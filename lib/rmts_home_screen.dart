@@ -89,7 +89,34 @@ class _RMTS_HomeScreenState extends State<RMTS_HomeScreen> {
               ),
               Expanded(
                 flex: 17,
-                child: Container(),
+                child: Container(
+                  alignment: Alignment.center,
+                  margin: EdgeInsets.only(top: 40),
+                  child: Column(
+                    children: const <Widget>[
+                      Text(
+                        "BRTS",
+                        style: TextStyle(
+                          decoration: TextDecoration.none,
+                          fontFamily: 'Poppins',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        "Swipe up or click here",
+                        style: TextStyle(
+                          decoration: TextDecoration.none,
+                          fontFamily: 'Poppins',
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ],
           ),
