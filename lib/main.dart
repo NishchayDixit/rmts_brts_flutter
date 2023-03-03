@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rmts_brts/brts_home_screen.dart';
 import 'package:rmts_brts/rmts_home_screen.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: const RMTS_HomeScreen(),
+      home: const BRTSHomeScreen(),
     );
   }
 }
