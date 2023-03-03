@@ -3,9 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/custom_text.dart';
 import 'package:rmts_brts/custom_text_field.dart';
-
-import 'custom_bus_card.dart';
-import 'custom_choice_chip.dart';
+import 'package:rmts_brts/custom_bus_card.dart';
+import 'package:rmts_brts/custom_choice_chip.dart';
 
 class RMTS_HomeScreen extends StatefulWidget {
   const RMTS_HomeScreen({Key? key}) : super(key: key);
