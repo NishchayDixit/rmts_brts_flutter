@@ -22,44 +22,51 @@ class _DetailBusState extends State<DetailBus> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     // futureBus = fetchBus();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: Column(
-          children: [
-            Text(widget.bus_no.toString()),
-            FutureBuilder<List<Bus>>(
-              future: fetchBus(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData && snapshot.data?.length != 0) {
-                  return Column(
-                    children: [
-                      Text(buses.length.toString()),
-                      ListView.builder(
-                        itemBuilder: (context, index) {
-                          return SingleBus(buses[index]);
-                        },
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        itemCount: snapshot.data?.length,
-                      ),
-                    ],
-                  );
-                } else if (snapshot.hasError) {
-                  return Text('${snapshot.error}');
-                }
-                // By default, show a loading spinner.
-                return const CircularProgressIndicator();
-              },
-            )
-          ],
-        ), // This trailing comma makes auto-formatting nicer for build methods.
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: SafeArea(
+          child: Scaffold(
+            body: Column(
+              children: [
+                Text(widget.bus_no.toString()),
+                FutureBuilder<List<Bus>>(
+                  future: fetchBus(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data?.length != 0) {
+                      return Column(
+                        children: [
+                          Text(buses.length.toString()),
+                          ListView.builder(
+                            itemBuilder: (context, index) {
+                              return SingleBus(buses[index]);
+                            },
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: snapshot.data?.length,
+                          ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Text('${snapshot.error}');
+                    }
+                    // By default, show a loading spinner.
+                    return const CircularProgressIndicator();
+                  },
+                )
+              ],
+            ), // This trailing comma makes auto-formatting nicer for build methods.
+          ),
+        ),
       ),
     );
   }

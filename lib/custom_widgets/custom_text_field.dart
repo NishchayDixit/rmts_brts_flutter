@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmts_brts/custom_text.dart';
+import 'package:rmts_brts/custom_widgets/custom_text.dart';
 
 class CustomTextField extends StatelessWidget {
   final String text;
@@ -28,7 +28,7 @@ class CustomTextField extends StatelessWidget {
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: const Color.fromARGB(255, 248, 248, 248),
+                fillColor: const Color.fromARGB(255, 242, 242, 242),
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                   borderRadius: BorderRadius.circular(10),

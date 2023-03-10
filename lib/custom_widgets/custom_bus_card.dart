@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmts_brts/custom_text.dart';
+import 'package:rmts_brts/custom_widgets/custom_text.dart';
 
 class CustomBusCard extends StatelessWidget {
   final String busNo;
@@ -68,13 +68,10 @@ class CustomBusCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(top: 5, bottom: 1),
-                  child: const Image(
-                    image: AssetImage(
-                      'assets/icons/verticale_dots.png',
-                    ),
-                    width: 16,
-                    height: 16,
+                  child: Column(
+                    children: [
+                      Text("|", style: TextStyle(fontSize: 18.0),),
+                    ],
                   ),
                 ),
                 CustomText(

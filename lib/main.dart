@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:rmts_brts/brts_home_screen.dart';
-import 'package:rmts_brts/rmts_home_screen.dart';
+import 'package:rmts_brts/rmts_brts_tab_screen.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then(
+    (value) => runApp(
+      const MyApp(),
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -17,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.grey,
       ),
-      home: const BRTSHomeScreen(),
+      home: const RMTS_BRTSTabScreen(),
     );
   }
 }

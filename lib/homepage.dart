@@ -13,34 +13,62 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-          body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextField(
-            decoration: InputDecoration(
-              hintText: "Enter Bus no.",
-            ),
-            keyboardType: TextInputType.number,
-            controller: textEditingController,
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailBus(
-                    bus_no: textEditingController.text.toString(),
-                  ),
+    return GestureDetector(
+      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Colors.white,
+        ),
+        child: SafeArea(
+          child: Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.transparent,
+              body: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 30.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextField(
+                      decoration: InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 217, 217, 217),
+                              width: 1.0),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                          borderSide: const BorderSide(
+                              color: Color.fromARGB(255, 185, 185, 185),
+                              width: 1.0),
+                        ),
+                        hintText: "Enter Bus no.",
+                      ),
+                      keyboardType: TextInputType.number,
+                      controller: textEditingController,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: const Color.fromARGB(255, 217, 217, 217),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => DetailBus(
+                              bus_no: textEditingController.text.toString(),
+                            ),
+                          ),
+                        );
+                      },
+                      child: const Text("Search"),
+                    ),
+                  ],
                 ),
-              );
-            },
-            child: Text("Submit"),
-          ),
-        ],
-      ) // This trailing comma makes auto-formatting nicer for build methods.
-          ),
+              ) // This trailing comma makes auto-formatting nicer for build methods.
+              ),
+        ),
+      ),
     );
   }
 }

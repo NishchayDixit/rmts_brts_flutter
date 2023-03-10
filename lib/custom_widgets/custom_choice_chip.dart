@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rmts_brts/custom_text.dart';
+import 'package:rmts_brts/custom_widgets/custom_text.dart';
 
 class CustomChoiceChip extends StatelessWidget {
   final String text;
