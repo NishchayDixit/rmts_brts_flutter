@@ -19,15 +19,24 @@ class RMTSHomeScreen extends StatefulWidget {
 
 class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
 
-  late List<RmtsPickupPoints> rmtsPickupPoints;
-
+  List<RmtsPickupPoints> rmtsPickupPoints = [];
+  int formID=-1;
+  int toID=-1;
   @override
   void initState() {
     () async{
-      var response = await BaseClient().get('Rmts/GetAllRmtsPickupPoints');
-      // List.from(jsonDecode(response);
-      // RmtsPickupPoints.fromJSON(response);
-      print(response);
+      var response = jsonDecode(await BaseClient().get('Rmts/GetAllRmtsPickupPoints'));
+      if(response['IsResult']==1){
+        List<dynamic> temp = List.from(response['ResultList']);
+
+        for(var t in temp){
+          rmtsPickupPoints.add(RmtsPickupPoints.fromJSON(t));
+        }
+        // print(response['ResultList']);
+        print(rmtsPickupPoints.toString());
+      }else{
+        print(response['Message']);
+      }
     }();
   }
 
