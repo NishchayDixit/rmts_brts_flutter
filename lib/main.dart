@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:rmts_brts/brts_home_screen.dart';
 import 'package:rmts_brts/rmts_brts_tab_screen.dart';
+import 'package:rmts_brts/rmts_live_bus.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'RMTS BRTS',
       theme: ThemeData(
         primarySwatch: Colors.grey,
+        // useMaterial3: true
       ),
       home: const RMTS_BRTSTabScreen(),
     );

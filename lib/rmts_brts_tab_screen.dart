@@ -38,14 +38,14 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           body: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 22.0),
-              child: Container(
-                margin: const EdgeInsets.only(top: 20.0),
-                height: MediaQuery.of(context).size.height,
-                child: Column(
-                  children: [
-                    Container(
+            child: Container(
+              margin: const EdgeInsets.only(top: 20.0),
+              height: MediaQuery.of(context).size.height,
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
                       // height: 50,
                       width: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
@@ -78,17 +78,17 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
                         ],
                       ),
                     ),
-                    Expanded(
-                      child: TabBarView(
-                        controller: tabController,
-                        children: const [
-                          RMTSHomeScreen(),
-                          BRTSHomeScreen(),
-                        ],
-                      ),
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: tabController,
+                      children: const [
+                        RMTSHomeScreen(),
+                        BRTSHomeScreen(),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
