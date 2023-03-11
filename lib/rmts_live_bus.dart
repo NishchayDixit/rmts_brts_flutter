@@ -34,7 +34,6 @@ class _MyHomePageState extends State<RmtsLiveBus> {
           backgroundColor: Colors.transparent,
           body: SafeArea(
             child: Column(
-
               children: <Widget>[
                 Row(
                   children: [
@@ -197,7 +196,6 @@ class _MyHomePageState extends State<RmtsLiveBus> {
               ),
             ],
           ),
-
           Text(b.A_BusNo.toString()),
         ],
       ),
