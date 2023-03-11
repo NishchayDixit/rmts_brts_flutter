@@ -29,9 +29,9 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
           rmtsResultModel.add(RmtsSearchResultModel.fromJSON(t));
         }
 
-        /*setState(() {
+        setState(() {
           _loading = false;
-        });*/
+        });
         // print(response['ResultList']);
         print(rmtsResultModel.toString());
       } else {
@@ -50,37 +50,41 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
         ),
         child: SafeArea(
           child: Scaffold(
-              body: Container(
-            width: double.infinity,
-            child: !_loading
-                ? ListView.builder(
-                    scrollDirection: Axis.vertical,
-                    addAutomaticKeepAlives: true,
-                    itemBuilder: (context, index) {
-                      return SingleBus(
-                          rmtsResultModel[index].BusNo,
-                          rmtsResultModel[index].RouteNameEnglish,
-                          rmtsResultModel[index].RouteID);
-                    },
-                    itemCount: rmtsResultModel.length,
-                  )
-                : Container(
-                    alignment: Alignment.center,
-                    width: double.infinity,
-                    height: double.infinity,
-                    color: Color.fromARGB(100, 195, 195, 195),
-                    child: Container(
+            body: Container(
+              width: double.infinity,
+              child: !_loading
+                  ? ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      addAutomaticKeepAlives: true,
+                      itemBuilder: (context, index) {
+                        return SingleBus(
+                            rmtsResultModel[index].BusNo,
+                            rmtsResultModel[index].RouteNameEnglish,
+                            rmtsResultModel[index].RouteID);
+                      },
+                      itemCount: rmtsResultModel.length,
+                    )
+                  : Container(
+                      alignment: Alignment.center,
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Color.fromARGB(100, 195, 195, 195),
+                      child: Container(
                         height: 90,
                         width: 300,
                         padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
                         decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(8)),
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
                         ),
                         child: Row(
                           children: [
                             Expanded(
-                                flex: 15, child: CircularProgressIndicator()),
+                              flex: 15,
+                              child: CircularProgressIndicator(),
+                            ),
                             Expanded(
                               flex: 85,
                               child: Text(
@@ -94,12 +98,14 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
                               ),
                             )
                           ],
-                        ))),
-          )),
+                        ),
+                      ),
+                    ),
+            ),
+          ),
         ),
       ),
     );
-    ;
   }
 
   Widget SingleBus(var busno, var name, var routeid) {
@@ -118,31 +124,40 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
         onPressed: () {},
         child: Row(
           children: [
-            SizedBox(
-              width: 10,
-            ),
-            SizedBox(
-              width: 30,
-              child: Text(
-                busno.toString() == "null" ? "" : busno.toString(),
-                style: TextStyle(
-                  color: Colors.orange,
-                  fontSize: 22,
+            Expanded(
+              flex: 10,
+              child: Container(
+                alignment: Alignment.center,
+                width: 30,
+                child: Text(
+                  busno.toString() == "null" ? "" : busno.toString(),
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontSize: 22,
+                  ),
                 ),
               ),
             ),
-            SizedBox(
-              width: 20,
+            Expanded(
+              flex: 70,
+              child: Container(
+                margin: EdgeInsets.only(left: 10.0),
+                alignment: Alignment.centerLeft,
+                child: Text(name.toString(),
+                    // overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontSize: 14,
+                    )),
+              ),
             ),
-            SizedBox(
-              width: 230,
-              child: Text(name.toString(),
-                  style: TextStyle(
-                    fontSize: 14,
-                  )),
+            Expanded(
+              flex: 20,
+              child: Container(
+                alignment: Alignment.centerRight,
+                width: 30.0,
+                child: Icon(Icons.navigate_next_rounded),
+              ),
             ),
-            Spacer(),
-            Icon(Icons.navigate_next_rounded),
           ],
         ),
       ),
