@@ -1,11 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
-import 'package:rmts_brts/Model/RmtsPickupPoints.dart';
+import 'package:rmts_brts/Model/rmts_pickup_points.dart';
 import 'package:rmts_brts/custom_widgets/custom_bus_card.dart';
 import 'package:rmts_brts/custom_widgets/custom_choice_chip.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:rmts_brts/custom_widgets/custom_text_field.dart';
+import 'package:rmts_brts/rmts_all_routes.dart';
 import 'package:rmts_brts/rmts_live_bus.dart';
+import 'package:rmts_brts/rmts_serach_result.dart';
 import 'package:awesome_dropdown/awesome_dropdown.dart';
 
 class RMTSHomeScreen extends StatefulWidget {
@@ -16,21 +20,39 @@ class RMTSHomeScreen extends StatefulWidget {
 }
 
 class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [];
+    for (var p in rmtsPickupPoints) {
+      menuItems.add(DropdownMenuItem(
+          child: Text(p.PickupPointNameEnglish), value: p.PickupPointID));
+    }
+    return menuItems;
+  }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  late List<RmtsPickupPoints> rmtsPickupPoints = [];
   String? selectedValue = null;
+  List<RmtsPickupPoints> rmtsPickupPoints = [];
+  int formID = -1;
+  int toID = -1;
 
   @override
   void initState() {
     () async {
-      var response = await BaseClient().get('Rmts/GetAllRmtsPickupPoints');
-      // List.from(jsonDecode(response);
-      // RmtsPickupPoints.fromJSON(response);
-      print(response);
-    };
-    super.initState();
+      var response =
+          jsonDecode(await BaseClient().get('Rmts/GetAllRmtsPickupPoints'));
+      if (response['IsResult'] == 1) {
+        List<dynamic> temp = List.from(response['ResultList']);
+
+        for (var t in temp) {
+          rmtsPickupPoints.add(RmtsPickupPoints.fromJSON(t));
+        }
+        // print(response['ResultList']);
+        print(rmtsPickupPoints.toString());
+      } else {
+        print(response['Message']);
+      }
+    }();
   }
 
   @override
@@ -71,7 +93,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                 margin: const EdgeInsets.only(top: 15),
                                 child: Column(
                                   children: const <Widget>[
-                                    CustomTextField(text: 'From'),
+                                    CustomTextField(text: 'FROM'),
                                     SizedBox(
                                       height: 10,
                                     ),
@@ -114,20 +136,29 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                               Expanded(
                                 flex: 100,
                                 child: Container(
-                                  margin:
-                                  const EdgeInsets.only(top: 5, left: 44),
+                                  margin: const EdgeInsets.only(top: 5, left: 44),
                                   alignment: Alignment.centerLeft,
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
                                       fixedSize: const Size(120.54, 34),
-                                      backgroundColor: const Color.fromARGB(
-                                          255, 217, 217, 217),
+                                      backgroundColor:
+                                      const Color.fromARGB(255, 217, 217, 217),
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(6),
                                       ),
                                     ),
-                                    onPressed: () {},
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              RmtsSearchResult(
+                                                  fromID: this.formID,
+                                                  toID: this.toID),
+                                        ),
+                                      );
+                                    },
                                     child: const CustomText(
                                       text: "Show Result",
                                       fontFamily: 'Poppins',
@@ -165,8 +196,8 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                   padding: EdgeInsets.only(right: 20.0),
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color.fromARGB(
-                                          255, 217, 217, 217),
+                                      backgroundColor:
+                                      const Color.fromARGB(255, 217, 217, 217),
                                       elevation: 0,
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(6),
@@ -177,7 +208,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                          const RmtsLiveBus(),
+                                              const RmtsAllRoutes(),
                                         ),
                                       );
                                     },
@@ -250,54 +281,47 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                               children: const <Widget>[
                                 CustomChoiceChip(
                                   text: "Madhapar Chowk",
-                                  borderColor:
-                                  Color.fromARGB(255, 177, 177, 177),
+                                  borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "GreenLand Chowk",
-                                  borderColor:
-                                  Color.fromARGB(255, 177, 177, 177),
+                                  borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "AajiDam",
-                                  borderColor:
-                                  Color.fromARGB(255, 177, 177, 177),
+                                  borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "AaryaSamaj",
                                   marginTop: EdgeInsets.only(top: 6),
-                                  borderColor:
-                                  Color.fromARGB(255, 177, 177, 177),
+                                  borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "Aazad Chowk",
                                   marginTop: EdgeInsets.only(top: 6),
-                                  borderColor:
-                                  Color.fromARGB(255, 177, 177, 177),
+                                  borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "Bedi",
                                   marginTop: EdgeInsets.only(top: 6),
-                                  borderColor:
-                                  Color.fromARGB(255, 177, 177, 177),
+                                  borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "Show All",
                                   marginTop: EdgeInsets.only(top: 6),
-                                  borderColor:
-                                  Color.fromARGB(255, 255, 255, 255),
+                                  borderColor: Color.fromARGB(255, 255, 255, 255),
                                   boxColor: Color.fromARGB(255, 185, 185, 185),
                                   textColor: Color.fromARGB(255, 255, 255, 255),
                                 ),

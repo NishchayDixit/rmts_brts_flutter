@@ -34,62 +34,61 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
         color: Colors.white,
       ),
       child: SafeArea(
+
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
-          body: SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.only(top: 20.0),
-              height: MediaQuery.of(context).size.height,
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                    child: Container(
-                      // height: 50,
-                      width: MediaQuery.of(context).size.height,
-                      decoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 230, 230, 230),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: TabBar(
-                              indicatorColor: Colors.white,
-                              indicatorWeight: 2,
-                              indicatorPadding: EdgeInsets.all(1.0),
-                              indicator: BoxDecoration(
-                                color: Color.fromARGB(255, 185, 185, 185),
-                                borderRadius: BorderRadius.circular(6.0),
-                              ),
-                              controller: tabController,
-                              tabs: const [
-                                Tab(
-                                  text: 'RMTS',
-                                ),
-                                Tab(
-                                  text: 'BRTS',
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+          body: Container(
+            margin: const EdgeInsets.only(top: 20.0),
+            height: MediaQuery.of(context).size.height,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Container(
+                    // height: 50,
+                    width: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 230, 230, 230),
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
-                  ),
-                  Expanded(
-                    child: TabBarView(
-                      controller: tabController,
-                      children: const [
-                        RMTSHomeScreen(),
-                        BRTSHomeScreen(),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(5.0),
+                          child: TabBar(
+                            indicatorColor: Colors.white,
+                            indicatorWeight: 2,
+                            indicatorPadding: EdgeInsets.all(1.0),
+                            indicator: BoxDecoration(
+                              color: Color.fromARGB(255, 185, 185, 185),
+                              borderRadius: BorderRadius.circular(6.0),
+                            ),
+                            controller: tabController,
+                            tabs: const [
+                              Tab(
+                                text: 'RMTS',
+                              ),
+                              Tab(
+                                text: 'BRTS',
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                ],
-              ),
+                ),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabController,
+                    children: const [
+                      RMTSHomeScreen(),
+                      BRTSHomeScreen(),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
         ),

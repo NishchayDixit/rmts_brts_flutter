@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:rmts_brts/Model/bus.dart';
+import 'package:rmts_brts/Model/rmts_live_bus_model.dart';
 
 class DetailBus extends StatefulWidget {
   const DetailBus({
@@ -17,7 +17,7 @@ class DetailBus extends StatefulWidget {
 }
 
 class _DetailBusState extends State<DetailBus> {
-  late Future<List<Bus>> futureBus;
+  late Future<List<RmtsLiveBusModel>> futureBus;
   int busfoundcount = 0;
 
   @override
@@ -39,7 +39,7 @@ class _DetailBusState extends State<DetailBus> {
             body: Column(
               children: [
                 Text(widget.bus_no.toString()),
-                FutureBuilder<List<Bus>>(
+                FutureBuilder<List<RmtsLiveBusModel>>(
                   future: fetchBus(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data?.length != 0) {
@@ -71,7 +71,7 @@ class _DetailBusState extends State<DetailBus> {
     );
   }
 
-  Widget SingleBus(Bus b) {
+  Widget SingleBus(RmtsLiveBusModel b) {
     return Container(
       margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
       decoration: BoxDecoration(
@@ -152,9 +152,9 @@ class _DetailBusState extends State<DetailBus> {
     );
   }
 
-  List<Bus> buses = [];
+  List<RmtsLiveBusModel> buses = [];
 
-  Future<List<Bus>> fetchBus() async {
+  Future<List<RmtsLiveBusModel>> fetchBus() async {
     buses.clear();
     final response = await http
         .get(Uri.parse('http://www.rajkotrajpath.com/get_location.php'));
@@ -182,7 +182,7 @@ class _DetailBusState extends State<DetailBus> {
           print(d_bus['A_BusNo']);
           if (d_bus['A_BusNo'] == int.parse(widget.bus_no.toString())) {
             busfoundcount++;
-            buses.add(Bus.fromJSON(d_bus));
+            buses.add(RmtsLiveBusModel.fromJSON(d_bus));
           }
         }
         // d_bus['A_BusNo'] = int.parse(d_bus['VehName'].toString().substring(d_bus['VehName'].toString().length-2,d_bus['VehName'].toString().length));

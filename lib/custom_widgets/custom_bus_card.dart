@@ -76,7 +76,7 @@ class CustomBusCard extends StatelessWidget {
                       margin: const EdgeInsets.only(top: 5, bottom: 1),
                       child: const Image(
                         image: AssetImage(
-                          'assets/icons/verticale_dots.png',
+                          'assets/icons/vertical_dots.png',
                         ),
                         width: 16,
                         height: 16,

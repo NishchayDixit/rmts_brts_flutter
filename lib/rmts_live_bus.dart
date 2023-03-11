@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:maps_launcher/maps_launcher.dart';
-import 'package:rmts_brts/Model/bus.dart';
+import 'package:rmts_brts/Model/rmts_live_bus_model.dart';
 
 class RmtsLiveBus extends StatefulWidget {
   const RmtsLiveBus({super.key});
@@ -14,7 +14,7 @@ class RmtsLiveBus extends StatefulWidget {
 
 class _MyHomePageState extends State<RmtsLiveBus> {
   TextEditingController textEditingController = TextEditingController();
-  late Future<List<Bus>> futureBus;
+  late Future<List<RmtsLiveBusModel>> futureBus;
   int busfoundcount = 0;
   int bus_no = -1;
   bool isLoading = false;
@@ -84,7 +84,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                 ),
 
                 if (bus_no != -1)
-                  FutureBuilder<List<Bus>>(
+                  FutureBuilder<List<RmtsLiveBusModel>>(
                     future: fetchBus(),
                     builder: (context, snapshot) {
                       if (snapshot.hasData && snapshot.data?.length != 0) {
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
     );
   }
 
-  Widget SingleBus(Bus b) {
+  Widget SingleBus(RmtsLiveBusModel b) {
     return Container(
       margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
       decoration: BoxDecoration(
@@ -202,9 +202,9 @@ class _MyHomePageState extends State<RmtsLiveBus> {
     );
   }
 
-  List<Bus> buses = [];
+  List<RmtsLiveBusModel> buses = [];
 
-  Future<List<Bus>> fetchBus() async {
+  Future<List<RmtsLiveBusModel>> fetchBus() async {
     isLoading=true;
     buses.clear();
     busfoundcount=0;
@@ -234,7 +234,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
           print(d_bus['A_BusNo']);
           if (d_bus['A_BusNo'] == int.parse(bus_no.toString())) {
             busfoundcount++;
-            buses.add(Bus.fromJSON(d_bus));
+            buses.add(RmtsLiveBusModel.fromJSON(d_bus));
           }
         }
       }
