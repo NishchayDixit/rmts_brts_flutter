@@ -1,10 +1,41 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:rmts_brts/Api/base_client.dart';
+import 'package:rmts_brts/Model/brts_pickup_points.dart';
 import 'package:rmts_brts/custom_widgets/custom_choice_chip.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:rmts_brts/custom_widgets/custom_text_field.dart';
 
-class BRTSHomeScreen extends StatelessWidget {
+class BRTSHomeScreen extends StatefulWidget {
   const BRTSHomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<BRTSHomeScreen> createState() => _BRTSHomeScreenState();
+}
+
+class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
+
+  List<BrtsPickupPoints> brtsPickupPoints = [];
+  int formID=-1;
+  int toID=-1;
+  @override
+  void initState() {
+    () async{
+      var response = jsonDecode(await BaseClient().get('Brts/GetAllBrtsPickupPoints'));
+      if(response['IsResult']==1){
+        List<dynamic> temp = List.from(response['ResultList']);
+
+        for(var t in temp){
+          brtsPickupPoints.add(BrtsPickupPoints.fromJSON(t));
+        }
+        // print(response['ResultList']);
+        print(brtsPickupPoints.toString());
+      }else{
+        print(response['Message']);
+      }
+    }();
+  }
 
   @override
   Widget build(BuildContext context) {
