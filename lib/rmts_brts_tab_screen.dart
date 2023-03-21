@@ -34,7 +34,6 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
         color: Colors.white,
       ),
       child: SafeArea(
-
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,

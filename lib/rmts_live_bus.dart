@@ -18,99 +18,130 @@ class _MyHomePageState extends State<RmtsLiveBus> {
   int busfoundcount = 0;
   int bus_no = -1;
   bool isLoading = false;
+
+  @override
+  void dispose() {
+    textEditingController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(
         decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/background.png'),
-            fit: BoxFit.fill,
-          ),
+          color: Colors.white,
         ),
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.transparent,
-          body: SafeArea(
-            child: Column(
-              children: <Widget>[
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 70,
-                      child: Container(
-                        margin: const EdgeInsets.fromLTRB(30, 15, 30, 0),
-                        child: TextField(
-                          decoration: InputDecoration(
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 217, 217, 217),
-                                  width: 1.0),
+        child: SafeArea(
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.transparent,
+            body: Padding(
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
+              child: Column(
+                children: <Widget>[
+                  Expanded(
+                    flex: 6,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        borderRadius: BorderRadius.circular(8.0),
+                        border: Border.all(
+                            style: BorderStyle.solid,
+                            color: const Color.fromARGB(255, 167, 167, 167),
+                            width: 2.0),
+                      ),
+                      child: Row(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 65,
+                            child: TextField(
+                              controller: textEditingController,
+                              textAlignVertical: TextAlignVertical.bottom,
+                              cursorColor:
+                                  const Color.fromARGB(255, 160, 160, 160),
+                              decoration: const InputDecoration(
+                                filled: true,
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                ),
+                                hintText: "Enter Bus no.",
+                              ),
+                              keyboardType: TextInputType.number,
                             ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(20),
-                              borderSide: const BorderSide(
-                                  color: Color.fromARGB(255, 185, 185, 185),
-                                  width: 1.0),
-                            ),
-                            hintText: "Enter Bus no.",
                           ),
-                          keyboardType: TextInputType.number,
-                          controller: textEditingController,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 30,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color.fromARGB(255, 217, 217, 217),
-                        ),
-                        onPressed: () {
-                          // if(!isLoading){
-                            setState(() {
-                              bus_no = int.parse(textEditingController.text.toString());
-                              buses;
-                              // fetchBus();
-                            });
-                          // }
-                        },
-                        child: Text("Search"),
-                      ),
-                    ),
-                  ],
-                ),
-
-                if (bus_no != -1)
-                  FutureBuilder<List<RmtsLiveBusModel>>(
-                    future: fetchBus(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData && snapshot.data?.length != 0) {
-                        return Column(
-                          children: [
-                            Text(buses.length.toString()),
-                            ListView.builder(
-                              itemBuilder: (context, index) {
-                                return SingleBus(buses[index]);
+                          Expanded(
+                            flex: 35,
+                            child: InkWell(
+                              onTap: () {
+                                // if(!isLoading){
+                                setState(() {
+                                  bus_no = int.parse(
+                                      textEditingController.text.toString());
+                                  buses;
+                                  // fetchBus();
+                                });
+                                // }
                               },
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: snapshot.data?.length,
+                              enableFeedback: true,
+                              child: Ink(
+                                color: const Color.fromARGB(255, 167, 167, 167),
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  height: double.maxFinite,
+                                  width: double.maxFinite,
+                                  decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.only(
+                                      bottomRight: Radius.circular(4.0),
+                                      topRight: Radius.circular(4.0),
+                                    ),
+                                  ),
+                                  child: const Text("Search",
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 16.0)),
+                                ),
+                              ),
                             ),
-                          ],
-                        );
-                      } else if (snapshot.hasError) {
-                        return Text('${snapshot.error}');
-                      }else if(!isLoading && busfoundcount==0){
-                        return Text("no buses found.");
-                      }
-                      // By default, show a loading spinner.
-                      return const CircularProgressIndicator();
-                    },
-                  )
-              ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 94,
+                    child: (bus_no != -1)
+                        ? FutureBuilder<List<RmtsLiveBusModel>>(
+                            future: fetchBus(),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData &&
+                                  snapshot.data?.length != 0) {
+                                return Column(
+                                  children: [
+                                    Text(buses.length.toString()),
+                                    ListView.builder(
+                                      itemBuilder: (context, index) {
+                                        return SingleBus(buses[index]);
+                                      },
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.vertical,
+                                      itemCount: snapshot.data?.length,
+                                    ),
+                                  ],
+                                );
+                              } else if (snapshot.hasError) {
+                                return Text('${snapshot.error}');
+                              } else if (!isLoading && busfoundcount == 0) {
+                                return Text("no buses found.");
+                              }
+                              // By default, show a loading spinner.
+                              return Center(child: const CircularProgressIndicator());
+                            },
+                          )
+                        : Container(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -205,9 +236,9 @@ class _MyHomePageState extends State<RmtsLiveBus> {
   List<RmtsLiveBusModel> buses = [];
 
   Future<List<RmtsLiveBusModel>> fetchBus() async {
-    isLoading=true;
+    isLoading = true;
     buses.clear();
-    busfoundcount=0;
+    busfoundcount = 0;
     final response = await http
         .get(Uri.parse('http://www.rajkotrajpath.com/get_location.php'));
     if (response.statusCode == 200) {
@@ -240,7 +271,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
       }
 
       print(buses.length);
-      isLoading=false;
+      isLoading = false;
       return buses;
     } else {
       // If the server did not return a 200 OK response,

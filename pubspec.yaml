@@ -37,6 +37,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   json_annotation: ^4.8.0
   awesome_dropdown: ^0.0.4
+  dropdown_search: ^3.0.1
+  animated_custom_dropdown: 1.4.0
+
 
 dev_dependencies:
   flutter_test:

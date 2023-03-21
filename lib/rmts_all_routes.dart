@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_search_result_model.dart';
+import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 
 class RmtsAllRoutes extends StatefulWidget {
   const RmtsAllRoutes({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
           _loading = false;
         });
         // print(response['ResultList']);
-        print(rmtsResultModel.toString());
+        // print(rmtsResultModel.toString());
       } else {
         print(response['Message']);
       }
@@ -64,43 +65,7 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
                       },
                       itemCount: rmtsResultModel.length,
                     )
-                  : Container(
-                      alignment: Alignment.center,
-                      width: double.infinity,
-                      height: double.infinity,
-                      color: Color.fromARGB(100, 195, 195, 195),
-                      child: Container(
-                        height: 90,
-                        width: 300,
-                        padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 15,
-                              child: CircularProgressIndicator(),
-                            ),
-                            Expanded(
-                              flex: 85,
-                              child: Text(
-                                "Please Wait...",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w500,
-                                  fontFamily: 'Poppins',
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
+                  : CustomLoader(),
             ),
           ),
         ),

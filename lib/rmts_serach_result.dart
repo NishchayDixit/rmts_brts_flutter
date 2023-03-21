@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_search_result_model.dart';
-import 'package:rmts_brts/custom_widgets/custom_text.dart';
+import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 
 class RmtsSearchResult extends StatefulWidget {
   final fromID;
@@ -18,6 +18,7 @@ class RmtsSearchResult extends StatefulWidget {
 
 class _RmtsSearchResultState extends State<RmtsSearchResult> {
   List<RmtsSearchResultModel> rmtsSearchResultModel = [];
+  var _loading = true;
 
   @override
   void initState() {
@@ -26,7 +27,9 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
         "frompickpoint": widget.fromID.toString(),
         "topickpoint": widget.toID.toString(),
       };
-      var response = jsonDecode(await BaseClient().post('Rmts/GetRmtsRouteFromTo', obj).catchError((err)=>{print(err.toString())}));
+      var response = jsonDecode(await BaseClient()
+          .post('Rmts/GetRmtsRouteFromTo', obj)
+          .catchError((err) => {print(err.toString())}));
 
       if (response['IsResult'] == 1) {
         List<dynamic> temp = List.from(response['ResultList']);
@@ -34,6 +37,9 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
         for (var t in temp) {
           rmtsSearchResultModel.add(RmtsSearchResultModel.fromJSON(t));
         }
+        setState(() {
+          _loading = false;
+        });
         // print(response['ResultList']);
         print(rmtsSearchResultModel.toString());
       } else {
@@ -52,35 +58,37 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
         ),
         child: SafeArea(
           child: Scaffold(
-            body: ListView.builder(
-              itemBuilder: (context, index) {
-                return SingleBus(rmtsSearchResultModel[index].BusNo, rmtsSearchResultModel[index].RouteNameEnglish,rmtsSearchResultModel[index].RouteID);
-              },
-              itemCount: rmtsSearchResultModel.length,
-            ),
+            body: !_loading
+                ? ListView.builder(
+                    itemBuilder: (context, index) {
+                      return SingleBus(
+                          rmtsSearchResultModel[index].BusNo,
+                          rmtsSearchResultModel[index].RouteNameEnglish,
+                          rmtsSearchResultModel[index].RouteID);
+                    },
+                    itemCount: rmtsSearchResultModel.length,
+                  )
+                : CustomLoader(),
           ),
         ),
       ),
     );
   }
 
-  Widget SingleBus(var busno, var name,var routeid) {
+  Widget SingleBus(var busno, var name, var routeid) {
     return Container(
       height: 65,
       width: double.infinity,
       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor:
-          const Color.fromARGB(255, 217, 217, 217),
+          backgroundColor: const Color.fromARGB(255, 217, 217, 217),
           elevation: 0,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),
         ),
-        onPressed: () {
-
-        },
+        onPressed: () {},
         child: Row(
           children: [
             SizedBox(
@@ -98,9 +106,10 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
             ),
             SizedBox(
               width: 230,
-              child: Text(name.toString(),style: TextStyle(
-                fontSize: 14,
-              )),
+              child: Text(name.toString(),
+                  style: TextStyle(
+                    fontSize: 14,
+                  )),
             ),
             Spacer(),
             Icon(Icons.navigate_next_rounded),

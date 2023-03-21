@@ -1,6 +1,12 @@
 class RmtsPickupPoints {
   final PickupPointID,PickupPointNameEnglish,PickupPointName;
 
+  @override
+  String toString() {
+    // TODO: implement toString
+    return this.PickupPointNameEnglish;
+  }
+
   const RmtsPickupPoints({
     required this.PickupPointID,
     required this.PickupPointNameEnglish,
