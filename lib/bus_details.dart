@@ -21,24 +21,6 @@ class _BusDetailsState extends State<BusDetails>
   @override
   void initState() {
     tabController = TabController(length: 2, vsync: this);
-    () async {
-      var response = jsonDecode(await BaseClient().post(
-          'Rmts/GetRmtsSelectTime', {
-        "id": widget.rmtsResultModel.RouteID
-      }).catchError((err) => {print(err.toString())}));
-
-      if (response['IsResult'] == 1) {
-        List<dynamic> temp = List.from(response['ResultList']);
-
-        setState(() {
-          _loading = false;
-        });
-        print(response['ResultList']);
-        // print(rmtsResultModel.toString());
-      } else {
-        print(response['Message']);
-      }
-    }();
     super.initState();
   }
 
@@ -124,7 +106,7 @@ class _BusDetailsState extends State<BusDetails>
                 Expanded(
                   child: TabBarView(
                     controller: tabController,
-                    children: const [Text("Hello"), Text("World")],
+                    children: [customTimingView(), Text("World")],
                   ),
                 ),
               ],
@@ -134,9 +116,91 @@ class _BusDetailsState extends State<BusDetails>
       ),
     );
   }
-  Widget customTimingView(){
+
+  Widget customTimingView() {
     return Container(
 
+      child: FutureBuilder(
+        future: getTimings(widget.rmtsResultModel),
+        builder: (context, snapshot) {
+          if (snapshot != null && snapshot.hasData) {
+            List<String> timingsAm = [];
+            List<String> timingsPm = [];
+            for(var i=0;i<snapshot.data!.length;i++){
+              if(snapshot.data![i]["TimeDisplay"].toString().toLowerCase().contains("am")){
+                timingsAm.add(snapshot.data![i]["TimeDisplay"]);
+              }else{
+                timingsPm.add(snapshot.data![i]["TimeDisplay"]);
+              }
+            }
+            return Padding(
+              padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text("Morning To Noon"),
+                        ListView.builder(
+                          itemBuilder: (context, index) {
+                            print(snapshot.data);
+                            return Container(
+                              child: Text(timingsAm[index]),
+                            );
+                          },
+                          shrinkWrap: true,
+                          itemCount:timingsAm.length,
+                        ),                    ],
+                    ),
+                  ),
+
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Text("Noon To Afternoon"),
+                        ListView.builder(
+                          itemBuilder: (context, index) {
+                            print(snapshot.data);
+                            return Container(
+                              child: Text(timingsPm[index]),
+                            );
+                          },
+                          shrinkWrap: true,
+                          itemCount: timingsPm.length,
+                        ),
+                      ],
+                    ),
+                  ),
+
+
+                ],
+              ),
+            );
+          }
+          return Text("no result found");
+        },
+      ),
     );
+  }
+
+  Future<List> getTimings(RmtsResultModel rmtsResultModel) async {
+    var response = jsonDecode(await BaseClient().post(
+        'Rmts/GetRmtsSelectTime', {
+      "id": widget.rmtsResultModel.RouteID.toString()
+    }).catchError((err) => {print(err.toString())}));
+
+    if (response['IsResult'] == 1) {
+      List<dynamic> temp = List.from(response['ResultList']);
+
+      // setState(() {
+      //   _loading = false;
+      // });
+      print(temp);
+      return temp;
+      // print(rmtsResultModel.toString());
+    }
+    print(response['Message']);
+    return [];
   }
 }
