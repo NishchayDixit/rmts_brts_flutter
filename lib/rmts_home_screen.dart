@@ -7,7 +7,8 @@ import 'package:rmts_brts/custom_widgets/custom_bus_card.dart';
 import 'package:rmts_brts/custom_widgets/custom_choice_chip.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
-import 'package:rmts_brts/rmts_all_routes.dart';
+import 'package:rmts_brts/rmts_all_buses.dart';
+import 'package:rmts_brts/rmts_all_pickup_points.dart';
 import 'package:rmts_brts/rmts_live_bus.dart';
 import 'package:rmts_brts/rmts_serach_result.dart';
 
@@ -422,7 +423,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                               context,
                                               MaterialPageRoute(
                                                 builder: (context) =>
-                                                    const RmtsAllRoutes(),
+                                                    const RmtsAllBuses(),
                                               ),
                                             );
                                           },
@@ -494,7 +495,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                     alignment: WrapAlignment.start,
                                     spacing: 10.0,
                                     runSpacing: 10.0,
-                                    children: const <Widget>[
+                                    children: <Widget>[
                                       CustomChoiceChip(
                                         text: "Madhapar Chowk",
                                         borderColor:
@@ -552,15 +553,20 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                         textColor:
                                             Color.fromARGB(255, 77, 77, 77),
                                       ),
-                                      CustomChoiceChip(
-                                        text: "Show All",
-                                        marginTop: EdgeInsets.only(top: 6),
-                                        borderColor:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        boxColor:
-                                            Color.fromARGB(255, 185, 185, 185),
-                                        textColor:
-                                            Color.fromARGB(255, 255, 255, 255),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(context, MaterialPageRoute(builder: (context) => RmtsAllPickupPoints(),));
+                                        },
+                                        child: CustomChoiceChip(
+                                          text: "Show All",
+                                          marginTop: EdgeInsets.only(top: 6),
+                                          borderColor:
+                                              Color.fromARGB(255, 255, 255, 255),
+                                          boxColor:
+                                              Color.fromARGB(255, 185, 185, 185),
+                                          textColor:
+                                              Color.fromARGB(255, 255, 255, 255),
+                                        ),
                                       ),
                                     ],
                                   ),

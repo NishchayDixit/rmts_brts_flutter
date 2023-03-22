@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
+import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 
 class BusDetails extends StatefulWidget {
   final RmtsResultModel rmtsResultModel;
@@ -209,6 +210,8 @@ class _BusDetailsState extends State<BusDetails>
                 itemCount:snapshot.data!.length,
               ),
             );
+          }else if(_loading){
+            return CustomLoader();
           }
           return Text("no result found");
         },
@@ -217,6 +220,7 @@ class _BusDetailsState extends State<BusDetails>
   }
 
   Future<List> getTimings(RmtsResultModel rmtsResultModel) async {
+    _loading=true;
     var response = jsonDecode(await BaseClient().post(
         'Rmts/GetRmtsSelectTime', {
       "id": widget.rmtsResultModel.RouteID.toString()
@@ -226,13 +230,15 @@ class _BusDetailsState extends State<BusDetails>
       List<dynamic> temp = List.from(response['ResultList']);
 
       // setState(() {
-      //   _loading = false;
+
       // });
       print(temp);
+      _loading = false;
       return temp;
       // print(rmtsResultModel.toString());
     }
     print(response['Message']);
+    _loading = false;
     return [];
   }
   Future<List> getPickupPoints(RmtsResultModel rmtsResultModel) async {
