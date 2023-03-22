@@ -20,8 +20,7 @@ class CustomLoader extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Expanded(
-                    flex: 15, child: CircularProgressIndicator()),
+                Expanded(flex: 15, child: CircularProgressIndicator()),
                 Expanded(
                   flex: 85,
                   child: Text(

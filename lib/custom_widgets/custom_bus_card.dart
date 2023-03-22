@@ -20,16 +20,12 @@ class CustomBusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-
       height: 130,
       child: AspectRatio(
-
-        aspectRatio: 9/5,
+        aspectRatio: 9 / 5,
         child: Container(
-
           padding: const EdgeInsets.all(13),
           margin: marginRight,
-
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             color: const Color.fromARGB(255, 245, 245, 245),

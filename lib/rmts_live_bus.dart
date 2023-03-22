@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:rmts_brts/Model/rmts_live_bus_model.dart';
+import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 
 class RmtsLiveBus extends StatefulWidget {
   const RmtsLiveBus({super.key});
@@ -131,6 +132,8 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                                 );
                               } else if (snapshot.hasError) {
                                 return Text('${snapshot.error}');
+                              }else if(isLoading){
+                                return CustomLoader();
                               } else if (!isLoading && busfoundcount == 0) {
                                 return Text("no buses found.");
                               }
