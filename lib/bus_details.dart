@@ -106,7 +106,7 @@ class _BusDetailsState extends State<BusDetails>
                 Expanded(
                   child: TabBarView(
                     controller: tabController,
-                    children: [customTimingView(), Text("World")],
+                    children: [customTimingView(), customPickupPointsView()],
                   ),
                 ),
               ],
@@ -183,10 +183,61 @@ class _BusDetailsState extends State<BusDetails>
       ),
     );
   }
+  Widget customPickupPointsView() {
+    return Container(
+      child: FutureBuilder(
+        future: getPickupPoints(widget.rmtsResultModel),
+        builder: (context, snapshot) {
+          if (snapshot != null && snapshot.hasData) {
+            List<String> pickuppoints = [];
+            return Padding(
+              padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+              child: ListView.builder(
+                itemBuilder: (context, index) {
+                  print(snapshot.data);
+                  return Container(
+                    child: Row(
+                      children: [
+                        Icon(Icons.location_on),
+                        Text(snapshot.data![index]["PickupPointNameEnglish"].toString()),
+                        Expanded(child: Container()),
+                        Icon(Icons.navigate_next_rounded),
+                      ],
+                    ),
+                  );
+                },
+                itemCount:snapshot.data!.length,
+              ),
+            );
+          }
+          return Text("no result found");
+        },
+      ),
+    );
+  }
 
   Future<List> getTimings(RmtsResultModel rmtsResultModel) async {
     var response = jsonDecode(await BaseClient().post(
         'Rmts/GetRmtsSelectTime', {
+      "id": widget.rmtsResultModel.RouteID.toString()
+    }).catchError((err) => {print(err.toString())}));
+
+    if (response['IsResult'] == 1) {
+      List<dynamic> temp = List.from(response['ResultList']);
+
+      // setState(() {
+      //   _loading = false;
+      // });
+      print(temp);
+      return temp;
+      // print(rmtsResultModel.toString());
+    }
+    print(response['Message']);
+    return [];
+  }
+  Future<List> getPickupPoints(RmtsResultModel rmtsResultModel) async {
+    var response = jsonDecode(await BaseClient().post(
+        'Rmts/GetRmtsPickupPointRoutewise', {
       "id": widget.rmtsResultModel.RouteID.toString()
     }).catchError((err) => {print(err.toString())}));
 
