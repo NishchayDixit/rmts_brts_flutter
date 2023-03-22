@@ -9,6 +9,8 @@ import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:rmts_brts/rmts_all_buses.dart';
 import 'package:rmts_brts/rmts_all_pickup_points.dart';
+import 'package:rmts_brts/custom_widgets/custom_text_field.dart';
+import 'package:rmts_brts/rmts_all_routes.dart';
 import 'package:rmts_brts/rmts_live_bus.dart';
 import 'package:rmts_brts/rmts_serach_result.dart';
 
@@ -100,25 +102,9 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                       margin: const EdgeInsets.only(top: 15),
                                       child: Column(
                                         children: <Widget>[
-                                          // DropdownSearch<RmtsPickupPoints>(
-                                          //   mode: Mode.MENU,
-                                          //   // showSelectedItems: true,
-                                          //   items: rmtsPickupPoints,
-                                          //   onChanged: print,
-                                          //   selectedItem: rmtsPickupPoints[0],
-                                          // ),
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Expanded(
-                                                child: CustomText(
-                                                  text: "From",
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 12.0,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10),
                                               Expanded(
                                                 flex: 8,
                                                 child: Autocomplete(
@@ -148,35 +134,11 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                                       textEditingController,
                                                       focusNode,
                                                       onFieldSubmitted) {
-                                                    return SizedBox(
-                                                      height: 39,
-                                                      child: TextField(
-                                                        textAlignVertical:
-                                                            TextAlignVertical
-                                                                .top,
-                                                        cursorColor:
-                                                            Colors.black,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          filled: true,
-                                                          fillColor: const Color
-                                                                  .fromARGB(255,
-                                                              242, 242, 242),
-                                                          border:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide.none,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                        ),
-                                                        controller:
+                                                    return CustomTextField(
+                                                        text: "FROM",
+                                                        textEditingController:
                                                             textEditingController,
-                                                        focusNode: focusNode,
-                                                      ),
-                                                    );
+                                                        focusNode: focusNode);
                                                   },
                                                   onSelected:
                                                       (String selection) {
@@ -205,22 +167,12 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                               ),
                                             ],
                                           ),
-
                                           SizedBox(
                                             height: 10,
                                           ),
                                           Row(
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
-                                              Expanded(
-                                                child: CustomText(
-                                                  text: "To",
-                                                  fontFamily: 'Poppins',
-                                                  fontSize: 12.0,
-                                                  fontWeight: FontWeight.w700,
-                                                ),
-                                              ),
-                                              const SizedBox(width: 10),
                                               Expanded(
                                                 flex: 8,
                                                 child: Autocomplete(
@@ -250,35 +202,11 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                                       textEditingController,
                                                       focusNode,
                                                       onFieldSubmitted) {
-                                                    return SizedBox(
-                                                      height: 39,
-                                                      child: TextField(
-                                                        textAlignVertical:
-                                                            TextAlignVertical
-                                                                .top,
-                                                        cursorColor:
-                                                            Colors.black,
-                                                        decoration:
-                                                            InputDecoration(
-                                                          filled: true,
-                                                          fillColor: const Color
-                                                                  .fromARGB(255,
-                                                              242, 242, 242),
-                                                          border:
-                                                              OutlineInputBorder(
-                                                            borderSide:
-                                                                BorderSide.none,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10),
-                                                          ),
-                                                        ),
-                                                        controller:
+                                                    return CustomTextField(
+                                                        text: "TO",
+                                                        textEditingController:
                                                             textEditingController,
-                                                        focusNode: focusNode,
-                                                      ),
-                                                    );
+                                                        focusNode: focusNode);
                                                   },
                                                   onSelected:
                                                       (String selection) {
@@ -493,9 +421,9 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                   margin: const EdgeInsets.only(top: 10),
                                   child: Wrap(
                                     alignment: WrapAlignment.start,
-                                    spacing: 10.0,
-                                    runSpacing: 10.0,
-                                    children: <Widget>[
+                                    spacing: 5.0,
+                                    runSpacing: 5.5,
+                                    children: const <Widget>[
                                       CustomChoiceChip(
                                         text: "Madhapar Chowk",
                                         borderColor:
@@ -525,7 +453,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                       ),
                                       CustomChoiceChip(
                                         text: "AaryaSamaj",
-                                        marginTop: EdgeInsets.only(top: 6),
+                                        // marginTop: EdgeInsets.only(top: 5),
                                         borderColor:
                                             Color.fromARGB(255, 177, 177, 177),
                                         boxColor:
@@ -535,7 +463,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                       ),
                                       CustomChoiceChip(
                                         text: "Aazad Chowk",
-                                        marginTop: EdgeInsets.only(top: 6),
+                                        // marginTop: EdgeInsets.only(top: 5),
                                         borderColor:
                                             Color.fromARGB(255, 177, 177, 177),
                                         boxColor:
@@ -545,7 +473,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                       ),
                                       CustomChoiceChip(
                                         text: "Bedi",
-                                        marginTop: EdgeInsets.only(top: 6),
+                                        // marginTop: EdgeInsets.only(top: 5),
                                         borderColor:
                                             Color.fromARGB(255, 177, 177, 177),
                                         boxColor:
@@ -559,7 +487,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                         },
                                         child: CustomChoiceChip(
                                           text: "Show All",
-                                          marginTop: EdgeInsets.only(top: 6),
+                                          //marginTop: EdgeInsets.only(top: 6),
                                           borderColor:
                                               Color.fromARGB(255, 255, 255, 255),
                                           boxColor:
