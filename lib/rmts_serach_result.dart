@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
-import 'package:rmts_brts/Model/rmts_search_result_model.dart';
+import 'package:rmts_brts/Model/rmts_result_model.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 
 class RmtsSearchResult extends StatefulWidget {
@@ -17,7 +17,7 @@ class RmtsSearchResult extends StatefulWidget {
 }
 
 class _RmtsSearchResultState extends State<RmtsSearchResult> {
-  List<RmtsSearchResultModel> rmtsSearchResultModel = [];
+  List<RmtsResultModel> rmtsSearchResultModel = [];
   var _loading = true;
 
   @override
@@ -35,7 +35,7 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
         List<dynamic> temp = List.from(response['ResultList']);
 
         for (var t in temp) {
-          rmtsSearchResultModel.add(RmtsSearchResultModel.fromJSON(t));
+          rmtsSearchResultModel.add(RmtsResultModel.fromJSON(t));
         }
         setState(() {
           _loading = false;

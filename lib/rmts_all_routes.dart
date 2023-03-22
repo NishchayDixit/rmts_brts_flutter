@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
-import 'package:rmts_brts/Model/rmts_search_result_model.dart';
+import 'package:rmts_brts/Model/rmts_result_model.dart';
+import 'package:rmts_brts/bus_details.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 
 class RmtsAllRoutes extends StatefulWidget {
@@ -13,7 +14,7 @@ class RmtsAllRoutes extends StatefulWidget {
 }
 
 class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
-  List<RmtsSearchResultModel> rmtsResultModel = [];
+  List<RmtsResultModel> rmtsResultModel = [];
   var _loading = true;
 
   @override
@@ -27,7 +28,7 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
         List<dynamic> temp = List.from(response['ResultList']);
 
         for (var t in temp) {
-          rmtsResultModel.add(RmtsSearchResultModel.fromJSON(t));
+          rmtsResultModel.add(RmtsResultModel.fromJSON(t));
         }
 
         setState(() {
@@ -58,10 +59,7 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
                       scrollDirection: Axis.vertical,
                       addAutomaticKeepAlives: true,
                       itemBuilder: (context, index) {
-                        return SingleBus(
-                            rmtsResultModel[index].BusNo,
-                            rmtsResultModel[index].RouteNameEnglish,
-                            rmtsResultModel[index].RouteID);
+                        return SingleBus(rmtsResultModel[index]);
                       },
                       itemCount: rmtsResultModel.length,
                     )
@@ -73,7 +71,7 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
     );
   }
 
-  Widget SingleBus(var busno, var name, var routeid) {
+  Widget SingleBus(RmtsResultModel rmtsResultModel) {
     return Container(
       height: 65,
       width: double.infinity,
@@ -86,7 +84,14 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
             borderRadius: BorderRadius.circular(6),
           ),
         ),
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    BusDetails(rmtsResultModel: rmtsResultModel),
+              ));
+        },
         child: Row(
           children: [
             Expanded(
@@ -95,7 +100,9 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
                 alignment: Alignment.center,
                 width: 30,
                 child: Text(
-                  busno.toString() == "null" ? "" : busno.toString(),
+                  rmtsResultModel.BusNo.toString() == "null"
+                      ? ""
+                      : rmtsResultModel.BusNo.toString(),
                   style: TextStyle(
                     color: Colors.orange,
                     fontSize: 22,
@@ -108,7 +115,7 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
               child: Container(
                 margin: EdgeInsets.only(left: 10.0),
                 alignment: Alignment.centerLeft,
-                child: Text(name.toString(),
+                child: Text(rmtsResultModel.RouteNameEnglish.toString(),
                     // overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 14,

@@ -1,14 +1,14 @@
-class RmtsSearchResultModel {
+class RmtsResultModel {
   final RouteID,RouteNameEnglish,BusNo;
 
-  const RmtsSearchResultModel({
+  const RmtsResultModel({
     required this.RouteID,
     required this.RouteNameEnglish,
     required this.BusNo,
   });
 
-  factory RmtsSearchResultModel.fromJSON(Map<String, dynamic> json) {
-    return RmtsSearchResultModel(
+  factory RmtsResultModel.fromJSON(Map<String, dynamic> json) {
+    return RmtsResultModel(
       RouteID: json['RouteID'],
       RouteNameEnglish:json['RouteNameEnglish'],
       BusNo: json['BusNo'],
