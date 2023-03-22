@@ -57,16 +57,21 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                           Expanded(
                             flex: 65,
                             child: TextField(
+                              textAlign: TextAlign.start,
                               controller: textEditingController,
                               textAlignVertical: TextAlignVertical.bottom,
                               cursorColor:
-                                  const Color.fromARGB(255, 160, 160, 160),
+                                  const Color.fromARGB(255, 167, 167, 167),
                               decoration: const InputDecoration(
-                                filled: true,
+                                filled: false,
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
                                 ),
                                 hintText: "Enter Bus no.",
+                                hintStyle: TextStyle(
+                                  fontSize: 15.5,
+                                  color: Color.fromARGB(255, 167, 167, 167),
+                                ),
                               ),
                               keyboardType: TextInputType.number,
                             ),
@@ -118,7 +123,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                                   snapshot.data?.length != 0) {
                                 return Column(
                                   children: [
-                                    Text(buses.length.toString()),
+                                    // Text(buses.length.toString()),
                                     ListView.builder(
                                       itemBuilder: (context, index) {
                                         return SingleBus(buses[index]);
@@ -135,7 +140,8 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                                 return Text("no buses found.");
                               }
                               // By default, show a loading spinner.
-                              return Center(child: const CircularProgressIndicator());
+                              return Center(
+                                  child: const CircularProgressIndicator());
                             },
                           )
                         : Container(),
@@ -151,20 +157,21 @@ class _MyHomePageState extends State<RmtsLiveBus> {
 
   Widget SingleBus(RmtsLiveBusModel b) {
     return Container(
-      margin: EdgeInsets.fromLTRB(20, 5, 20, 0),
+      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
       decoration: BoxDecoration(
+        color: Colors.black12,
         borderRadius: BorderRadius.all(
-          Radius.circular(16),
+          Radius.circular(5.0),
         ),
       ),
-      height: 200,
+      // height: 200,
       child: Column(
         children: [
           //Maps
           Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.circular(16),
+                borderRadius: BorderRadius.circular(5.0),
                 child: Image.network(
                     "https://maps.rmtsbus.in/?lat=" +
                         b.Latitude +
@@ -217,7 +224,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                         borderRadius: BorderRadius.all(
                           Radius.circular(5),
                         ),
-                        color: Colors.grey,
+                        color: Color.fromARGB(255, 210, 210, 210),
                       ),
                       padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
                       child: Text('Refresh'),
@@ -228,6 +235,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
             ],
           ),
           Text(b.A_BusNo.toString()),
+          Text(b.ResponseStatus.toString(),),
         ],
       ),
     );
@@ -262,7 +270,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                       .indexOf("Route No".toLowerCase()) +
                   temp +
                   2));
-          print(d_bus['A_BusNo']);
+          // print(d_bus['A_BusNo']);
           if (d_bus['A_BusNo'] == int.parse(bus_no.toString())) {
             busfoundcount++;
             buses.add(RmtsLiveBusModel.fromJSON(d_bus));
@@ -270,7 +278,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
         }
       }
 
-      print(buses.length);
+      // print(buses.length);
       isLoading = false;
       return buses;
     } else {

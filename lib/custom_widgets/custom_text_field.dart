@@ -3,8 +3,10 @@ import 'package:rmts_brts/custom_widgets/custom_text.dart';
 
 class CustomTextField extends StatelessWidget {
   final String text;
+  final TextEditingController? textEditingController;
+  final FocusNode? focusNode;
 
-  const CustomTextField({Key? key, required this.text}) : super(key: key);
+  const CustomTextField({Key? key, required this.text, this.textEditingController, this.focusNode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,8 @@ class CustomTextField extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              controller: textEditingController,
+              focusNode: focusNode,
             ),
           ),
         ),

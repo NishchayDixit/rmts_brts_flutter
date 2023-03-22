@@ -33,7 +33,7 @@ class CustomChoiceChip extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         text: text,
         fontFamily: 'Poppins',
-        fontSize: 11.0,
+        fontSize: 10.5,
         fontWeight: FontWeight.w600,
         color: textColor,
       ),

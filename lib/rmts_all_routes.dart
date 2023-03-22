@@ -48,7 +48,7 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color.fromARGB(255, 207, 207, 207),
         ),
         child: SafeArea(
           child: Scaffold(
@@ -78,8 +78,8 @@ class _RmtsAllRoutesState extends State<RmtsAllRoutes> {
       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 217, 217, 217),
-          elevation: 0,
+          backgroundColor: Colors.white,
+          elevation: 1.5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),

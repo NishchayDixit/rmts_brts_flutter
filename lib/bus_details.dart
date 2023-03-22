@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
+import 'package:rmts_brts/custom_widgets/custom_text.dart';
 
 class BusDetails extends StatefulWidget {
   final RmtsResultModel rmtsResultModel;
@@ -105,14 +106,42 @@ class _BusDetailsState extends State<BusDetails>
                               borderRadius: BorderRadius.circular(6.0),
                             ),
                             controller: tabController,
-                            tabs: const [
+                            tabs: [
                               Tab(
-                                icon: Icon(Icons.access_time),
-                                text: 'Timings',
+                                child: Row(
+                                  children: const <Widget>[
+                                    Expanded(
+                                      flex: 4,
+                                      child: Icon(Icons.access_time),
+                                    ),
+                                    Expanded(
+                                      flex: 6,
+                                      child: CustomText(
+                                          text: "Timings",
+                                          fontFamily: 'Poppins',
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.normal),
+                                    )
+                                  ],
+                                ),
                               ),
                               Tab(
-                                icon: Icon(Icons.location_on_rounded),
-                                text: 'Pickup points',
+                                child: Row(
+                                  children: const <Widget>[
+                                    Expanded(
+                                      flex: 4,
+                                      child: Icon(Icons.location_on_rounded),
+                                    ),
+                                    Expanded(
+                                      flex: 6,
+                                      child: CustomText(
+                                          text: "Points",
+                                          fontFamily: 'Poppins',
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.normal),
+                                    )
+                                  ],
+                                ),
                               ),
                             ],
                           ),
@@ -134,9 +163,8 @@ class _BusDetailsState extends State<BusDetails>
       ),
     );
   }
-  Widget customTimingView(){
-    return Container(
 
-    );
+  Widget customTimingView() {
+    return Container();
   }
 }

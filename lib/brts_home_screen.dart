@@ -86,6 +86,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                                 margin: const EdgeInsets.only(top: 14),
                                 child: Row(
                                   children: <Widget>[
+
                                     Expanded(
                                       flex: 70,
                                       child: Container(),
@@ -152,7 +153,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                               alignment: WrapAlignment.start,
                               spacing: 10.0,
                               runSpacing: 10.0,
-                              children:  <Widget>[
+                              children: const <Widget>[
                                 CustomChoiceChip(
                                   text: "Madhapar Chowk",
                                   borderColor: Color.fromARGB(255, 177, 177, 177),
@@ -173,28 +174,24 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                                 ),
                                 CustomChoiceChip(
                                   text: "AaryaSamaj",
-                                  marginTop: EdgeInsets.only(top: 6),
                                   borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "Aazad Chowk",
-                                  marginTop: EdgeInsets.only(top: 6),
                                   borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "Bedi",
-                                  marginTop: EdgeInsets.only(top: 6),
                                   borderColor: Color.fromARGB(255, 177, 177, 177),
                                   boxColor: Color.fromARGB(255, 255, 255, 255),
                                   textColor: Color.fromARGB(255, 77, 77, 77),
                                 ),
                                 CustomChoiceChip(
                                   text: "Show All",
-                                  marginTop: EdgeInsets.only(top: 6),
                                   borderColor: Color.fromARGB(255, 255, 255, 255),
                                   boxColor: Color.fromARGB(255, 185, 185, 185),
                                   textColor: Color.fromARGB(255, 255, 255, 255),
