@@ -32,7 +32,7 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color.fromARGB(255, 207, 207, 207),
         ),
         child: SafeArea(
           child: Scaffold(
@@ -59,7 +59,7 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
     );
   }
 
-  Future<List<RmtsResultModel>> getSearchResult(
+  Future<List<RmtsResultModel>?> getSearchResult(
       {required formID, required toID}) async {
     _loading = true;
     var obj = {
@@ -69,7 +69,10 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
     var response = jsonDecode(await BaseClient()
         .post('Rmts/GetRmtsRouteFromTo', obj)
         .catchError((err) => {print(err.toString())}));
-
+    if(response==null){
+      print(response['Message']);
+      return [];
+    }
     if (response['IsResult'] == 1) {
       List<dynamic> temp = List.from(response['ResultList']);
 
@@ -82,6 +85,7 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
       print(rmtsSearchResultModel.toString());
     }
     print(response['Message']);
-    return [];
+    _loading=false;
+    return null;
   }
 }

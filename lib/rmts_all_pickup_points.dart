@@ -28,31 +28,28 @@ class _RmtsAllPickupPointsState extends State<RmtsAllPickupPoints> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: const Color.fromARGB(255, 217, 217, 217),
         ),
         child: SafeArea(
           child: Scaffold(
-            body: Container(
-              width: double.infinity,
-              child: FutureBuilder(
-                future: getAllBuses(),
-                builder: (context, snapshot) {
-                  if (snapshot != null && snapshot.hasData) {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      addAutomaticKeepAlives: true,
-                      itemBuilder: (context, index) {
-                        return CustomPickupPoint(
-                            rmtsPickupPoint: rmtsPickupPoints[index]);
-                      },
-                      itemCount: rmtsPickupPoints.length,
-                    );
-                  } else if (_loading) {
-                    return CustomLoader();
-                  }
-                  return Text("no result found");
-                },
-              ),
+            body: FutureBuilder(
+              future: getAllBuses(),
+              builder: (context, snapshot) {
+                if (snapshot != null && snapshot.hasData) {
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    addAutomaticKeepAlives: true,
+                    itemBuilder: (context, index) {
+                      return CustomPickupPoint(
+                          rmtsPickupPoint: rmtsPickupPoints[index]);
+                    },
+                    itemCount: rmtsPickupPoints.length,
+                  );
+                } else if (_loading) {
+                  return CustomLoader();
+                }
+                return Text("no result found");
+              },
             ),
           ),
         ),

@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
+import 'package:rmts_brts/Model/rmts_pickup_points.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
+import 'package:rmts_brts/custom_widgets/custom_loader.dart';
+import 'package:rmts_brts/custom_widgets/custom_pickup_point.dart';
+import 'package:rmts_brts/custom_widgets/custom_text.dart';
 
 class BusDetails extends StatefulWidget {
   final RmtsResultModel rmtsResultModel;
@@ -90,7 +94,7 @@ class _BusDetailsState extends State<BusDetails>
                             tabs: [
                               Tab(
                                 child: Row(
-                                  children: const <Widget>[
+                                  children: <Widget>[
                                     Expanded(
                                       flex: 4,
                                       child: Icon(Icons.access_time),
@@ -102,7 +106,7 @@ class _BusDetailsState extends State<BusDetails>
                                           fontFamily: 'Poppins',
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.normal),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -217,23 +221,19 @@ class _BusDetailsState extends State<BusDetails>
         future: getPickupPoints(widget.rmtsResultModel),
         builder: (context, snapshot) {
           if (snapshot != null && snapshot.hasData) {
-            List<String> pickuppoints = [];
+            List<RmtsPickupPoints> pickuppoints = [];
+            for(var t in snapshot.data!){
+              pickuppoints.add(RmtsPickupPoints.fromJSON(t));
+            }
+
             return Padding(
-              padding: EdgeInsets.fromLTRB(20, 30, 20, 0),
+              padding: EdgeInsets.fromLTRB(15, 30, 15, 0),
               child: ListView.builder(
                 itemBuilder: (context, index) {
-                  print(snapshot.data);
-                  return Container(
-                    child: Row(
-                      children: [
-                        Icon(Icons.location_on),
-                        Text(snapshot.data![index]["PickupPointNameEnglish"].toString()),
-                        Expanded(child: Container()),
-                        Icon(Icons.navigate_next_rounded),
-                      ],
-                    ),
-                  );
+                  return CustomPickupPoint(rmtsPickupPoint: pickuppoints[index]);
                 },
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
                 itemCount:snapshot.data!.length,
               ),
             );

@@ -9,10 +9,11 @@ class BaseClient{
   //get
   Future<dynamic> get(String api) async {
     var url = Uri.parse(baseUrl+api);
-    var res = await client.get(url);
+    var res = await client.get(url).timeout(Duration(seconds: 3));
     if(res.statusCode==200){
       return res.body;
     }else{
+      return null;
       throw Exception("Cannot reach Server.");
     }
   }
@@ -20,11 +21,12 @@ class BaseClient{
   Future<dynamic> post(String api,dynamic object) async {
     var url = Uri.parse(baseUrl+api);
     // var payload = jsonEncode(object);
-    var res = await client.post(url,body: object);
+    var res = await client.post(url,body: object).timeout(Duration(seconds: 3));
     if(res.statusCode==200){
       print(res.body);
       return res.body;
     }else{
+      return null;
       throw Exception("Cannot reach Server.");
     }
   }

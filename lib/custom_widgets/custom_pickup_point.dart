@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/rmts_pickup_points.dart';
+import 'package:rmts_brts/rmts_buses_pickup.dart';
 
 class CustomPickupPoint extends StatefulWidget {
   final RmtsPickupPoints rmtsPickupPoint;
@@ -18,14 +19,14 @@ class _CustomPickupPointState extends State<CustomPickupPoint> {
       padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: const Color.fromARGB(255, 217, 217, 217),
-          elevation: 0,
+          backgroundColor: Colors.white,
+          elevation: 1.5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),
         ),
         onPressed: () {
-
+          Navigator.push(context, MaterialPageRoute(builder: (context) => RmtsBusesPickup(rmtsPickupPoint: widget.rmtsPickupPoint),));
         },
         child: Row(
           children: [

@@ -2,18 +2,20 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
+import 'package:rmts_brts/Model/rmts_pickup_points.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_single_bus.dart';
 
-class RmtsAllBuses extends StatefulWidget {
-  const RmtsAllBuses({Key? key}) : super(key: key);
+class RmtsBusesPickup extends StatefulWidget {
+  final RmtsPickupPoints rmtsPickupPoint;
+  const RmtsBusesPickup({Key? key,required this.rmtsPickupPoint}) : super(key: key);
 
   @override
-  State<RmtsAllBuses> createState() => _RmtsAllBusesState();
+  State<RmtsBusesPickup> createState() => _RmtsBusesPickupState();
 }
 
-class _RmtsAllBusesState extends State<RmtsAllBuses> {
+class _RmtsBusesPickupState extends State<RmtsBusesPickup> {
   List<RmtsResultModel> rmtsResultModel = [];
   var _loading = true;
 
@@ -21,7 +23,6 @@ class _RmtsAllBusesState extends State<RmtsAllBuses> {
   void initState() {
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -62,8 +63,11 @@ class _RmtsAllBusesState extends State<RmtsAllBuses> {
 
   Future<List> getAllBuses() async {
     _loading = true;
+    var obj = {
+      "id": widget.rmtsPickupPoint.PickupPointID.toString(),
+    };
     var response = jsonDecode(await BaseClient()
-        .get('Rmts/GetAllRmtsRoutes')
+        .post('Rmts/GetRmtsPickupRoutewiseRoute', obj)
         .catchError((err) => {print(err.toString())}));
 
     if (response['IsResult'] == 1) {
@@ -79,4 +83,5 @@ class _RmtsAllBusesState extends State<RmtsAllBuses> {
     _loading = false;
     return [];
   }
+
 }
