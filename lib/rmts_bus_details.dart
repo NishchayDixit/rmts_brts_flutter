@@ -8,16 +8,16 @@ import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_pickup_point.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
 
-class BusDetails extends StatefulWidget {
+class RmtsBusDetails extends StatefulWidget {
   final RmtsResultModel rmtsResultModel;
 
-  const BusDetails({Key? key, required this.rmtsResultModel}) : super(key: key);
+  const RmtsBusDetails({Key? key, required this.rmtsResultModel}) : super(key: key);
 
   @override
-  State<BusDetails> createState() => _BusDetailsState();
+  State<RmtsBusDetails> createState() => _RmtsBusDetailsState();
 }
 
-class _BusDetailsState extends State<BusDetails>
+class _RmtsBusDetailsState extends State<RmtsBusDetails>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   var _loading = true;

@@ -43,32 +43,34 @@ class _CustomDropDownState extends State<CustomDropDown> {
           flex: 8,
           child: SizedBox(
             height: 39,
-            child: DropdownButtonFormField(
-              // decoration: InputDecoration(
-              //   // hintText: "Name",
-              //   labelStyle: TextStyle(color: Colors.black),
-              //   filled: true,
-              //   fillColor: const Color.fromARGB(255, 242, 242, 242),
-              //   border: OutlineInputBorder(
-              //     borderSide: BorderSide.none,
-              //     borderRadius: BorderRadius.circular(10),
-              //   ),
-              // ),
+            child: Container(
+              child: DropdownButtonFormField(
+                // decoration: InputDecoration(
+                //   // hintText: "Name",
+                //   labelStyle: TextStyle(color: Colors.black),
+                //   filled: true,
+                //   fillColor: const Color.fromARGB(255, 242, 242, 242),
+                //   border: OutlineInputBorder(
+                //     borderSide: BorderSide.none,
+                //     borderRadius: BorderRadius.circular(10),
+                //   ),
+                // ),
 
-              focusNode: widget.focusNode,
-              items: widget.brtsPickupPoints
-                  .map((e) => DropdownMenuItem(
-                        value: int.parse(e.BrtsPickupPointID.toString()),
-                        child: Text(e.BrtsPickUpPointName),
-                      ))
-                  .toList(),
+                focusNode: widget.focusNode,
+                items: widget.brtsPickupPoints
+                    .map((e) => DropdownMenuItem(
+                          value: int.parse(e.BrtsPickupPointID.toString()),
+                          child: Text(e.BrtsPickUpPointName),
+                        ))
+                    .toList(),
 
-              value: widget.currentSelection["val"],
-              onChanged: (value) {
-                print(value!);
-                setState(() => widget.currentSelection["val"] = int.parse(value.toString()));
-              },
-              // value: "a",
+                value: widget.currentSelection["val"],
+                onChanged: (value) {
+                  print(value!);
+                  setState(() => widget.currentSelection["val"] = int.parse(value.toString()));
+                },
+                // value: "a",
+              ),
             ),
           ),
         ),

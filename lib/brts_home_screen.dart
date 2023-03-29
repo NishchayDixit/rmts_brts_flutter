@@ -53,8 +53,10 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                   builder: (context, snapshot) {
                     snapshot.connectionState == ConnectionState.waiting;
                     if (snapshot.data != null && snapshot.hasData) {
-                      fromID["val"] = fromPickupPoints[0].BrtsPickupPointID;
-                      toID["val"] = toPickupPoints[0].BrtsPickupPointID;
+                      if(fromID["val"]==-1||toID["val"]==-1){
+                        fromID["val"] = fromPickupPoints[0].BrtsPickupPointID;
+                        toID["val"] = toPickupPoints[0].BrtsPickupPointID;
+                      }
                       return Column(
                         children: <Widget>[
                           Container(
@@ -143,7 +145,6 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                             Expanded(
                                 child: ListView.builder(
                                     scrollDirection: Axis.vertical,
-                                    
                                     itemBuilder: (context, index) {
                                       return CustomExpansionTile(
                                           brtsPickUpPointName: brtsSearchResult[index].BrtsPickUpPointName,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
-import 'package:rmts_brts/bus_details.dart';
+import 'package:rmts_brts/rmts_bus_details.dart';
 
 class CustomSingleBus extends StatefulWidget {
   final RmtsResultModel rmtsResultModel;
@@ -32,7 +32,7 @@ class _CustomSingleBusState extends State<CustomSingleBus> {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    BusDetails(rmtsResultModel: widget.rmtsResultModel),
+                    RmtsBusDetails(rmtsResultModel: widget.rmtsResultModel),
               ));
         },
         child: Row(
