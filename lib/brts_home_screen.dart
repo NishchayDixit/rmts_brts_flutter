@@ -19,14 +19,11 @@ class BRTSHomeScreen extends StatefulWidget {
 class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   List<BrtsPickupPoints> fromPickupPoints = [];
   List<BrtsPickupPoints> toPickupPoints = [];
-
+  List<BrtsPickupPoints> brtsSearchResult = [];
+  List<BrtsRouteDetails> brtsSearchResultDetails = [];
   List<String> brtslist = [];
-  var fromID = {
-    "val":-1
-  };
-  var toID = {
-    "val":-1
-  };
+  var fromID = {"val": -1};
+  var toID = {"val": -1};
   bool _Loading = true;
 
   @override
@@ -54,6 +51,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                 child: FutureBuilder(
                   future: getBrtsPickupPoints(),
                   builder: (context, snapshot) {
+                    snapshot.connectionState == ConnectionState.waiting;
                     if (snapshot.data != null && snapshot.hasData) {
                       fromID["val"] = fromPickupPoints[0].BrtsPickupPointID;
                       toID["val"] = toPickupPoints[0].BrtsPickupPointID;
@@ -123,8 +121,12 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      print(fromID.toString() +"->"+ toID.toString());
-                                      getBrtsRoute(fromID: fromID["val"],toID: toID["val"]);
+                                      print(fromID.toString() +
+                                          "->" +
+                                          toID.toString());
+                                      getBrtsRoute(
+                                          fromID: fromID["val"],
+                                          toID: toID["val"]);
                                     },
                                     child: const CustomText(
                                       text: "Show Result",
@@ -137,11 +139,22 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                               ],
                             ),
                           ),
-                          CustomExpansionTile(brtsPickUpPointName: "qwerty dho",brtsRouteDetails: BrtsRouteDetails(
-                            BrtsDistance: 1,
-                            BrtsFare: 100.20,
-                            BrtsTravellingTime: 2,
-                          )),
+                          // if(brtsSearchResult.isNotEmpty)
+                            Expanded(
+                                child: ListView.builder(
+                                    scrollDirection: Axis.vertical,
+                                    
+                                    itemBuilder: (context, index) {
+                                      return CustomExpansionTile(
+                                          brtsPickUpPointName: brtsSearchResult[index].BrtsPickUpPointName,
+                                          brtsRouteDetails: brtsSearchResultDetails[index]);
+                                    },
+                                    shrinkWrap: true,
+                                    itemCount: brtsSearchResult.isNotEmpty ? brtsSearchResult.length:0,
+                                  ),
+                              ),
+                          // else Container(),
+
                           // Container(
                           //   alignment: Alignment.topLeft,
                           //   margin: const EdgeInsets.only(top: 30),
@@ -249,24 +262,65 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
       ),
     );
   }
-  getBrtsRoute({required fromID,required toID}) async{
-    _Loading=true;
+
+  getBrtsRoute({required fromID, required toID}) async {
+    _Loading = true;
+    brtsSearchResult.clear();
     var obj = {
-      "fromID": fromID,
-      "toID": toID,
+      "fromID": fromID.toString(),
+      "toID": toID.toString(),
     };
     var response = jsonDecode(await BaseClient()
-        .post('Brts/GetBrtsRoute', obj)
+        .post('Brts/GetBrtsRouteFromTo', obj)
         .catchError((err) => {print(err.toString())}));
 
     if (response['IsResult'] == 1) {
       List<dynamic> temp = List.from(response['ResultList']);
+
+      for (var t in temp) {
+        print(t);
+        BrtsRouteDetails? brtsRouteDetails = await getBrtsDetails(
+            fromID: fromID,
+            toID: BrtsPickupPoints.fromJSON(t).BrtsPickupPointID);
+        brtsSearchResult.add(BrtsPickupPoints.fromJSON(t));
+        brtsSearchResultDetails.add(brtsRouteDetails!);
+      }
       print(temp);
+      setState(() {
+        brtsSearchResult;
+      });
+      print("searchReuslt" + brtsSearchResult.toString());
       _Loading = false;
     }
     print(response['Message']);
+
     _Loading = false;
   }
+
+  Future<BrtsRouteDetails?> getBrtsDetails(
+      {required fromID, required toID}) async {
+    _Loading = true;
+    print("$fromID->$toID");
+    var obj = {
+      "fromID": fromID.toString(),
+      "toID": toID.toString(),
+    };
+    var response = jsonDecode(await BaseClient()
+        .post('Brts/GetBrtsRouteDetails', obj)
+        .catchError((err) => {print(err.toString())}));
+
+    if (response['IsResult'] == 1) {
+      List<dynamic> temp = List.from(response['ResultList']);
+      print(response['ResultList']);
+      _Loading = false;
+      return BrtsRouteDetails.fromJSON(temp[0]);
+    }
+    print(response['Message']);
+    _Loading = false;
+
+    return null;
+  }
+
   Future<List<BrtsPickupPoints>> getBrtsPickupPoints() async {
     _Loading = true;
     fromPickupPoints.clear();

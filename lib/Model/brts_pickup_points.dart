@@ -9,7 +9,7 @@ class BrtsPickupPoints {
 
   @override
   String toString() {
-    return BrtsPickupPointID.toString();
+    return BrtsPickUpPointName.toString();
   }
 
   factory BrtsPickupPoints.fromJSON(Map<String, dynamic> json) {
