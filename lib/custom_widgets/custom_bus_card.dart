@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomBusCard extends StatelessWidget {
   final String busNo;
@@ -20,14 +21,14 @@ class CustomBusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 130,
+      height: 16.2.h,
       child: AspectRatio(
         aspectRatio: 9 / 5,
         child: Container(
           padding: const EdgeInsets.all(13),
           margin: marginRight,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(1.5.h),
             color: const Color.fromARGB(255, 245, 245, 245),
           ),
           child: Row(
@@ -40,20 +41,20 @@ class CustomBusCard extends StatelessWidget {
                     CustomText(
                       text: busNo,
                       fontFamily: 'Poppins',
-                      fontSize: 30.0,
+                      fontSize: 22.sp,
                       fontWeight: FontWeight.w900,
                     ),
                     CustomText(
                       text: busText,
                       fontFamily: 'Poppins',
-                      fontSize: 14.0,
+                      fontSize: 11.5.sp,
                       fontWeight: FontWeight.w700,
                     ),
                   ],
                 ),
               ),
               const SizedBox(
-                width: 10,
+                width: 3.5,
               ),
               Flexible(
                 child: Column(
@@ -63,25 +64,25 @@ class CustomBusCard extends StatelessWidget {
                       child: CustomText(
                         text: startOfRoute,
                         fontFamily: 'Poppins',
-                        fontSize: 14.0,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.w700,
                         textAlignment: TextAlign.center,
                       ),
                     ),
                     Container(
-                      margin: const EdgeInsets.only(top: 5, bottom: 1),
-                      child: const Image(
-                        image: AssetImage(
+                      margin: EdgeInsets.only(top: .7.h, bottom: .7.h),
+                      child: Image(
+                        image: const AssetImage(
                           'assets/icons/vertical_dots.png',
                         ),
-                        width: 16,
-                        height: 16,
+                        width: 2.h,
+                        height: 2.h,
                       ),
                     ),
                     CustomText(
                       text: endOfRoute,
                       fontFamily: 'Poppins',
-                      fontSize: 14.0,
+                      fontSize: 12.sp,
                       fontWeight: FontWeight.w700,
                       textAlignment: TextAlign.center,
                     ),

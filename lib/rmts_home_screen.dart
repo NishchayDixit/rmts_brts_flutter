@@ -12,6 +12,7 @@ import 'package:rmts_brts/rmts_all_buses.dart';
 import 'package:rmts_brts/rmts_all_pickup_points.dart';
 import 'package:rmts_brts/rmts_live_bus.dart';
 import 'package:rmts_brts/rmts_serach_result.dart';
+import 'package:sizer/sizer.dart';
 
 class RMTSHomeScreen extends StatefulWidget {
   const RMTSHomeScreen({Key? key}) : super(key: key);
@@ -47,6 +48,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
     _Loading = true;
     rmtsPickupPoints.clear();
     rmtslist.clear();
+
     var response =
         jsonDecode(await BaseClient().get('Rmts/GetAllRmtsPickupPoints'));
 
@@ -83,378 +85,364 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
             backgroundColor: Colors.transparent,
             body: Container(
                 alignment: Alignment.topCenter,
-                margin: const EdgeInsets.only(top: 10.0),
+                margin: EdgeInsets.only(top: 0.5.h, left: 2.h, right: 2.h),
                 child: FutureBuilder(
                   future: getRmtsPickupPoints(),
                   builder: (context, snapshot) {
                     if (snapshot.data != null && snapshot.hasData) {
                       return Column(
                         children: <Widget>[
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Container(
-                              alignment: Alignment.topLeft,
-                              margin: const EdgeInsets.only(top: 30.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  const CustomText(
-                                    text: "SEARCH ROUTES",
-                                    fontFamily: 'Poppins',
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 15),
-                                    child: Column(
-                                      children: <Widget>[
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              flex: 8,
-                                              child: Autocomplete(
-                                                optionsBuilder:
-                                                    (TextEditingValue
-                                                        textEditingValue) {
-                                                  if (textEditingValue
-                                                          .text ==
-                                                      '') {
-                                                    return const Iterable<
-                                                        String>.empty();
-                                                  } else {
-                                                    List<String> matches =
-                                                        <String>[];
-                                                    matches
-                                                        .addAll(rmtslist);
-                                                    matches
-                                                        .retainWhere((s) {
-                                                      return s
-                                                          .toLowerCase()
-                                                          .contains(
-                                                              textEditingValue
-                                                                  .text
-                                                                  .toLowerCase());
-                                                    });
-                                                    return matches;
+                          Container(
+                            alignment: Alignment.topLeft,
+                            margin: EdgeInsets.only(top: 3.5.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                CustomText(
+                                  text: "SEARCH ROUTES",
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12.5.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 2.h),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            flex: 8,
+                                            child: Autocomplete(
+                                              optionsBuilder:
+                                                  (TextEditingValue
+                                                      textEditingValue) {
+                                                if (textEditingValue
+                                                        .text ==
+                                                    '') {
+                                                  return const Iterable<
+                                                      String>.empty();
+                                                } else {
+                                                  List<String> matches =
+                                                      <String>[];
+                                                  matches
+                                                      .addAll(rmtslist);
+                                                  matches
+                                                      .retainWhere((s) {
+                                                    return s
+                                                        .toLowerCase()
+                                                        .contains(
+                                                            textEditingValue
+                                                                .text
+                                                                .toLowerCase());
+                                                  });
+                                                  return matches;
+                                                }
+                                              },
+                                              fieldViewBuilder: (context,
+                                                  textEditingController,
+                                                  focusNode,
+                                                  onFieldSubmitted) {
+                                                return CustomTextField(
+                                                    text: "FROM",
+                                                    textEditingController:
+                                                        textEditingController,
+                                                    focusNode: focusNode);
+                                              },
+                                              onSelected:
+                                                  (String selection) {
+                                                print(
+                                                    'You just selected $selection');
+                                                fromID = -1;
+                                                for (var i = 0;
+                                                    i <
+                                                        rmtsPickupPoints
+                                                            .length;
+                                                    i++) {
+                                                  if (rmtsPickupPoints[i]
+                                                          .PickupPointNameEnglish
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      selection
+                                                          .trim()
+                                                          .toLowerCase()) {
+                                                    fromID =
+                                                        rmtsPickupPoints[
+                                                                i]
+                                                            .PickupPointID;
                                                   }
-                                                },
-                                                fieldViewBuilder: (context,
-                                                    textEditingController,
-                                                    focusNode,
-                                                    onFieldSubmitted) {
-                                                  return CustomTextField(
-                                                      text: "FROM",
-                                                      textEditingController:
-                                                          textEditingController,
-                                                      focusNode: focusNode);
-                                                },
-                                                onSelected:
-                                                    (String selection) {
-                                                  print(
-                                                      'You just selected $selection');
-                                                  fromID = -1;
-                                                  for (var i = 0;
-                                                      i <
-                                                          rmtsPickupPoints
-                                                              .length;
-                                                      i++) {
-                                                    if (rmtsPickupPoints[i]
-                                                            .PickupPointNameEnglish
-                                                            .toString()
-                                                            .toLowerCase() ==
-                                                        selection
-                                                            .trim()
-                                                            .toLowerCase()) {
-                                                      fromID =
-                                                          rmtsPickupPoints[
-                                                                  i]
-                                                              .PickupPointID;
-                                                    }
-                                                  }
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Expanded(
-                                              flex: 8,
-                                              child: Autocomplete(
-                                                optionsBuilder:
-                                                    (TextEditingValue
-                                                        textEditingValue) {
-                                                  if (textEditingValue
-                                                          .text ==
-                                                      '') {
-                                                    return const Iterable<
-                                                        String>.empty();
-                                                  } else {
-                                                    List<String> matches =
-                                                        <String>[];
-                                                    matches
-                                                        .addAll(rmtslist);
-                                                    matches
-                                                        .retainWhere((s) {
-                                                      return s
-                                                          .toLowerCase()
-                                                          .contains(
-                                                              textEditingValue
-                                                                  .text
-                                                                  .toLowerCase());
-                                                    });
-                                                    return matches;
-                                                  }
-                                                },
-                                                fieldViewBuilder: (context,
-                                                    textEditingController,
-                                                    focusNode,
-                                                    onFieldSubmitted) {
-                                                  return CustomTextField(
-                                                      text: "TO",
-                                                      textEditingController:
-                                                          textEditingController,
-                                                      focusNode: focusNode);
-                                                },
-                                                onSelected:
-                                                    (String selection) {
-                                                  print(
-                                                      'You just selected $selection');
-                                                  toID = -1;
-                                                  for (var i = 0;
-                                                      i <
-                                                          rmtsPickupPoints
-                                                              .length;
-                                                      i++) {
-                                                    if (rmtsPickupPoints[i]
-                                                            .PickupPointNameEnglish
-                                                            .toString()
-                                                            .toLowerCase() ==
-                                                        selection
-                                                            .trim()
-                                                            .toLowerCase()) {
-                                                      toID =
-                                                          rmtsPickupPoints[
-                                                                  i]
-                                                              .PickupPointID;
-                                                    }
-                                                  }
-                                                },
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                        child: Container(),
-                                      ),
-                                      Expanded(
-                                        flex: 100,
-                                        child: Container(
-                                          margin: const EdgeInsets.only(
-                                              top: 5, left: 44),
-                                          alignment: Alignment.centerLeft,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              fixedSize: const Size(120.54, 34),
-                                              backgroundColor:
-                                                  const Color.fromARGB(
-                                                      255, 217, 217, 217),
-                                              elevation: 0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RmtsSearchResult(
-                                                          fromID: fromID,
-                                                          toID: toID),
-                                                ),
-                                              );
-                                            },
-                                            child: const CustomText(
-                                              text: "Show Result",
-                                              fontFamily: 'Poppins',
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.w700,
+                                                }
+                                              },
                                             ),
                                           ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 1.5.h,
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Expanded(
+                                            flex: 8,
+                                            child: Autocomplete(
+                                              optionsBuilder:
+                                                  (TextEditingValue
+                                                      textEditingValue) {
+                                                if (textEditingValue
+                                                        .text ==
+                                                    '') {
+                                                  return const Iterable<
+                                                      String>.empty();
+                                                } else {
+                                                  List<String> matches =
+                                                      <String>[];
+                                                  matches
+                                                      .addAll(rmtslist);
+                                                  matches
+                                                      .retainWhere((s) {
+                                                    return s
+                                                        .toLowerCase()
+                                                        .contains(
+                                                            textEditingValue
+                                                                .text
+                                                                .toLowerCase());
+                                                  });
+                                                  return matches;
+                                                }
+                                              },
+                                              fieldViewBuilder: (context,
+                                                  textEditingController,
+                                                  focusNode,
+                                                  onFieldSubmitted) {
+                                                return CustomTextField(
+                                                    text: "TO",
+                                                    textEditingController:
+                                                        textEditingController,
+                                                    focusNode: focusNode);
+                                              },
+                                              onSelected:
+                                                  (String selection) {
+                                                print(
+                                                    'You just selected $selection');
+                                                toID = -1;
+                                                for (var i = 0;
+                                                    i <
+                                                        rmtsPickupPoints
+                                                            .length;
+                                                    i++) {
+                                                  if (rmtsPickupPoints[i]
+                                                          .PickupPointNameEnglish
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      selection
+                                                          .trim()
+                                                          .toLowerCase()) {
+                                                    toID =
+                                                        rmtsPickupPoints[
+                                                                i]
+                                                            .PickupPointID;
+                                                  }
+                                                }
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(),
+                                    ),
+                                    Expanded(
+                                      flex: 100,
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                            top: 0.6.h, left: 5.5.h),
+                                        alignment: Alignment.centerLeft,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            fixedSize: Size(16.h, 4.5.h),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    255, 217, 217, 217),
+                                            elevation: 0,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(0.8.h),
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RmtsSearchResult(
+                                                        fromID: fromID,
+                                                        toID: toID),
+                                              ),
+                                            );
+                                          },
+                                          child: CustomText(
+                                            text: "Show Result",
+                                            fontFamily: 'Poppins',
+                                            fontSize: 10.2.sp,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            alignment: Alignment.center,
+                            margin: EdgeInsets.only(top: 3.5.h),
+                            child: Column(
+                              children: <Widget>[
+                                Container(
+                                  alignment: Alignment.center,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: <Widget>[
+                                      CustomText(
+                                        text: "MOST ACTIVE ROUTES",
+                                        fontFamily: 'Poppins',
+                                        fontSize: 12.5.sp,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              const Color.fromARGB(
+                                                  255, 217, 217, 217),
+                                          elevation: 0,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(0.8.h),
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const RmtsAllBuses(),
+                                            ),
+                                          );
+                                        },
+                                        child: CustomText(
+                                          text: "Show More",
+                                          fontFamily: 'Poppins',
+                                          fontSize: 10.2.sp,
+                                          fontWeight: FontWeight.w700,
                                         ),
                                       ),
                                     ],
                                   ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 20.0),
-                            child: Container(
-                              alignment: Alignment.center,
-                              margin: const EdgeInsets.only(top: 30),
-                              child: Column(
-                                children: <Widget>[
-                                  Container(
-                                    alignment: Alignment.center,
+                                ),
+                                Container(
+                                  alignment: Alignment.topLeft,
+                                  margin: EdgeInsets.only(top: 2.2.h),
+                                  child: SingleChildScrollView(
+                                    scrollDirection: Axis.horizontal,
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
-                                        const CustomText(
-                                          text: "MOST ACTIVE ROUTES",
-                                          fontFamily: 'Poppins',
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.w700,
+                                        CustomBusCard(
+                                          marginRight:
+                                              EdgeInsets.only(right: 3.h),
+                                          busNo: '1',
+                                          busText: "Bus No.",
+                                          startOfRoute:
+                                              "Saurashtra University",
+                                          endOfRoute: "Trikon Baug",
                                         ),
-                                        Padding(
-                                          padding: EdgeInsets.only(right: 20.0),
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color.fromARGB(
-                                                      255, 217, 217, 217),
-                                              elevation: 0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(6),
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      const RmtsAllBuses(),
-                                                ),
-                                              );
-                                            },
-                                            child: const CustomText(
-                                              text: "Show More",
-                                              fontFamily: 'Poppins',
-                                              fontSize: 12.0,
-                                              fontWeight: FontWeight.w700,
-                                            ),
-                                          ),
+                                        CustomBusCard(
+                                          marginRight:
+                                              EdgeInsets.only(right: 3.h),
+                                          busNo: '12',
+                                          busText: "Bus No.",
+                                          startOfRoute:
+                                              "Saurashtra University",
+                                          endOfRoute: "Trikon Baug",
+                                        ),
+                                        const CustomBusCard(
+                                          busNo: '55',
+                                          busText: "Bus No.",
+                                          startOfRoute:
+                                              "Saurashtra University",
+                                          endOfRoute: "Trikon Baug",
                                         ),
                                       ],
                                     ),
                                   ),
-                                  Container(
-                                    alignment: Alignment.topLeft,
-                                    margin: const EdgeInsets.only(top: 15),
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.horizontal,
-                                      child: Row(
-                                        children: const <Widget>[
-                                          CustomBusCard(
-                                            marginRight:
-                                                EdgeInsets.only(right: 25),
-                                            busNo: '1',
-                                            busText: "Bus No.",
-                                            startOfRoute:
-                                                "Saurashtra University",
-                                            endOfRoute: "Trikon Baug",
-                                          ),
-                                          CustomBusCard(
-                                            marginRight:
-                                                EdgeInsets.only(right: 25),
-                                            busNo: '12',
-                                            busText: "Bus No.",
-                                            startOfRoute:
-                                                "Saurashtra University",
-                                            endOfRoute: "Trikon Baug",
-                                          ),
-                                          CustomBusCard(
-                                            busNo: '55',
-                                            busText: "Bus No.",
-                                            startOfRoute:
-                                                "Saurashtra University",
-                                            endOfRoute: "Trikon Baug",
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: Container(
-                              alignment: Alignment.topLeft,
-                              margin: const EdgeInsets.only(top: 30),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  const CustomText(
-                                    text: "PICKUP POINTS",
-                                    fontFamily: 'Poppins',
-                                    fontSize: 15.0,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                  Container(
-                                    margin: const EdgeInsets.only(top: 10),
-                                    child: Wrap(
-                                      alignment: WrapAlignment.start,
-                                      spacing: 5.0,
-                                      runSpacing: 5.5,
-                                      children: <Widget>[
-                                        for (var fvp in favPickupPoints)
-                                          CustomChoiceChip(
-                                            text: fvp,
-                                            borderColor: Color.fromARGB(
-                                                255, 177, 177, 177),
-                                            boxColor: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            textColor:
-                                                Color.fromARGB(255, 77, 77, 77),
-                                          ),
-                                        InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      RmtsAllPickupPoints(),
-                                                ));
-                                          },
-                                          child: CustomChoiceChip(
-                                            text: "Show All",
-                                            //marginTop: EdgeInsets.only(top: 6),
-                                            borderColor: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                            boxColor: Color.fromARGB(
-                                                255, 185, 185, 185),
-                                            textColor: Color.fromARGB(
-                                                255, 255, 255, 255),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: 30.0),
+                            alignment: Alignment.topLeft,
+                            margin: EdgeInsets.only(top: 3.5.h),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                CustomText(
+                                  text: "PICKUP POINTS",
+                                  fontFamily: 'Poppins',
+                                  fontSize: 12.5.sp,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(top: 2.h),
+                                  child: Wrap(
+                                    alignment: WrapAlignment.start,
+                                    spacing: 1.0.h,
+                                    runSpacing: 1.0.h,
+                                    children: <Widget>[
+                                      for (var fvp in favPickupPoints)
+                                        CustomChoiceChip(
+                                          text: fvp,
+                                          borderColor: Color.fromARGB(
+                                              255, 177, 177, 177),
+                                          boxColor: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          textColor:
+                                              Color.fromARGB(255, 77, 77, 77),
+                                        ),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    RmtsAllPickupPoints(),
+                                              ));
+                                        },
+                                        child: CustomChoiceChip(
+                                          text: "Show All",
+                                          //marginTop: EdgeInsets.only(top: 6),
+                                          borderColor: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                          boxColor: Color.fromARGB(
+                                              255, 185, 185, 185),
+                                          textColor: Color.fromARGB(
+                                              255, 255, 255, 255),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(top: 3.5.h),
                             child: ElevatedButton(
                               onPressed: () => {
                                 Navigator.push(
@@ -464,17 +452,18 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                     ))
                               },
                               style: ElevatedButton.styleFrom(
+                                fixedSize: Size(18.0.h, 5.0.h),
                                 backgroundColor:
                                     const Color.fromARGB(255, 217, 217, 217),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
+                                  borderRadius: BorderRadius.circular(0.8.h),
                                 ),
                               ),
                               child: CustomText(
                                 text: "Search Live Route",
                                 fontFamily: 'Poppins',
-                                fontSize: 12.0,
+                                fontSize: 10.0.sp,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -486,7 +475,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                     }
                     return Text("Cannot connect to server");
                   },
-                )),
+                ),),
           ),
         ),
       ),

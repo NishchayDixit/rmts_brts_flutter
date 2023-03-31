@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/brts_home_screen.dart';
 import 'package:rmts_brts/rmts_home_screen.dart';
+import 'package:sizer/sizer.dart';
 
 class RMTS_BRTSTabScreen extends StatefulWidget {
   const RMTS_BRTSTabScreen({Key? key}) : super(key: key);
@@ -38,30 +39,29 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
           resizeToAvoidBottomInset: false,
           backgroundColor: Colors.transparent,
           body: Container(
-            margin: const EdgeInsets.only(top: 20.0),
+            margin: EdgeInsets.only(top: 1.5.h),
             height: MediaQuery.of(context).size.height,
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: EdgeInsets.symmetric(horizontal: 3.5.h),
                   child: Container(
                     // height: 50,
                     width: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 230, 230, 230),
-                      borderRadius: BorderRadius.circular(10.0),
+                      borderRadius: BorderRadius.circular(1.2.h),
                     ),
                     child: Column(
                       children: [
                         Padding(
-                          padding: EdgeInsets.all(5.0),
+                          padding: EdgeInsets.all(0.8.h),
                           child: TabBar(
                             indicatorColor: Colors.white,
                             indicatorWeight: 2,
-                            indicatorPadding: EdgeInsets.all(1.0),
                             indicator: BoxDecoration(
-                              color: Color.fromARGB(255, 185, 185, 185),
-                              borderRadius: BorderRadius.circular(6.0),
+                              color: const Color.fromARGB(255, 185, 185, 185),
+                              borderRadius: BorderRadius.circular(0.7.h),
                             ),
                             controller: tabController,
                             tabs: const [

@@ -62,6 +62,7 @@ class _RmtsAllBusesState extends State<RmtsAllBuses> {
 
   Future<List> getAllBuses() async {
     _loading = true;
+    rmtsResultModel.clear();
     var response = jsonDecode(await BaseClient()
         .get('Rmts/GetAllRmtsRoutes')
         .catchError((err) => {print(err.toString())}));

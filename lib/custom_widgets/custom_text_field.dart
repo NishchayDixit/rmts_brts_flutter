@@ -6,7 +6,12 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? textEditingController;
   final FocusNode? focusNode;
 
-  const CustomTextField({Key? key, required this.text, this.textEditingController, this.focusNode}) : super(key: key);
+  const CustomTextField(
+      {Key? key,
+      required this.text,
+      this.textEditingController,
+      this.focusNode})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +33,10 @@ class CustomTextField extends StatelessWidget {
             child: TextField(
               textAlignVertical: TextAlignVertical.top,
               cursorColor: Colors.black,
+              style: TextStyle(
+                fontSize: 14.0,
+                fontFamily: 'Poppins',
+              ),
               decoration: InputDecoration(
                 filled: true,
                 fillColor: const Color.fromARGB(255, 242, 242, 242),

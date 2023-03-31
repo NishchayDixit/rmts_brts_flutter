@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomChoiceChip extends StatelessWidget {
   final String text;
@@ -21,10 +22,10 @@ class CustomChoiceChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: marginTop,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 9),
+      padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 1.h),
       decoration: BoxDecoration(
         color: boxColor,
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(1.2.h),
         border: Border.all(
           color: borderColor,
         ),
@@ -33,7 +34,7 @@ class CustomChoiceChip extends StatelessWidget {
         overflow: TextOverflow.ellipsis,
         text: text,
         fontFamily: 'Poppins',
-        fontSize: 10.5,
+        fontSize: 9.sp,
         fontWeight: FontWeight.w600,
         color: textColor,
       ),
