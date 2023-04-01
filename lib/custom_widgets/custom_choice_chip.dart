@@ -22,7 +22,7 @@ class CustomChoiceChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: marginTop,
-      padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 1.h),
+      padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 2.5.w),
       decoration: BoxDecoration(
         color: boxColor,
         borderRadius: BorderRadius.circular(1.2.h),

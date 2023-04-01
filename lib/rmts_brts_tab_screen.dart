@@ -44,13 +44,13 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 3.5.h),
+                  padding: EdgeInsets.symmetric(horizontal: 5.5.w),
                   child: Container(
                     // height: 50,
                     width: MediaQuery.of(context).size.height,
                     decoration: BoxDecoration(
                       color: const Color.fromARGB(255, 230, 230, 230),
-                      borderRadius: BorderRadius.circular(1.2.h),
+                      borderRadius: BorderRadius.circular(20.h),
                     ),
                     child: Column(
                       children: [
@@ -61,7 +61,7 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
                             indicatorWeight: 2,
                             indicator: BoxDecoration(
                               color: const Color.fromARGB(255, 185, 185, 185),
-                              borderRadius: BorderRadius.circular(0.7.h),
+                              borderRadius: BorderRadius.circular(20.h),
                             ),
                             controller: tabController,
                             tabs: const [

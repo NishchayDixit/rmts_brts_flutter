@@ -53,8 +53,8 @@ class CustomBusCard extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(
-                width: 3.5,
+              SizedBox(
+                width: 3.2.w,
               ),
               Flexible(
                 child: Column(
@@ -75,8 +75,8 @@ class CustomBusCard extends StatelessWidget {
                         image: const AssetImage(
                           'assets/icons/vertical_dots.png',
                         ),
-                        width: 2.h,
-                        height: 2.h,
+                        // width: 2.h,
+                        height: 2.5.h,
                       ),
                     ),
                     CustomText(

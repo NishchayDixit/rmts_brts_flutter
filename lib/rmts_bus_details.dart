@@ -7,18 +7,19 @@ import 'package:rmts_brts/Model/rmts_result_model.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_pickup_point.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
+import 'package:sizer/sizer.dart';
 
-class RmtstBusDetails extends StatefulWidget {
+class RmtsBusDetails extends StatefulWidget {
   final RmtsResultModel rmtsResultModel;
 
-  const RmtstBusDetails({Key? key, required this.rmtsResultModel})
+  const RmtsBusDetails({Key? key, required this.rmtsResultModel})
       : super(key: key);
 
   @override
-  State<RmtstBusDetails> createState() => _RmtstBusDetailsState();
+  State<RmtsBusDetails> createState() => _RmtsBusDetailsState();
 }
 
-class _RmtstBusDetailsState extends State<RmtstBusDetails>
+class _RmtsBusDetailsState extends State<RmtsBusDetails>
     with SingleTickerProviderStateMixin {
   late TabController tabController;
   var _loading = true;
@@ -47,75 +48,81 @@ class _RmtstBusDetailsState extends State<RmtstBusDetails>
           backgroundColor: Colors.transparent,
           body: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(15.0, 20.0, 18.0, 20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      flex: 10,
-                      child: InkWell(
-                        onTap: () => Navigator.pop(context),
-                        child: const Icon(Icons.arrow_back_rounded, size: 24),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 90,
-                      child: Container(
-                        margin: const EdgeInsets.only(left: 20.0),
-                        child: Row(
-                          children: [
-                            CustomText(
-                                text: widget.rmtsResultModel.BusNo == null
-                                    ? ""
-                                    : "${widget.rmtsResultModel.BusNo}",
-                                fontFamily: 'Poppins',
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w600),
-                            const CustomText(
-                                text: " - ",
-                                fontFamily: 'Poppins',
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w600),
-                            Expanded(
-                              child: CustomText(
-                                text: widget
-                                    .rmtsResultModel.RouteNameEnglish,
-                                fontFamily: 'Poppins',
-                                fontSize: 14.0,
-                                fontWeight: FontWeight.w600,
-                                overflow: TextOverflow.ellipsis,),
-                            ),
-                          ],
+              Container(
+                margin: EdgeInsets.only(bottom: 1.5.h),
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 210, 210, 210),
+                  // borderRadius: BorderRadius.only(
+                  //   bottomRight: Radius.circular(1.5.h),
+                  //   bottomLeft: Radius.circular(1.5.h),
+                  // ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.fromLTRB(6.0.w, 2.5.h, 6.0.w, 2.5.h),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Expanded(
+                        flex: 10,
+                        child: InkWell(
+                          onTap: () => Navigator.pop(context),
+                          child: const Icon(Icons.arrow_back_rounded, size: 24),
                         ),
                       ),
-                    ),
-                  ],
+                      Expanded(
+                        flex: 90,
+                        child: Container(
+                          margin: const EdgeInsets.only(left: 20.0),
+                          child: Row(
+                            children: [
+                              CustomText(
+                                  text: widget.rmtsResultModel.BusNo == null
+                                      ? ""
+                                      : "${widget.rmtsResultModel.BusNo}",
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w600),
+                              const CustomText(
+                                  text: " - ",
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w600),
+                              Expanded(
+                                child: CustomText(
+                                  text: widget.rmtsResultModel.RouteNameEnglish,
+                                  fontFamily: 'Poppins',
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w600,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                 child: Container(
                   // height: 50,
-                  width: MediaQuery
-                      .of(context)
-                      .size
-                      .height,
+                  width: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                     color: const Color.fromARGB(255, 230, 230, 230),
-                    borderRadius: BorderRadius.circular(10.0),
+                    borderRadius: BorderRadius.circular(20.h),
                   ),
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.all(5.0),
+                        padding: EdgeInsets.all(.6.h),
                         child: TabBar(
                           indicatorColor: Colors.white,
                           indicatorWeight: 2,
-                          indicatorPadding: EdgeInsets.all(1.0),
                           indicator: BoxDecoration(
                             color: Color.fromARGB(255, 185, 185, 185),
-                            borderRadius: BorderRadius.circular(6.0),
+                            borderRadius: BorderRadius.circular(20.h),
                           ),
                           controller: tabController,
                           tabs: [
@@ -130,16 +137,16 @@ class _RmtstBusDetailsState extends State<RmtstBusDetails>
                                     flex: 6,
                                     child: CustomText(
                                         text: "Timings",
-                                        fontFamily: 'Poppins',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal),
+                                        fontFamily: 'Poppins-SemiBold',
+                                        fontSize: 12.5.sp,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ],
                               ),
                             ),
                             Tab(
                               child: Row(
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Expanded(
                                     flex: 4,
                                     child: Icon(Icons.location_on_rounded),
@@ -148,9 +155,9 @@ class _RmtstBusDetailsState extends State<RmtstBusDetails>
                                     flex: 6,
                                     child: CustomText(
                                         text: "Points",
-                                        fontFamily: 'Poppins',
-                                        fontSize: 15.0,
-                                        fontWeight: FontWeight.normal),
+                                        fontFamily: 'Poppins-SemiBold',
+                                        fontSize: 12.5.sp,
+                                        fontWeight: FontWeight.w600),
                                   )
                                 ],
                               ),
@@ -165,7 +172,10 @@ class _RmtstBusDetailsState extends State<RmtstBusDetails>
               Expanded(
                 child: TabBarView(
                   controller: tabController,
-                  children: [customTimingView(), customPickupPointsView()],
+                  children: [
+                    customTimingView(),
+                    customPickupPointsView(),
+                  ],
                 ),
               ),
             ],
@@ -177,6 +187,7 @@ class _RmtstBusDetailsState extends State<RmtstBusDetails>
 
   Widget customTimingView() {
     return Container(
+      alignment: Alignment.center,
       child: FutureBuilder(
         future: getTimings(widget.rmtsResultModel),
         builder: (context, snapshot) {
@@ -199,37 +210,134 @@ class _RmtstBusDetailsState extends State<RmtstBusDetails>
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Expanded(
-                    child: Column(
-                      children: [
-                        Text("Morning To Noon"),
-                        ListView.builder(
-                          itemBuilder: (context, index) {
-                            print(snapshot.data);
-                            return Container(
-                              child: Text(timingsAm[index]),
-                            );
-                          },
-                          shrinkWrap: true,
-                          itemCount: timingsAm.length,
-                        ),
-                      ],
+                    child: Container(
+                      margin: EdgeInsets.only(right: 1.0.h),
+                      child: Column(
+                        children: [
+                          // Text("Morning To Noon"),
+                          Container(
+                            padding:
+                            EdgeInsets.only(top: 1.0.h, bottom: 1.0.h, right: 4.0.w, left: 4.0.w),
+                            margin: EdgeInsets.only(top: .5.h, bottom: .5.h),
+                            decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 1,
+                                  color: Color.fromARGB(255, 190, 190, 190),
+                                )
+                              ],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(1.0.h),
+                              ),
+                              color: Color.fromARGB(255, 230, 230, 230),
+                            ),
+                            child: CustomText(
+                              text: "Morning To Noon",
+                              fontFamily: "Poppins",
+                              fontSize: 12.0.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          ListView.builder(
+                            itemBuilder: (context, index) {
+                              print(snapshot.data);
+                              return Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 1,
+                                      color: Color.fromARGB(255, 190, 190, 190),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(1.0.h),
+                                  ),
+                                  color: Colors.white,
+                                ),
+                                padding:
+                                    EdgeInsets.only(top: 1.0.h, bottom: 1.0.h),
+                                margin: EdgeInsets.only(top: .5.h, bottom: .5.h),
+                                alignment: Alignment.center,
+                                child: CustomText(
+                                  text: timingsAm[index],
+                                  fontFamily: 'Poppins',
+                                  fontSize: 11.5.sp,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              );
+                            },
+                            shrinkWrap: true,
+                            itemCount: timingsAm.length,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Expanded(
-                    child: Column(
-                      children: [
-                        Text("Noon To Afternoon"),
-                        ListView.builder(
-                          itemBuilder: (context, index) {
-                            print(snapshot.data);
-                            return Container(
-                              child: Text(timingsPm[index]),
-                            );
-                          },
-                          shrinkWrap: true,
-                          itemCount: timingsPm.length,
-                        ),
-                      ],
+                    child: Container(
+                      margin: EdgeInsets.only(left: 1.0.h),
+                      child: Column(
+                        children: [
+                          Container(
+                            padding:
+                            EdgeInsets.only(top: 1.0.h, bottom: 1.0.h, right: 2.0.w, left: 2.0.w),
+                            margin: EdgeInsets.only(top: .5.h, bottom: .5.h),
+                            decoration: BoxDecoration(
+                              boxShadow: const [
+                                BoxShadow(
+                                  offset: Offset(0, 1),
+                                  blurRadius: 1,
+                                  color: Color.fromARGB(255, 190, 190, 190),
+                                )
+                              ],
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(1.0.h),
+                              ),
+                              color: Color.fromARGB(255, 230, 230, 230),
+                            ),
+                            child: CustomText(
+                              text: "Noon To Afternoon",
+                              fontFamily: "Poppins",
+                              fontSize: 12.0.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          ListView.builder(
+                            itemBuilder: (context, index) {
+                              print(snapshot.data);
+                              return Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      offset: Offset(0, 1),
+                                      blurRadius: 1,
+                                      color: Color.fromARGB(255, 190, 190, 190),
+                                    )
+                                  ],
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(1.0.h),
+                                  ),
+                                  color: Colors.white,
+                                ),
+                                padding:
+                                    EdgeInsets.only(top: 1.0.h, bottom: 1.0.h),
+                                margin: EdgeInsets.only(top: .5.h, bottom: .5.h),
+                                alignment: Alignment.center,
+                                child: CustomText(
+                                  text: timingsPm[index],
+                                  fontFamily: 'Poppins',
+                                  fontSize: 11.5.sp,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              );
+                            },
+                            shrinkWrap: true,
+                            itemCount: timingsPm.length,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ],
