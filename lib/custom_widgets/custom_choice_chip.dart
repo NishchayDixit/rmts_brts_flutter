@@ -5,7 +5,6 @@ import 'package:sizer/sizer.dart';
 class CustomChoiceChip extends StatelessWidget {
   final String text;
   final EdgeInsets? marginTop;
-  final Color borderColor;
   final Color boxColor;
   final Color textColor;
 
@@ -13,7 +12,6 @@ class CustomChoiceChip extends StatelessWidget {
     Key? key,
     required this.text,
     this.marginTop,
-    required this.borderColor,
     required this.boxColor,
     required this.textColor,
   }) : super(key: key);
@@ -22,13 +20,10 @@ class CustomChoiceChip extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: marginTop,
-      padding: EdgeInsets.symmetric(vertical: 1.2.h, horizontal: 2.5.w),
+      padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 3.0.w),
       decoration: BoxDecoration(
         color: boxColor,
         borderRadius: BorderRadius.circular(1.2.h),
-        border: Border.all(
-          color: borderColor,
-        ),
       ),
       child: CustomText(
         overflow: TextOverflow.ellipsis,

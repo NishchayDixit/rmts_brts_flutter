@@ -4,6 +4,11 @@ import 'package:rmts_brts/rmts_brts_tab_screen.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle(
+  //     statusBarColor: Colors.indigo,
+  //   ),
+  // );
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -27,7 +32,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'RMTS BRTS',
           theme: ThemeData(
-            primarySwatch: Colors.grey,
+            primarySwatch: Colors.indigo,
           ),
           home: const RMTS_BRTSTabScreen(),
         );

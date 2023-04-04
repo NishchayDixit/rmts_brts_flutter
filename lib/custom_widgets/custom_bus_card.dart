@@ -21,15 +21,19 @@ class CustomBusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 16.2.h,
+      height: 20.2.h,
       child: AspectRatio(
-        aspectRatio: 9 / 5,
+        aspectRatio: 9 / 5.5,
         child: Container(
           padding: const EdgeInsets.all(13),
           margin: marginRight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1.5.h),
-            color: const Color.fromARGB(255, 245, 245, 245),
+            // color: const Color.fromARGB(255, 245, 245, 245),
+            gradient: LinearGradient(begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [Color.fromARGB(255, 53, 83, 204), Color.fromARGB(
+                  255, 103, 130, 255),],),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -41,21 +45,23 @@ class CustomBusCard extends StatelessWidget {
                     CustomText(
                       text: busNo,
                       fontFamily: 'Poppins',
-                      fontSize: 22.sp,
+                      fontSize: 26.0.sp,
                       fontWeight: FontWeight.w900,
+                      color: Colors.white,
                     ),
                     CustomText(
                       text: busText,
                       fontFamily: 'Poppins',
                       fontSize: 11.5.sp,
                       fontWeight: FontWeight.w700,
+                      color: Colors.white,
                     ),
                   ],
                 ),
               ),
-              SizedBox(
-                width: 3.2.w,
-              ),
+              // SizedBox(
+              //   width: 2.2.w,
+              // ),
               Flexible(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -64,9 +70,10 @@ class CustomBusCard extends StatelessWidget {
                       child: CustomText(
                         text: startOfRoute,
                         fontFamily: 'Poppins',
-                        fontSize: 12.sp,
+                        fontSize: 11.5.sp,
                         fontWeight: FontWeight.w700,
                         textAlignment: TextAlign.center,
+                        color: Colors.white,
                       ),
                     ),
                     Container(
@@ -75,16 +82,18 @@ class CustomBusCard extends StatelessWidget {
                         image: const AssetImage(
                           'assets/icons/vertical_dots.png',
                         ),
+                        color: Colors.white,
                         // width: 2.h,
-                        height: 2.5.h,
+                        height: 2.h,
                       ),
                     ),
                     CustomText(
                       text: endOfRoute,
                       fontFamily: 'Poppins',
-                      fontSize: 12.sp,
+                      fontSize: 11.5.sp,
                       fontWeight: FontWeight.w700,
                       textAlignment: TextAlign.center,
+                      color: Colors.white,
                     ),
                   ],
                 ),

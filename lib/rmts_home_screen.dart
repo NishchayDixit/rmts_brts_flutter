@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_pickup_points.dart';
+import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_bus_card.dart';
 import 'package:rmts_brts/custom_widgets/custom_choice_chip.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
@@ -22,7 +23,7 @@ class RMTSHomeScreen extends StatefulWidget {
 }
 
 class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   String? selectedValue = null;
   List<RmtsPickupPoints> rmtsPickupPoints = [];
@@ -75,18 +76,14 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        child: SafeArea(
-          child: Scaffold(
-            key: _scaffoldKey,
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.transparent,
-            body: Container(
-              alignment: Alignment.topCenter,
-              margin: EdgeInsets.only(top: 0.5.h, left: 3.5.w, right: 3.5.w),
-              child: FutureBuilder(
+        alignment: Alignment.topCenter,
+        margin: EdgeInsets.only(top: 1.0.h, left: 3.5.w, right: 3.5.w),
+        child: SingleChildScrollView(
+          physics: ClampingScrollPhysics(),
+          scrollDirection: Axis.vertical,
+          child: Column(
+            children: [
+              FutureBuilder(
                 future: getRmtsPickupPoints(),
                 builder: (context, snapshot) {
                   if (snapshot.data != null && snapshot.hasData) {
@@ -114,22 +111,21 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                         Expanded(
                                           flex: 8,
                                           child: Autocomplete(
-                                            optionsBuilder: (TextEditingValue
-                                                textEditingValue) {
+                                            optionsBuilder:
+                                                (TextEditingValue textEditingValue) {
                                               if (textEditingValue.text == '') {
-                                                return const Iterable<
-                                                    String>.empty();
+                                                return const Iterable<String>.empty();
                                               } else {
-                                                List<String> matches =
-                                                    <String>[];
+                                                List<String> matches = <String>[];
                                                 matches.addAll(rmtslist);
-                                                matches.retainWhere((s) {
-                                                  return s
-                                                      .toLowerCase()
-                                                      .contains(textEditingValue
-                                                          .text
-                                                          .toLowerCase());
-                                                });
+                                                matches.retainWhere(
+                                                  (s) {
+                                                    return s.toLowerCase().contains(
+                                                          textEditingValue.text
+                                                              .toLowerCase(),
+                                                        );
+                                                  },
+                                                );
                                                 return matches;
                                               }
                                             },
@@ -138,14 +134,14 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                                 focusNode,
                                                 onFieldSubmitted) {
                                               return CustomTextField(
-                                                  text: "FROM",
-                                                  textEditingController:
-                                                      textEditingController,
-                                                  focusNode: focusNode);
+                                                text: "FROM",
+                                                textEditingController:
+                                                    textEditingController,
+                                                focusNode: focusNode,
+                                              );
                                             },
                                             onSelected: (String selection) {
-                                              print(
-                                                  'You just selected $selection');
+                                              print('You just selected $selection');
                                               fromID = -1;
                                               for (var i = 0;
                                                   i < rmtsPickupPoints.length;
@@ -154,9 +150,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                                         .PickupPointNameEnglish
                                                         .toString()
                                                         .toLowerCase() ==
-                                                    selection
-                                                        .trim()
-                                                        .toLowerCase()) {
+                                                    selection.trim().toLowerCase()) {
                                                   fromID = rmtsPickupPoints[i]
                                                       .PickupPointID;
                                                 }
@@ -175,22 +169,21 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                         Expanded(
                                           flex: 8,
                                           child: Autocomplete(
-                                            optionsBuilder: (TextEditingValue
-                                                textEditingValue) {
+                                            optionsBuilder:
+                                                (TextEditingValue textEditingValue) {
                                               if (textEditingValue.text == '') {
-                                                return const Iterable<
-                                                    String>.empty();
+                                                return const Iterable<String>.empty();
                                               } else {
-                                                List<String> matches =
-                                                    <String>[];
+                                                List<String> matches = <String>[];
                                                 matches.addAll(rmtslist);
-                                                matches.retainWhere((s) {
-                                                  return s
-                                                      .toLowerCase()
-                                                      .contains(textEditingValue
-                                                          .text
-                                                          .toLowerCase());
-                                                });
+                                                matches.retainWhere(
+                                                  (s) {
+                                                    return s.toLowerCase().contains(
+                                                          textEditingValue.text
+                                                              .toLowerCase(),
+                                                        );
+                                                  },
+                                                );
                                                 return matches;
                                               }
                                             },
@@ -205,8 +198,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                                   focusNode: focusNode);
                                             },
                                             onSelected: (String selection) {
-                                              print(
-                                                  'You just selected $selection');
+                                              print('You just selected $selection');
                                               toID = -1;
                                               for (var i = 0;
                                                   i < rmtsPickupPoints.length;
@@ -215,9 +207,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                                         .PickupPointNameEnglish
                                                         .toString()
                                                         .toLowerCase() ==
-                                                    selection
-                                                        .trim()
-                                                        .toLowerCase()) {
+                                                    selection.trim().toLowerCase()) {
                                                   toID = rmtsPickupPoints[i]
                                                       .PickupPointID;
                                                 }
@@ -233,19 +223,19 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                               Row(
                                 children: [
                                   Expanded(
+                                    flex: 4,
                                     child: Container(),
                                   ),
                                   Expanded(
-                                    flex: 100,
+                                    flex: 95,
                                     child: Container(
-                                      margin: EdgeInsets.only(
-                                          top: 0.6.h, left: 12.2.w),
+                                      margin:
+                                          EdgeInsets.only(top: 0.6.h, left: 12.2.w),
                                       alignment: Alignment.centerLeft,
                                       child: ElevatedButton(
                                         style: ElevatedButton.styleFrom(
                                           fixedSize: Size(35.0.w, 4.5.h),
-                                          backgroundColor: const Color.fromARGB(
-                                              255, 217, 217, 217),
+                                          backgroundColor: ColorConstants.primaryColor,
                                           elevation: 0,
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -256,10 +246,10 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (context) =>
-                                                  RmtsSearchResult(
-                                                      fromID: fromID,
-                                                      toID: toID),
+                                              builder: (context) => RmtsSearchResult(
+                                                fromID: fromID,
+                                                toID: toID,
+                                              ),
                                             ),
                                           );
                                         },
@@ -268,6 +258,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                           fontFamily: 'Poppins',
                                           fontSize: 10.2.sp,
                                           fontWeight: FontWeight.w700,
+                                          color: ColorConstants.primaryAccentTextColor,
                                         ),
                                       ),
                                     ),
@@ -279,14 +270,13 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                         ),
                         Container(
                           alignment: Alignment.center,
-                          margin: EdgeInsets.only(top: 3.5.h),
+                          margin: EdgeInsets.only(top: 1.5.h),
                           child: Column(
                             children: <Widget>[
                               Container(
                                 alignment: Alignment.center,
                                 child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: <Widget>[
                                     CustomText(
                                       text: "MOST ACTIVE ROUTES",
@@ -296,12 +286,11 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                     ),
                                     ElevatedButton(
                                       style: ElevatedButton.styleFrom(
-                                        backgroundColor: const Color.fromARGB(
-                                            255, 217, 217, 217),
+                                        backgroundColor:
+                                            ColorConstants.primaryColor,
                                         elevation: 0,
                                         shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(0.8.h),
+                                          borderRadius: BorderRadius.circular(0.8.h),
                                         ),
                                       ),
                                       onPressed: () {
@@ -318,6 +307,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                         fontFamily: 'Poppins',
                                         fontSize: 10.2.sp,
                                         fontWeight: FontWeight.w700,
+                                        color: ColorConstants.primaryAccentTextColor,
                                       ),
                                     ),
                                   ],
@@ -331,16 +321,14 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                   child: Row(
                                     children: <Widget>[
                                       CustomBusCard(
-                                        marginRight:
-                                            EdgeInsets.only(right: 5.0.w),
+                                        marginRight: EdgeInsets.only(right: 5.0.w),
                                         busNo: '1',
                                         busText: "Bus No.",
                                         startOfRoute: "Saurashtra University",
                                         endOfRoute: "Trikon Baug",
                                       ),
                                       CustomBusCard(
-                                        marginRight:
-                                            EdgeInsets.only(right: 5.0.w),
+                                        marginRight: EdgeInsets.only(right: 5.0.w),
                                         busNo: '12',
                                         busText: "Bus No.",
                                         startOfRoute: "Saurashtra University",
@@ -375,18 +363,14 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                 margin: EdgeInsets.only(top: 2.h),
                                 child: Wrap(
                                   alignment: WrapAlignment.start,
-                                  spacing: 2.5.w,
-                                  runSpacing: 1.0.h,
+                                  spacing: 1.7.w,
+                                  runSpacing: .8.h,
                                   children: <Widget>[
                                     for (var fvp in favPickupPoints)
                                       CustomChoiceChip(
                                         text: fvp,
-                                        borderColor:
-                                            Color.fromARGB(255, 177, 177, 177),
-                                        boxColor:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        textColor:
-                                            Color.fromARGB(255, 77, 77, 77),
+                                        boxColor: ColorConstants.primaryFillColor,
+                                        textColor: ColorConstants.primaryTextColor,
                                       ),
                                     InkWell(
                                       onTap: () {
@@ -401,12 +385,8 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                       child: CustomChoiceChip(
                                         text: "Show All",
                                         //marginTop: EdgeInsets.only(top: 6),
-                                        borderColor:
-                                            Color.fromARGB(255, 255, 255, 255),
-                                        boxColor:
-                                            Color.fromARGB(255, 185, 185, 185),
-                                        textColor:
-                                            Color.fromARGB(255, 255, 255, 255),
+                                        boxColor: ColorConstants.primaryColor,
+                                        textColor: ColorConstants.primaryAccentTextColor,
                                       ),
                                     ),
                                   ],
@@ -416,19 +396,19 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                           ),
                         ),
                         Container(
-                          margin: EdgeInsets.only(top: 3.5.h),
+                          margin: EdgeInsets.only(top: 2.5.h),
                           child: ElevatedButton(
                             onPressed: () => {
                               Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RmtsLiveBus(),
-                                  ))
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => RmtsLiveBus(),
+                                ),
+                              )
                             },
                             style: ElevatedButton.styleFrom(
-                              fixedSize: Size(65.0.w, 5.0.h),
-                              backgroundColor:
-                                  const Color.fromARGB(255, 217, 217, 217),
+                              fixedSize: Size(65.0.w, 5.5.h),
+                              backgroundColor: ColorConstants.primaryColor,
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(0.8.h),
@@ -439,6 +419,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                               fontFamily: 'Poppins',
                               fontSize: 10.0.sp,
                               fontWeight: FontWeight.w700,
+                              color: ColorConstants.primaryAccentTextColor,
                             ),
                           ),
                         )
@@ -450,7 +431,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                   return Text("Cannot connect to server");
                 },
               ),
-            ),
+            ],
           ),
         ),
       ),

@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/rmts_pickup_points.dart';
 import 'package:rmts_brts/rmts_buses_pickup.dart';
+import 'package:sizer/sizer.dart';
+
+import '../config/color_constants.dart';
 
 class CustomPickupPoint extends StatefulWidget {
   final RmtsPickupPoints rmtsPickupPoint;
-  const CustomPickupPoint({Key? key, required this.rmtsPickupPoint}) : super(key: key);
+
+  const CustomPickupPoint({Key? key, required this.rmtsPickupPoint})
+      : super(key: key);
 
   @override
   State<CustomPickupPoint> createState() => _CustomPickupPointState();
@@ -16,17 +21,22 @@ class _CustomPickupPointState extends State<CustomPickupPoint> {
     return Container(
       height: 65,
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+      padding: EdgeInsets.fromLTRB(1.0.w, 1.0.h, 1.0.w, 1.0.h),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white,
+          backgroundColor: ColorConstants.primaryAccentTextColor,
           elevation: 1.5,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(6),
           ),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => RmtsBusesPickup(rmtsPickupPoint: widget.rmtsPickupPoint),));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    RmtsBusesPickup(rmtsPickupPoint: widget.rmtsPickupPoint),
+              ));
         },
         child: Row(
           children: [
@@ -35,7 +45,8 @@ class _CustomPickupPointState extends State<CustomPickupPoint> {
               child: Container(
                 alignment: Alignment.center,
                 width: 30,
-                child: Icon(Icons.location_on),
+                child:
+                    Icon(Icons.location_on, color: ColorConstants.primaryColor),
               ),
             ),
             Expanded(
@@ -48,6 +59,7 @@ class _CustomPickupPointState extends State<CustomPickupPoint> {
                     // overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontSize: 14,
+                      color: ColorConstants.seconderyTextColor,
                     )),
               ),
             ),
@@ -56,7 +68,10 @@ class _CustomPickupPointState extends State<CustomPickupPoint> {
               child: Container(
                 alignment: Alignment.centerRight,
                 width: 30.0,
-                child: Icon(Icons.navigate_next_rounded),
+                child: Icon(
+                  Icons.navigate_next_rounded,
+                  color: ColorConstants.seconderyTextColor,
+                ),
               ),
             ),
           ],

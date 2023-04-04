@@ -7,8 +7,8 @@ class CustomLoader extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         alignment: Alignment.center,
-        width: double.infinity,
-        height: double.infinity,
+        // width: double.infinity,
+        // height: double.infinity,
         color: Color.fromARGB(100, 195, 195, 195),
         child: Container(
             height: 90,
