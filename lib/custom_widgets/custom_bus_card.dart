@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 
@@ -21,18 +22,18 @@ class CustomBusCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 20.2.h,
+      height: 19.2.h,
       child: AspectRatio(
         aspectRatio: 9 / 5.5,
         child: Container(
-          padding: const EdgeInsets.all(13),
+          padding: EdgeInsets.all(.5.h),
           margin: marginRight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1.5.h),
             // color: const Color.fromARGB(255, 245, 245, 245),
             gradient: LinearGradient(begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [Color.fromARGB(255, 53, 83, 204), Color.fromARGB(
+              colors: [ColorConstants.primaryColor,const Color.fromARGB(
                   255, 103, 130, 255),],),
           ),
           child: Row(
@@ -52,7 +53,7 @@ class CustomBusCard extends StatelessWidget {
                     CustomText(
                       text: busText,
                       fontFamily: 'Poppins',
-                      fontSize: 11.5.sp,
+                      fontSize: 11.0.sp,
                       fontWeight: FontWeight.w700,
                       color: Colors.white,
                     ),
@@ -70,7 +71,7 @@ class CustomBusCard extends StatelessWidget {
                       child: CustomText(
                         text: startOfRoute,
                         fontFamily: 'Poppins',
-                        fontSize: 11.5.sp,
+                        fontSize: 11.0.sp,
                         fontWeight: FontWeight.w700,
                         textAlignment: TextAlign.center,
                         color: Colors.white,
@@ -90,7 +91,7 @@ class CustomBusCard extends StatelessWidget {
                     CustomText(
                       text: endOfRoute,
                       fontFamily: 'Poppins',
-                      fontSize: 11.5.sp,
+                      fontSize: 11.0.sp,
                       fontWeight: FontWeight.w700,
                       textAlignment: TextAlign.center,
                       color: Colors.white,

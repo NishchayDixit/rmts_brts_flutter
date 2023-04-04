@@ -89,10 +89,11 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
               ),
               Expanded(
                 child: TabBarView(
+
                   controller: tabController,
                   children: const [
-                    RMTSHomeScreen(),
-                    BRTSHomeScreen(),
+                    Center(child: RMTSHomeScreen()),
+                    Center(child: BRTSHomeScreen()),
                   ],
                 ),
               ),
