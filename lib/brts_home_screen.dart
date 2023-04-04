@@ -8,6 +8,7 @@ import 'package:rmts_brts/custom_widgets/custom_dropdown.dart';
 import 'package:rmts_brts/custom_widgets/custom_expansion_tile.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
+import 'package:sizer/sizer.dart';
 
 class BRTSHomeScreen extends StatefulWidget {
   const BRTSHomeScreen({Key? key}) : super(key: key);
@@ -36,229 +37,215 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(
-        decoration: const BoxDecoration(
-          color: Colors.white,
-        ),
-        child: SafeArea(
-          child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            backgroundColor: Colors.transparent,
-            body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Container(
-                alignment: Alignment.topCenter,
-                margin: const EdgeInsets.only(top: 10.0),
-                child: FutureBuilder(
-                  future: getBrtsPickupPoints(),
-                  builder: (context, snapshot) {
-                    snapshot.connectionState == ConnectionState.waiting;
-                    if (snapshot.data != null && snapshot.hasData) {
-                      if(fromID["val"]==-1||toID["val"]==-1){
-                        fromID["val"] = fromPickupPoints[0].BrtsPickupPointID;
-                        toID["val"] = toPickupPoints[0].BrtsPickupPointID;
-                      }
-                      return Column(
+        alignment: Alignment.topCenter,
+        margin: const EdgeInsets.only(top: 10.0),
+        child: FutureBuilder(
+          future: getBrtsPickupPoints(),
+          builder: (context, snapshot) {
+            snapshot.connectionState == ConnectionState.waiting;
+            if (snapshot.data != null && snapshot.hasData) {
+              fromID["val"] = fromPickupPoints[0].BrtsPickupPointID;
+              toID["val"] = toPickupPoints[0].BrtsPickupPointID;
+              return Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                    child: Container(
+                      alignment: Alignment.topLeft,
+                      margin: const EdgeInsets.only(top: 30.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
+                          const CustomText(
+                            text: "SEARCH ROUTES",
+                            fontFamily: 'Poppins',
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w700,
+                          ),
                           Container(
-                            alignment: Alignment.topLeft,
-                            margin: const EdgeInsets.only(top: 30),
+                            margin: const EdgeInsets.only(top: 14),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                const CustomText(
-                                  text: "SEARCH ROUTES",
-                                  fontFamily: 'Poppins',
-                                  fontSize: 15.0,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                                Container(
-                                  margin: const EdgeInsets.only(top: 14),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            flex: 8,
-                                            child: CustomDropDown(
-                                              text: "FROM",
-                                              brtsPickupPoints:
-                                                  fromPickupPoints,
-                                              currentSelection: fromID,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            flex: 8,
-                                            child: CustomDropDown(
-                                              text: "To",
-                                              brtsPickupPoints: toPickupPoints,
-                                              currentSelection: toID,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  margin:
-                                      const EdgeInsets.only(top: 5, left: 44),
-                                  alignment: Alignment.centerLeft,
-                                  child: ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                      fixedSize: const Size(120.54, 34),
-                                      backgroundColor: const Color.fromARGB(
-                                          255, 217, 217, 217),
-                                      elevation: 0,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(6),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      flex: 8,
+                                      child: CustomDropDown(
+                                        text: "FROM",
+                                        brtsPickupPoints: fromPickupPoints,
+                                        currentSelection: fromID,
                                       ),
                                     ),
-                                    onPressed: () {
-                                      print(fromID.toString() +
-                                          "->" +
-                                          toID.toString());
-                                      getBrtsRoute(
-                                          fromID: fromID["val"],
-                                          toID: toID["val"]);
-                                    },
-                                    child: const CustomText(
-                                      text: "Show Result",
-                                      fontFamily: 'Poppins',
-                                      fontSize: 12.0,
-                                      fontWeight: FontWeight.w700,
+                                  ],
+                                ),
+                                SizedBox(
+                                  height: 2.0.h,
+                                ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Expanded(
+                                      flex: 8,
+                                      child: CustomDropDown(
+                                        text: "To",
+                                        brtsPickupPoints: toPickupPoints,
+                                        currentSelection: toID,
+                                      ),
                                     ),
-                                  ),
+                                  ],
                                 ),
                               ],
                             ),
                           ),
-                          // if(brtsSearchResult.isNotEmpty)
-                            Expanded(
-                                child: ListView.builder(
-                                    scrollDirection: Axis.vertical,
-                                    itemBuilder: (context, index) {
-                                      return CustomExpansionTile(
-                                          brtsPickUpPointName: brtsSearchResult[index].BrtsPickUpPointName,
-                                          brtsRouteDetails: brtsSearchResultDetails[index]);
-                                    },
-                                    shrinkWrap: true,
-                                    itemCount: brtsSearchResult.isNotEmpty ? brtsSearchResult.length:0,
-                                  ),
+                          Container(
+                            margin: const EdgeInsets.only(top: 5, left: 44),
+                            alignment: Alignment.centerLeft,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                fixedSize: const Size(120.54, 34),
+                                backgroundColor:
+                                    const Color.fromARGB(255, 217, 217, 217),
+                                elevation: 0,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
                               ),
-                          // else Container(),
-
-                          // Container(
-                          //   alignment: Alignment.topLeft,
-                          //   margin: const EdgeInsets.only(top: 30),
-                          //   child: Column(
-                          //     crossAxisAlignment: CrossAxisAlignment.start,
-                          //     children: <Widget>[
-                          //       const CustomText(
-                          //         text: "PICKUP POINTS",
-                          //         fontFamily: 'Poppins',
-                          //         fontSize: 15.0,
-                          //         fontWeight: FontWeight.w700,
-                          //       ),
-                          //       Container(
-                          //         margin: const EdgeInsets.only(top: 10),
-                          //         child: Wrap(
-                          //           alignment: WrapAlignment.start,
-                          //           spacing: 10.0,
-                          //           runSpacing: 10.0,
-                          //           children: <Widget>[
-                          //             CustomChoiceChip(
-                          //               text: "Madhapar Chowk",
-                          //               borderColor:
-                          //                   Color.fromARGB(255, 177, 177, 177),
-                          //               boxColor:
-                          //                   Color.fromARGB(255, 255, 255, 255),
-                          //               textColor:
-                          //                   Color.fromARGB(255, 77, 77, 77),
-                          //             ),
-                          //             CustomChoiceChip(
-                          //               text: "GreenLand Chowk",
-                          //               borderColor:
-                          //                   Color.fromARGB(255, 177, 177, 177),
-                          //               boxColor:
-                          //                   Color.fromARGB(255, 255, 255, 255),
-                          //               textColor:
-                          //                   Color.fromARGB(255, 77, 77, 77),
-                          //             ),
-                          //             CustomChoiceChip(
-                          //               text: "AajiDam",
-                          //               borderColor:
-                          //                   Color.fromARGB(255, 177, 177, 177),
-                          //               boxColor:
-                          //                   Color.fromARGB(255, 255, 255, 255),
-                          //               textColor:
-                          //                   Color.fromARGB(255, 77, 77, 77),
-                          //             ),
-                          //             CustomChoiceChip(
-                          //               text: "AaryaSamaj",
-                          //               marginTop: EdgeInsets.only(top: 6),
-                          //               borderColor:
-                          //                   Color.fromARGB(255, 177, 177, 177),
-                          //               boxColor:
-                          //                   Color.fromARGB(255, 255, 255, 255),
-                          //               textColor:
-                          //                   Color.fromARGB(255, 77, 77, 77),
-                          //             ),
-                          //             CustomChoiceChip(
-                          //               text: "Aazad Chowk",
-                          //               marginTop: EdgeInsets.only(top: 6),
-                          //               borderColor:
-                          //                   Color.fromARGB(255, 177, 177, 177),
-                          //               boxColor:
-                          //                   Color.fromARGB(255, 255, 255, 255),
-                          //               textColor:
-                          //                   Color.fromARGB(255, 77, 77, 77),
-                          //             ),
-                          //             CustomChoiceChip(
-                          //               text: "Bedi",
-                          //               marginTop: EdgeInsets.only(top: 6),
-                          //               borderColor:
-                          //                   Color.fromARGB(255, 177, 177, 177),
-                          //               boxColor:
-                          //                   Color.fromARGB(255, 255, 255, 255),
-                          //               textColor:
-                          //                   Color.fromARGB(255, 77, 77, 77),
-                          //             ),
-                          //             CustomChoiceChip(
-                          //               text: "Show All",
-                          //               marginTop: EdgeInsets.only(top: 6),
-                          //               borderColor:
-                          //                   Color.fromARGB(255, 255, 255, 255),
-                          //               boxColor:
-                          //                   Color.fromARGB(255, 185, 185, 185),
-                          //               textColor:
-                          //                   Color.fromARGB(255, 255, 255, 255),
-                          //             ),
-                          //           ],
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                          // ),
+                              onPressed: () {
+                                print(
+                                    fromID.toString() + "->" + toID.toString());
+                                getBrtsRoute(
+                                    fromID: fromID["val"], toID: toID["val"]);
+                              },
+                              child: const CustomText(
+                                text: "Show Result",
+                                fontFamily: 'Poppins',
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                          ),
                         ],
-                      );
-                    } else if (_Loading) {
-                      return CustomLoader();
-                    }
-                    return Text("Cannot connect to server");
-                  },
-                ),
-              ),
-            ),
-          ),
+                      ),
+                    ),
+                  ),
+                  // if(brtsSearchResult.isNotEmpty)
+                  Expanded(
+                    child: ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      itemBuilder: (context, index) {
+                        return CustomExpansionTile(
+                            brtsPickUpPointName:
+                                brtsSearchResult[index].BrtsPickUpPointName,
+                            brtsRouteDetails: brtsSearchResultDetails[index]);
+                      },
+                      shrinkWrap: true,
+                      itemCount: brtsSearchResult.isNotEmpty
+                          ? brtsSearchResult.length
+                          : 0,
+                    ),
+                  ),
+                  // else Container(),
+
+                  // Container(
+                  //   alignment: Alignment.topLeft,
+                  //   margin: const EdgeInsets.only(top: 30),
+                  //   child: Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.start,
+                  //     children: <Widget>[
+                  //       const CustomText(
+                  //         text: "PICKUP POINTS",
+                  //         fontFamily: 'Poppins',
+                  //         fontSize: 15.0,
+                  //         fontWeight: FontWeight.w700,
+                  //       ),
+                  //       Container(
+                  //         margin: const EdgeInsets.only(top: 10),
+                  //         child: Wrap(
+                  //           alignment: WrapAlignment.start,
+                  //           spacing: 10.0,
+                  //           runSpacing: 10.0,
+                  //           children: <Widget>[
+                  //             CustomChoiceChip(
+                  //               text: "Madhapar Chowk",
+                  //               borderColor:
+                  //                   Color.fromARGB(255, 177, 177, 177),
+                  //               boxColor:
+                  //                   Color.fromARGB(255, 255, 255, 255),
+                  //               textColor:
+                  //                   Color.fromARGB(255, 77, 77, 77),
+                  //             ),
+                  //             CustomChoiceChip(
+                  //               text: "GreenLand Chowk",
+                  //               borderColor:
+                  //                   Color.fromARGB(255, 177, 177, 177),
+                  //               boxColor:
+                  //                   Color.fromARGB(255, 255, 255, 255),
+                  //               textColor:
+                  //                   Color.fromARGB(255, 77, 77, 77),
+                  //             ),
+                  //             CustomChoiceChip(
+                  //               text: "AajiDam",
+                  //               borderColor:
+                  //                   Color.fromARGB(255, 177, 177, 177),
+                  //               boxColor:
+                  //                   Color.fromARGB(255, 255, 255, 255),
+                  //               textColor:
+                  //                   Color.fromARGB(255, 77, 77, 77),
+                  //             ),
+                  //             CustomChoiceChip(
+                  //               text: "AaryaSamaj",
+                  //               marginTop: EdgeInsets.only(top: 6),
+                  //               borderColor:
+                  //                   Color.fromARGB(255, 177, 177, 177),
+                  //               boxColor:
+                  //                   Color.fromARGB(255, 255, 255, 255),
+                  //               textColor:
+                  //                   Color.fromARGB(255, 77, 77, 77),
+                  //             ),
+                  //             CustomChoiceChip(
+                  //               text: "Aazad Chowk",
+                  //               marginTop: EdgeInsets.only(top: 6),
+                  //               borderColor:
+                  //                   Color.fromARGB(255, 177, 177, 177),
+                  //               boxColor:
+                  //                   Color.fromARGB(255, 255, 255, 255),
+                  //               textColor:
+                  //                   Color.fromARGB(255, 77, 77, 77),
+                  //             ),
+                  //             CustomChoiceChip(
+                  //               text: "Bedi",
+                  //               marginTop: EdgeInsets.only(top: 6),
+                  //               borderColor:
+                  //                   Color.fromARGB(255, 177, 177, 177),
+                  //               boxColor:
+                  //                   Color.fromARGB(255, 255, 255, 255),
+                  //               textColor:
+                  //                   Color.fromARGB(255, 77, 77, 77),
+                  //             ),
+                  //             CustomChoiceChip(
+                  //               text: "Show All",
+                  //               marginTop: EdgeInsets.only(top: 6),
+                  //               borderColor:
+                  //                   Color.fromARGB(255, 255, 255, 255),
+                  //               boxColor:
+                  //                   Color.fromARGB(255, 185, 185, 185),
+                  //               textColor:
+                  //                   Color.fromARGB(255, 255, 255, 255),
+                  //             ),
+                  //           ],
+                  //         ),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              );
+            } else if (_Loading) {
+              return CustomLoader();
+            }
+            return Text("Cannot connect to server");
+          },
         ),
       ),
     );

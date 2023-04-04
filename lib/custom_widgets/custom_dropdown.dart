@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/brts_pickup_points.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomDropDown extends StatefulWidget {
   final String text;
@@ -38,9 +39,9 @@ class _CustomDropDownState extends State<CustomDropDown> {
             fontWeight: FontWeight.w700,
           ),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: 4.0.w),
         Expanded(
-          flex: 8,
+          flex: 7,
           child: SizedBox(
             height: 39,
             child: Container(

@@ -3,8 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
+import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_single_bus.dart';
+import 'package:rmts_brts/custom_widgets/custom_text.dart';
+import 'package:sizer/sizer.dart';
 
 class RmtsSearchResult extends StatefulWidget {
   final fromID;
@@ -32,27 +35,34 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 207, 207, 207),
+          color: ColorConstants.primaryBackGround,
         ),
         child: SafeArea(
           child: Scaffold(
             body: FutureBuilder(
-                future:
-                    getSearchResult(formID: widget.fromID, toID: widget.toID),
-                builder: (context, snapshot) {
-                  if (snapshot != null && snapshot.hasData) {
-                    return ListView.builder(
-                      itemBuilder: (context, index) {
-                        return CustomSingleBus(
-                            rmtsResultModel: rmtsSearchResultModel[index]);
-                      },
-                      itemCount: rmtsSearchResultModel.length,
-                    );
-                  } else if (_loading) {
-                    return CustomLoader();
-                  }
-                  return Text("no result found");
-                }),
+              future: getSearchResult(formID: widget.fromID, toID: widget.toID),
+              builder: (context, snapshot) {
+                if (snapshot != null && snapshot.hasData) {
+                  return ListView.builder(
+                    itemBuilder: (context, index) {
+                      return CustomSingleBus(
+                          rmtsResultModel: rmtsSearchResultModel[index]);
+                    },
+                    itemCount: rmtsSearchResultModel.length,
+                  );
+                } else if (_loading) {
+                  return CustomLoader();
+                }
+                return Center(
+                  child: CustomText(
+                    text: "No Result Found",
+                    fontFamily: "Poppins",
+                    fontSize: 12.5.sp,
+                    fontWeight: FontWeight.w300,
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),
@@ -69,7 +79,7 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
     var response = jsonDecode(await BaseClient()
         .post('Rmts/GetRmtsRouteFromTo', obj)
         .catchError((err) => {print(err.toString())}));
-    if(response==null){
+    if (response == null) {
       print(response['Message']);
       return [];
     }
@@ -82,10 +92,10 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
       _loading = false;
       return rmtsSearchResultModel;
       // print(response['ResultList']);
-      print(rmtsSearchResultModel.toString());
+      // print(rmtsSearchResultModel.toString());
     }
     print(response['Message']);
-    _loading=false;
+    _loading = false;
     return null;
   }
 }

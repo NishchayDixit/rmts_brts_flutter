@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class CustomLoader extends StatelessWidget {
   const CustomLoader({Key? key}) : super(key: key);
@@ -6,9 +7,12 @@ class CustomLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        // decoration: BoxDecoration(
+        //   borderRadius: BorderRadius.all(Radius.circular(8)),
+        // ),
         alignment: Alignment.center,
-        width: double.infinity,
-        height: double.infinity,
+        width: 100.w,
+        height: 85.5.h,
         color: Color.fromARGB(100, 195, 195, 195),
         child: Container(
             height: 90,

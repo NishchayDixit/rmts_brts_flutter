@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rmts_brts/brts_home_screen.dart';
-import 'package:rmts_brts/rmts_bus_details.dart';
-import 'package:rmts_brts/rmts_all_buses.dart';
 import 'package:rmts_brts/rmts_brts_tab_screen.dart';
-import 'package:rmts_brts/rmts_live_bus.dart';
-import 'package:rmts_brts/rmts_serach_result.dart';
+import 'package:sizer/sizer.dart';
 
 void main() {
+  // SystemChrome.setSystemUIOverlayStyle(
+  //   SystemUiOverlayStyle(
+  //     statusBarColor: Colors.indigo,
+  //   ),
+  // );
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -25,14 +26,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'RMTS BRTS',
-      theme: ThemeData(
-        primarySwatch: Colors.grey,
-        // useMaterial3: true
-      ),
-      home: const RMTS_BRTSTabScreen(),
+    return Sizer(
+      builder: (context, orientation, deviceType) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'RMTS BRTS',
+          theme: ThemeData(
+            primarySwatch: Colors.indigo,
+          ),
+          home: const RMTS_BRTSTabScreen(),
+        );
+      },
     );
   }
 }
