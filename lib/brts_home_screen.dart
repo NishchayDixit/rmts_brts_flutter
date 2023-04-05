@@ -105,8 +105,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                 fixedSize: const Size(120.54, 34),
-                                backgroundColor:
-                                    const Color.fromARGB(255, 217, 217, 217),
+                                backgroundColor: ColorConstants.primaryColor,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(6),

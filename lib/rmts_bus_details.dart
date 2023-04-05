@@ -47,12 +47,8 @@ class _RmtsBusDetailsState extends State<RmtsBusDetails>
           children: [
             Container(
               margin: EdgeInsets.only(bottom: 1.5.h),
-              decoration: BoxDecoration(
-                color: ColorConstants.seconderyColor,
-                // borderRadius: BorderRadius.only(
-                //   bottomRight: Radius.circular(1.5.h),
-                //   bottomLeft: Radius.circular(1.5.h),
-                // ),
+              decoration: const BoxDecoration(
+                color: Colors.indigo,
               ),
               child: Padding(
                 padding: EdgeInsets.fromLTRB(6.0.w, 2.5.h, 6.0.w, 2.5.h),

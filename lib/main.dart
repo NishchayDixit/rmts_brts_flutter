@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:rmts_brts/rmts_brts_tab_screen.dart';
+import 'package:rmts_brts/hidden_drawer.dart';
 import 'package:sizer/sizer.dart';
 
 void main() {
-  // SystemChrome.setSystemUIOverlayStyle(
-  //   SystemUiOverlayStyle(
-  //     statusBarColor: Colors.indigo,
-  //   ),
-  // );
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.indigo,
+      statusBarIconBrightness: Brightness.light,
+    ),
+  );
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.indigo,
           ),
-          home: const RMTS_BRTSTabScreen(),
+          home: const HiddenDrawer(),
         );
       },
     );

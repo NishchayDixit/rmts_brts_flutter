@@ -11,7 +11,6 @@ import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:rmts_brts/custom_widgets/custom_text_field.dart';
 import 'package:rmts_brts/rmts_all_buses.dart';
 import 'package:rmts_brts/rmts_all_pickup_points.dart';
-import 'package:rmts_brts/rmts_live_bus.dart';
 import 'package:rmts_brts/rmts_serach_result.dart';
 import 'package:sizer/sizer.dart';
 
@@ -442,34 +441,6 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                               ],
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: 2.5.h),
-                            child: ElevatedButton(
-                              onPressed: () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => RmtsLiveBus(),
-                                  ),
-                                )
-                              },
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: Size(65.0.w, 5.5.h),
-                                backgroundColor: ColorConstants.primaryColor,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0.8.h),
-                                ),
-                              ),
-                              child: CustomText(
-                                text: "Search Live Bus Location",
-                                fontFamily: 'Poppins',
-                                fontSize: 10.0.sp,
-                                fontWeight: FontWeight.w700,
-                                color: ColorConstants.primaryAccentTextColor,
-                              ),
-                            ),
-                          )
                         ],
                       );
                     } else if (_Loading) {
