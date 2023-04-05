@@ -27,6 +27,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
 
   String? selectedValue = null;
   List<RmtsPickupPoints> rmtsPickupPoints = [];
+  TextEditingController tecFrom=TextEditingController(),tecTo=TextEditingController();
   List<String> rmtslist = [];
   int fromID = -1;
   int toID = -1;
@@ -102,124 +103,169 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                                   fontSize: 12.5.sp,
                                   fontWeight: FontWeight.w700,
                                 ),
-                                Container(
-                                  margin: EdgeInsets.only(top: 2.h),
-                                  child: Column(
-                                    children: <Widget>[
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
+                                Stack(
+                                  children: [
+                                    Container(
+                                      margin: EdgeInsets.only(top: 2.h),
+                                      child: Column(
+                                        children: <Widget>[
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                flex: 8,
+                                                child: Autocomplete(
+                                                  optionsBuilder:
+                                                      (TextEditingValue textEditingValue) {
+                                                    if (textEditingValue.text == '') {
+                                                      return const Iterable<String>.empty();
+                                                    } else {
+                                                      List<String> matches = <String>[];
+                                                      matches.addAll(rmtslist);
+                                                      matches.retainWhere(
+                                                        (s) {
+                                                          return s.toLowerCase().contains(
+                                                                textEditingValue.text
+                                                                    .toLowerCase(),
+                                                              );
+                                                        },
+                                                      );
+                                                      return matches;
+                                                    }
+                                                  },
+                                                  fieldViewBuilder: (context,
+                                                      tecFrom,
+                                                      focusNode,
+                                                      onFieldSubmitted) {
+                                                    this.tecFrom=tecFrom;
+                                                    return CustomTextField(
+                                                      text: "FROM",
+                                                      textEditingController:
+                                                          tecFrom,
+                                                      focusNode: focusNode,
+                                                    );
+                                                  },
+                                                  onSelected: (String selection) {
+                                                    print('You just selected $selection');
+                                                    fromID = -1;
+                                                    for (var i = 0;
+                                                        i < rmtsPickupPoints.length;
+                                                        i++) {
+                                                      if (rmtsPickupPoints[i]
+                                                              .PickupPointNameEnglish
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          selection.trim().toLowerCase()) {
+                                                        fromID = rmtsPickupPoints[i]
+                                                            .PickupPointID;
+                                                      }
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(
+                                            height: 1.5.h,
+                                          ),
+                                          Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Expanded(
+                                                flex: 8,
+                                                child: Autocomplete(
+                                                  optionsBuilder:
+                                                      (TextEditingValue textEditingValue) {
+                                                    if (textEditingValue.text == '') {
+                                                      return const Iterable<String>.empty();
+                                                    } else {
+                                                      List<String> matches = <String>[];
+                                                      matches.addAll(rmtslist);
+                                                      matches.retainWhere(
+                                                        (s) {
+                                                          return s.toLowerCase().contains(
+                                                                textEditingValue.text
+                                                                    .toLowerCase(),
+                                                              );
+                                                        },
+                                                      );
+                                                      return matches;
+                                                    }
+                                                  },
+                                                  fieldViewBuilder: (context,
+                                                      tecTo,
+                                                      focusNode,
+                                                      onFieldSubmitted) {
+                                                    this.tecTo=tecTo;
+                                                    return CustomTextField(
+                                                        text: "TO",
+                                                        textEditingController:
+                                                            tecTo,
+                                                        focusNode: focusNode);
+                                                  },
+                                                  onSelected: (String selection) {
+                                                    print('You just selected $selection');
+                                                    toID = -1;
+                                                    for (var i = 0;
+                                                        i < rmtsPickupPoints.length;
+                                                        i++) {
+                                                      if (rmtsPickupPoints[i]
+                                                              .PickupPointNameEnglish
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          selection.trim().toLowerCase()) {
+                                                        toID = rmtsPickupPoints[i]
+                                                            .PickupPointID;
+                                                      }
+                                                    }
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.only(top: 15),
+                                      child: Row(
+                                        children: <Widget>[
                                           Expanded(
-                                            flex: 8,
-                                            child: Autocomplete(
-                                              optionsBuilder:
-                                                  (TextEditingValue textEditingValue) {
-                                                if (textEditingValue.text == '') {
-                                                  return const Iterable<String>.empty();
-                                                } else {
-                                                  List<String> matches = <String>[];
-                                                  matches.addAll(rmtslist);
-                                                  matches.retainWhere(
-                                                    (s) {
-                                                      return s.toLowerCase().contains(
-                                                            textEditingValue.text
-                                                                .toLowerCase(),
-                                                          );
-                                                    },
-                                                  );
-                                                  return matches;
-                                                }
-                                              },
-                                              fieldViewBuilder: (context,
-                                                  textEditingController,
-                                                  focusNode,
-                                                  onFieldSubmitted) {
-                                                return CustomTextField(
-                                                  text: "FROM",
-                                                  textEditingController:
-                                                      textEditingController,
-                                                  focusNode: focusNode,
-                                                );
-                                              },
-                                              onSelected: (String selection) {
-                                                print('You just selected $selection');
-                                                fromID = -1;
-                                                for (var i = 0;
-                                                    i < rmtsPickupPoints.length;
-                                                    i++) {
-                                                  if (rmtsPickupPoints[i]
-                                                          .PickupPointNameEnglish
-                                                          .toString()
-                                                          .toLowerCase() ==
-                                                      selection.trim().toLowerCase()) {
-                                                    fromID = rmtsPickupPoints[i]
-                                                        .PickupPointID;
-                                                  }
-                                                }
-                                              },
+                                            flex: 70,
+                                            child: Container(),
+                                          ),
+                                          Expanded(
+                                            flex: 30,
+                                            child: SizedBox(
+                                              height: 46 + 46,
+                                              child: Container(
+                                                alignment: Alignment.center,
+                                                child: InkWell(
+                                                  onTap: () {
+
+                                                    var temp=toID;
+                                                    toID=fromID;
+                                                    fromID=temp;
+                                                    var temp2=tecFrom.text;
+                                                    tecFrom.text=tecTo.text;
+                                                    tecTo.text=temp2;
+                                                    // tecFrom.notifyListeners();
+                                                    // tecTo.notifyListeners();
+                                                    // tecFrom.value.
+                                                  },
+                                                  child: Image.asset(
+                                                    "assets/icons/icon_swap.png",
+                                                    width: 36,
+                                                    height: 36,
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
-                                        height: 1.5.h,
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            flex: 8,
-                                            child: Autocomplete(
-                                              optionsBuilder:
-                                                  (TextEditingValue textEditingValue) {
-                                                if (textEditingValue.text == '') {
-                                                  return const Iterable<String>.empty();
-                                                } else {
-                                                  List<String> matches = <String>[];
-                                                  matches.addAll(rmtslist);
-                                                  matches.retainWhere(
-                                                    (s) {
-                                                      return s.toLowerCase().contains(
-                                                            textEditingValue.text
-                                                                .toLowerCase(),
-                                                          );
-                                                    },
-                                                  );
-                                                  return matches;
-                                                }
-                                              },
-                                              fieldViewBuilder: (context,
-                                                  textEditingController,
-                                                  focusNode,
-                                                  onFieldSubmitted) {
-                                                return CustomTextField(
-                                                    text: "TO",
-                                                    textEditingController:
-                                                        textEditingController,
-                                                    focusNode: focusNode);
-                                              },
-                                              onSelected: (String selection) {
-                                                print('You just selected $selection');
-                                                toID = -1;
-                                                for (var i = 0;
-                                                    i < rmtsPickupPoints.length;
-                                                    i++) {
-                                                  if (rmtsPickupPoints[i]
-                                                          .PickupPointNameEnglish
-                                                          .toString()
-                                                          .toLowerCase() ==
-                                                      selection.trim().toLowerCase()) {
-                                                    toID = rmtsPickupPoints[i]
-                                                        .PickupPointID;
-                                                  }
-                                                }
-                                              },
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                    ),
+                                  ],
                                 ),
                                 Row(
                                   children: [

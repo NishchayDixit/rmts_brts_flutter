@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/brts_pickup_points.dart';
 import 'package:rmts_brts/Model/brts_route_details.dart';
+import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_dropdown.dart';
-import 'package:rmts_brts/custom_widgets/custom_expansion_tile.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
@@ -22,13 +22,16 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   List<BrtsPickupPoints> toPickupPoints = [];
   List<BrtsPickupPoints> brtsSearchResult = [];
   List<BrtsRouteDetails> brtsSearchResultDetails = [];
-  List<String> brtslist = [];
   var fromID = {"val": -1};
   var toID = {"val": -1};
   bool _Loading = true;
+  bool _showResult = false;
+  List<String> timings = [];
 
   @override
   void initState() {
+    fromID["val"] = 1;
+    toID["val"] = 1;
     super.initState();
   }
 
@@ -42,10 +45,8 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
         child: FutureBuilder(
           future: getBrtsPickupPoints(),
           builder: (context, snapshot) {
-            snapshot.connectionState == ConnectionState.waiting;
+            // snapshot.connectionState == ConnectionState.waiting;
             if (snapshot.data != null && snapshot.hasData) {
-              fromID["val"] = fromPickupPoints[0].BrtsPickupPointID;
-              toID["val"] = toPickupPoints[0].BrtsPickupPointID;
               return Column(
                 children: <Widget>[
                   Padding(
@@ -114,8 +115,14 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                               onPressed: () {
                                 print(
                                     fromID.toString() + "->" + toID.toString());
-                                getBrtsRoute(
-                                    fromID: fromID["val"], toID: toID["val"]);
+                                // getBrtsRoute(
+                                //     fromID: fromID["val"], toID: toID["val"]);
+                                // getTimings(fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime());
+                                // (){
+                                setState(() {
+                                  _showResult = true;
+                                });
+                                // }();
                               },
                               child: const CustomText(
                                 text: "Show Result",
@@ -129,114 +136,18 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                       ),
                     ),
                   ),
-                  // if(brtsSearchResult.isNotEmpty)
-                  Expanded(
-                    child: ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      itemBuilder: (context, index) {
-                        return CustomExpansionTile(
-                            brtsPickUpPointName:
-                                brtsSearchResult[index].BrtsPickUpPointName,
-                            brtsRouteDetails: brtsSearchResultDetails[index]);
-                      },
-                      shrinkWrap: true,
-                      itemCount: brtsSearchResult.isNotEmpty
-                          ? brtsSearchResult.length
-                          : 0,
-                    ),
-                  ),
-                  // else Container(),
-
-                  // Container(
-                  //   alignment: Alignment.topLeft,
-                  //   margin: const EdgeInsets.only(top: 30),
-                  //   child: Column(
-                  //     crossAxisAlignment: CrossAxisAlignment.start,
-                  //     children: <Widget>[
-                  //       const CustomText(
-                  //         text: "PICKUP POINTS",
-                  //         fontFamily: 'Poppins',
-                  //         fontSize: 15.0,
-                  //         fontWeight: FontWeight.w700,
-                  //       ),
-                  //       Container(
-                  //         margin: const EdgeInsets.only(top: 10),
-                  //         child: Wrap(
-                  //           alignment: WrapAlignment.start,
-                  //           spacing: 10.0,
-                  //           runSpacing: 10.0,
-                  //           children: <Widget>[
-                  //             CustomChoiceChip(
-                  //               text: "Madhapar Chowk",
-                  //               borderColor:
-                  //                   Color.fromARGB(255, 177, 177, 177),
-                  //               boxColor:
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //               textColor:
-                  //                   Color.fromARGB(255, 77, 77, 77),
-                  //             ),
-                  //             CustomChoiceChip(
-                  //               text: "GreenLand Chowk",
-                  //               borderColor:
-                  //                   Color.fromARGB(255, 177, 177, 177),
-                  //               boxColor:
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //               textColor:
-                  //                   Color.fromARGB(255, 77, 77, 77),
-                  //             ),
-                  //             CustomChoiceChip(
-                  //               text: "AajiDam",
-                  //               borderColor:
-                  //                   Color.fromARGB(255, 177, 177, 177),
-                  //               boxColor:
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //               textColor:
-                  //                   Color.fromARGB(255, 77, 77, 77),
-                  //             ),
-                  //             CustomChoiceChip(
-                  //               text: "AaryaSamaj",
-                  //               marginTop: EdgeInsets.only(top: 6),
-                  //               borderColor:
-                  //                   Color.fromARGB(255, 177, 177, 177),
-                  //               boxColor:
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //               textColor:
-                  //                   Color.fromARGB(255, 77, 77, 77),
-                  //             ),
-                  //             CustomChoiceChip(
-                  //               text: "Aazad Chowk",
-                  //               marginTop: EdgeInsets.only(top: 6),
-                  //               borderColor:
-                  //                   Color.fromARGB(255, 177, 177, 177),
-                  //               boxColor:
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //               textColor:
-                  //                   Color.fromARGB(255, 77, 77, 77),
-                  //             ),
-                  //             CustomChoiceChip(
-                  //               text: "Bedi",
-                  //               marginTop: EdgeInsets.only(top: 6),
-                  //               borderColor:
-                  //                   Color.fromARGB(255, 177, 177, 177),
-                  //               boxColor:
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //               textColor:
-                  //                   Color.fromARGB(255, 77, 77, 77),
-                  //             ),
-                  //             CustomChoiceChip(
-                  //               text: "Show All",
-                  //               marginTop: EdgeInsets.only(top: 6),
-                  //               borderColor:
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //               boxColor:
-                  //                   Color.fromARGB(255, 185, 185, 185),
-                  //               textColor:
-                  //                   Color.fromARGB(255, 255, 255, 255),
-                  //             ),
-                  //           ],
-                  //         ),
-                  //       ),
-                  //     ],
+                  _showResult ? customTimingView() : Container(),
+                  // Expanded(
+                  //   child: ListView.builder(
+                  //     scrollDirection: Axis.vertical,
+                  //     itemBuilder: (context, index) {
+                  //       return CustomExpansionTile(
+                  //           brtsPickUpPointName:
+                  //               brtsSearchResult[index].BrtsPickUpPointName,
+                  //           brtsRouteDetails: brtsSearchResultDetails[index]);
+                  //     },
+                  //     shrinkWrap: true,
+                  //     itemCount: brtsSearchResult.length,
                   //   ),
                   // ),
                 ],
@@ -249,6 +160,265 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
         ),
       ),
     );
+  }
+
+  Widget customTimingView() {
+    timings.clear();
+    return FutureBuilder(
+      future: getTimings(
+          fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime()),
+      builder: (context, snapshot) {
+        if (snapshot != null && snapshot.hasData) {
+          for (var i = 0; i < snapshot.data!.length; i++) {
+            timings.add(snapshot.data![i]["time"]);
+          }
+          return Padding(
+            padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+            child: Container(
+              // margin: EdgeInsets.only(left: .5.h),
+              padding: EdgeInsets.only(left: .5.h),
+              child: Column(
+                children: [
+                  FutureBuilder(
+                    future: getBrtsDetails(
+                        fromID: fromID["val"], toID: toID["val"]),
+                    builder: (context, snapshot) {
+                      print(snapshot.data);
+                      if (snapshot != null && snapshot.hasData) {
+                        return Container(
+                          child: getCard(
+                              distance: "${snapshot.data?.BrtsDistance} km.",
+                              fare: "₹ ${snapshot.data?.BrtsFare}/-",
+                              duration:
+                                  "${snapshot.data?.BrtsTravellingTime} minutes"),
+                        );
+                      }
+                      return Container();
+                    },
+                  ),
+                  Container(
+                    padding: EdgeInsets.only(
+                        top: 1.0.h, bottom: 1.0.h, right: 2.0.w, left: 2.0.w),
+                    margin: EdgeInsets.only(top: .5.h, bottom: .5.h),
+                    decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          offset: Offset(0, 1),
+                          blurRadius: 1,
+                          color: ColorConstants.shadowColor,
+                        )
+                      ],
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(1.0.h),
+                      ),
+                      color: ColorConstants.primaryFillColor,
+                    ),
+                    child: CustomText(
+                      text: "Bus Timings",
+                      fontFamily: "Poppins",
+                      fontSize: 12.0.sp,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,childAspectRatio: 3/1.5,crossAxisSpacing: 1.w,mainAxisSpacing: 0.5.h),
+                    itemBuilder: (context, index) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              offset: Offset(0, 1),
+                              blurRadius: 1,
+                              color: ColorConstants.shadowColor,
+                            )
+                          ],
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(1.0.h),
+                          ),
+                          color: ColorConstants.primaryAccentTextColor,
+                        ),
+                        padding: EdgeInsets.symmetric(vertical: 1.0.h),
+                        margin: EdgeInsets.symmetric(
+                            vertical: .5.h, horizontal: .5.w),
+                        alignment: Alignment.center,
+                        child: CustomText(
+                          text: timings[index],
+                          fontFamily: 'Poppins',
+                          fontSize: 11.5.sp,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      );
+                    },
+                    itemCount: timings.length,
+                  ),
+                  // ListView.builder(
+                  //   physics: const ClampingScrollPhysics(),
+                  //   itemBuilder: (context, index) {
+                  //     // print(snapshot.data);
+                  //     return Container(
+                  //       decoration: BoxDecoration(
+                  //         boxShadow: [
+                  //           BoxShadow(
+                  //             offset: Offset(0, 1),
+                  //             blurRadius: 1,
+                  //             color: ColorConstants.shadowColor,
+                  //           )
+                  //         ],
+                  //         borderRadius: BorderRadius.all(
+                  //           Radius.circular(1.0.h),
+                  //         ),
+                  //         color: ColorConstants.primaryAccentTextColor,
+                  //       ),
+                  //       padding: EdgeInsets.symmetric(vertical: 1.0.h),
+                  //       margin: EdgeInsets.symmetric(
+                  //           vertical: .5.h, horizontal: .5.w),
+                  //       alignment: Alignment.center,
+                  //       child: CustomText(
+                  //         text: timings[index],
+                  //         fontFamily: 'Poppins',
+                  //         fontSize: 11.5.sp,
+                  //         fontWeight: FontWeight.w300,
+                  //       ),
+                  //     );
+                  //   },
+                  //   shrinkWrap: true,
+                  //   itemCount: timings.length,
+                  // ),
+                ],
+              ),
+            ),
+          );
+        }
+        return Center(
+          child: CustomText(
+            text: "No Result Found",
+            fontFamily: "Poppins",
+            fontSize: 12.5.sp,
+            fontWeight: FontWeight.w300,
+          ),
+        );
+      },
+    );
+  }
+
+  Future<List> getTimings(
+      {required int fromID, required int toID, required int time}) async {
+    _Loading = true;
+    var response =
+        jsonDecode(await BaseClient().post('Brts/GetBrtsGetTimings', {
+      // "id": widget.rmtsResultModel.RouteID.toString()
+      "fromID": fromID.toString(),
+      "toID": toID.toString(),
+      "time": time.toString()
+    }).catchError((err) => {print(err.toString())}));
+
+    if (response['IsResult'] == 1) {
+      List<dynamic> temp = List.from(response['ResultList']);
+
+      print(temp);
+      _Loading = false;
+      return temp;
+    }
+    print(response['Message']);
+    _Loading = false;
+    return [];
+  }
+
+  Widget getCard({fare, distance, duration}) {
+    return Container(
+        decoration: BoxDecoration(
+          color: ColorConstants.primaryColor,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Container(
+          // color: Colors.black87,
+          padding: EdgeInsets.all(30),
+          child: Table(
+            children: [
+              TableRow(children: [
+                CustomText(
+                  text: "Fare",
+                  fontFamily: 'Poppins',
+                  fontSize: 13.5.sp,
+                  fontWeight: FontWeight.w300,
+                  color: ColorConstants.primaryAccentTextColor,
+                ),
+                // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
+                // Text("Duration"),
+                CustomText(
+                  text: ":",
+                  fontFamily: 'Poppins',
+                  fontSize: 13.5.sp,
+                  fontWeight: FontWeight.w300,
+                  color: ColorConstants.primaryAccentTextColor,
+                ),
+                CustomText(
+                  text: fare,
+                  fontFamily: 'Poppins',
+                  fontSize: 13.5.sp,
+                  fontWeight: FontWeight.w300,
+                  color: ColorConstants.primaryAccentTextColor,
+                ),
+              ]),
+              TableRow(
+                children: [
+                  CustomText(
+                    text: "Distance",
+                    fontFamily: 'Poppins',
+                    fontSize: 13.5.sp,
+                    fontWeight: FontWeight.w300,
+                    color: ColorConstants.primaryAccentTextColor,
+                  ),
+                  // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
+                  // Text("Duration"),
+                  CustomText(
+                    text: ":",
+                    fontFamily: 'Poppins',
+                    fontSize: 13.5.sp,
+                    fontWeight: FontWeight.w300,
+                    color: ColorConstants.primaryAccentTextColor,
+                  ),
+                  CustomText(
+                    text: distance,
+                    fontFamily: 'Poppins',
+                    fontSize: 13.5.sp,
+                    fontWeight: FontWeight.w300,
+                    color: ColorConstants.primaryAccentTextColor,
+                  ),
+                ],
+              ),
+              TableRow(
+                children: [
+                  CustomText(
+                    text: "Duration",
+                    fontFamily: 'Poppins',
+                    fontSize: 13.5.sp,
+                    fontWeight: FontWeight.w300,
+                    color: ColorConstants.primaryAccentTextColor,
+                  ),
+                  // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
+                  // Text("Duration"),
+                  CustomText(
+                    text: ":",
+                    fontFamily: 'Poppins',
+                    fontSize: 13.5.sp,
+                    fontWeight: FontWeight.w300,
+                    color: ColorConstants.primaryAccentTextColor,
+                  ),
+                  CustomText(
+                    text: duration,
+                    fontFamily: 'Poppins',
+                    fontSize: 13.5.sp,
+                    fontWeight: FontWeight.w300,
+                    color: ColorConstants.primaryAccentTextColor,
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ));
   }
 
   getBrtsRoute({required fromID, required toID}) async {
@@ -305,14 +475,18 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
     }
     print(response['Message']);
     _Loading = false;
-
     return null;
+  }
+
+  int getCurrTime() {
+    var time = int.parse(
+        TimeOfDay.now().hour.toString() + TimeOfDay.now().minute.toString());
+    return time;
   }
 
   Future<List<BrtsPickupPoints>> getBrtsPickupPoints() async {
     _Loading = true;
     fromPickupPoints.clear();
-    brtslist.clear();
     var response =
         jsonDecode(await BaseClient().get('Brts/GetAllBrtsPickupPoints'));
     if (response['IsResult'] == 1) {
@@ -321,11 +495,8 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
       for (var t in temp) {
         fromPickupPoints.add(BrtsPickupPoints.fromJSON(t));
       }
-      for (var b in fromPickupPoints) {
-        brtslist.add(b.BrtsPickUpPointName);
-        // print(b.BrtsPickupPointID);
-      }
-      List<BrtsPickupPoints> fromtemp, totemp;
+      toPickupPoints = fromPickupPoints.toList();
+      /*List<BrtsPickupPoints> fromtemp, totemp;
       fromtemp = [];
       totemp = [];
       for (var e in fromPickupPoints) {
@@ -338,7 +509,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
         }
       }
       toPickupPoints = totemp;
-      fromPickupPoints = fromtemp;
+      fromPickupPoints = fromtemp;*/
       // print(response['ResultList']);
       print(fromPickupPoints.toString());
       // print(toPickupPoints.toString());

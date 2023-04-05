@@ -1,5 +1,7 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/brts_pickup_points.dart';
+import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 
@@ -45,18 +47,12 @@ class _CustomDropDownState extends State<CustomDropDown> {
           child: SizedBox(
             height: 39,
             child: Container(
-              child: DropdownButtonFormField(
-                // decoration: InputDecoration(
-                //   // hintText: "Name",
-                //   labelStyle: TextStyle(color: Colors.black),
-                //   filled: true,
-                //   fillColor: const Color.fromARGB(255, 242, 242, 242),
-                //   border: OutlineInputBorder(
-                //     borderSide: BorderSide.none,
-                //     borderRadius: BorderRadius.circular(10),
-                //   ),
-                // ),
-
+              child: DropdownButtonFormField2(
+                buttonStyleData: ButtonStyleData(
+                  decoration: BoxDecoration(
+                    color: ColorConstants.primaryFillColor
+                  ),
+                ),
                 focusNode: widget.focusNode,
                 items: widget.brtsPickupPoints
                     .map((e) => DropdownMenuItem(
