@@ -136,19 +136,6 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                     ),
                   ),
                   _showResult ? customTimingView() : Container(),
-                  // Expanded(
-                  //   child: ListView.builder(
-                  //     scrollDirection: Axis.vertical,
-                  //     itemBuilder: (context, index) {
-                  //       return CustomExpansionTile(
-                  //           brtsPickUpPointName:
-                  //               brtsSearchResult[index].BrtsPickUpPointName,
-                  //           brtsRouteDetails: brtsSearchResultDetails[index]);
-                  //     },
-                  //     shrinkWrap: true,
-                  //     itemCount: brtsSearchResult.length,
-                  //   ),
-                  // ),
                 ],
               );
             } else if (_Loading) {
@@ -172,9 +159,8 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
             timings.add(snapshot.data![i]["time"]);
           }
           return Padding(
-            padding: const EdgeInsets.fromLTRB(20, 30, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
             child: Container(
-              // margin: EdgeInsets.only(left: .5.h),
               padding: EdgeInsets.only(left: .5.h),
               child: Column(
                 children: [
@@ -189,7 +175,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                               distance: "${snapshot.data?.BrtsDistance} km.",
                               fare: "₹ ${snapshot.data?.BrtsFare}/-",
                               duration:
-                                  "${snapshot.data?.BrtsTravellingTime} minutes"),
+                                  "${snapshot.data?.BrtsTravellingTime} mins"),
                         );
                       }
                       return Container();
@@ -198,7 +184,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                   Container(
                     padding: EdgeInsets.only(
                         top: 1.0.h, bottom: 1.0.h, right: 2.0.w, left: 2.0.w),
-                    margin: EdgeInsets.only(top: .5.h, bottom: .5.h),
+                    margin: EdgeInsets.only(top: 2.5.h, bottom: 1.5.h),
                     decoration: BoxDecoration(
                       boxShadow: [
                         BoxShadow(
@@ -219,75 +205,47 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  GridView.builder(
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        childAspectRatio: 3 / 1.5,
-                        crossAxisSpacing: 1.w,
-                        mainAxisSpacing: 0.5.h),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              offset: Offset(0, 1),
-                              blurRadius: 1,
-                              color: ColorConstants.shadowColor,
-                            )
-                          ],
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(1.0.h),
+                  Container(
+                    height: 20.0.h,
+                    child: GridView.builder(
+                      shrinkWrap: true,
+                      primary: true,
+                      scrollDirection: Axis.vertical,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          childAspectRatio: 3 / 1.5,
+                          crossAxisSpacing: 1.w,
+                          mainAxisSpacing: 0.5.h),
+                      itemBuilder: (context, index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            boxShadow: [
+                              BoxShadow(
+                                offset: Offset(0, 1),
+                                blurRadius: 1,
+                                color: ColorConstants.shadowColor,
+                              )
+                            ],
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(1.0.h),
+                            ),
+                            color: ColorConstants.primaryAccentTextColor,
                           ),
-                          color: ColorConstants.primaryAccentTextColor,
-                        ),
-                        padding: EdgeInsets.symmetric(vertical: 1.0.h),
-                        margin: EdgeInsets.symmetric(
-                            vertical: .5.h, horizontal: .5.w),
-                        alignment: Alignment.center,
-                        child: CustomText(
-                          text: timings[index],
-                          fontFamily: 'Poppins',
-                          fontSize: 11.5.sp,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      );
-                    },
-                    itemCount: timings.length,
+                          padding: EdgeInsets.symmetric(vertical: 1.0.h),
+                          margin: EdgeInsets.symmetric(
+                              vertical: .5.h, horizontal: .5.w),
+                          alignment: Alignment.center,
+                          child: CustomText(
+                            text: timings[index],
+                            fontFamily: 'Poppins',
+                            fontSize: 11.5.sp,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        );
+                      },
+                      itemCount: timings.length,
+                    ),
                   ),
-                  // ListView.builder(
-                  //   physics: const ClampingScrollPhysics(),
-                  //   itemBuilder: (context, index) {
-                  //     // print(snapshot.data);
-                  //     return Container(
-                  //       decoration: BoxDecoration(
-                  //         boxShadow: [
-                  //           BoxShadow(
-                  //             offset: Offset(0, 1),
-                  //             blurRadius: 1,
-                  //             color: ColorConstants.shadowColor,
-                  //           )
-                  //         ],
-                  //         borderRadius: BorderRadius.all(
-                  //           Radius.circular(1.0.h),
-                  //         ),
-                  //         color: ColorConstants.primaryAccentTextColor,
-                  //       ),
-                  //       padding: EdgeInsets.symmetric(vertical: 1.0.h),
-                  //       margin: EdgeInsets.symmetric(
-                  //           vertical: .5.h, horizontal: .5.w),
-                  //       alignment: Alignment.center,
-                  //       child: CustomText(
-                  //         text: timings[index],
-                  //         fontFamily: 'Poppins',
-                  //         fontSize: 11.5.sp,
-                  //         fontWeight: FontWeight.w300,
-                  //       ),
-                  //     );
-                  //   },
-                  //   shrinkWrap: true,
-                  //   itemCount: timings.length,
-                  // ),
                 ],
               ),
             ),
