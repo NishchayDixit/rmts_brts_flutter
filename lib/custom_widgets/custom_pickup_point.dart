@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/rmts_pickup_points.dart';
 import 'package:rmts_brts/rmts_buses_pickup.dart';
 import 'package:sizer/sizer.dart';
-
 import '../config/color_constants.dart';
 
 class CustomPickupPoint extends StatefulWidget {
@@ -32,14 +31,15 @@ class _CustomPickupPointState extends State<CustomPickupPoint> {
         ),
         onPressed: () {
           Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) =>
-                    RmtsBusesPickup(rmtsPickupPoint: widget.rmtsPickupPoint),
-              ));
+            context,
+            MaterialPageRoute(
+              builder: (context) =>
+                  RmtsBusesPickup(rmtsPickupPoint: widget.rmtsPickupPoint),
+            ),
+          );
         },
         child: Row(
-          children: [
+          children: <Widget>[
             Expanded(
               flex: 10,
               child: Container(
@@ -52,15 +52,16 @@ class _CustomPickupPointState extends State<CustomPickupPoint> {
             Expanded(
               flex: 70,
               child: Container(
-                margin: EdgeInsets.only(left: 10.0),
+                margin: const EdgeInsets.only(left: 10.0),
                 alignment: Alignment.centerLeft,
                 child: Text(
-                    widget.rmtsPickupPoint.PickupPointNameEnglish.toString(),
-                    // overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: ColorConstants.seconderyTextColor,
-                    )),
+                  widget.rmtsPickupPoint.PickupPointNameEnglish.toString(),
+                  // overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: ColorConstants.seconderyTextColor,
+                  ),
+                ),
               ),
             ),
             Expanded(

@@ -1,4 +1,3 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/brts_pickup_points.dart';
 import 'package:rmts_brts/config/color_constants.dart';
@@ -10,11 +9,13 @@ class CustomDropDown extends StatefulWidget {
   final FocusNode? focusNode;
   final List<BrtsPickupPoints> brtsPickupPoints;
   dynamic currentSelection;
+
   CustomDropDown(
       {Key? key,
       required this.text,
       this.focusNode,
-      required this.brtsPickupPoints,required this.currentSelection})
+      required this.brtsPickupPoints,
+      required this.currentSelection})
       : super(key: key);
 
   @override
@@ -22,10 +23,8 @@ class CustomDropDown extends StatefulWidget {
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -39,34 +38,47 @@ class _CustomDropDownState extends State<CustomDropDown> {
             fontFamily: 'Poppins',
             fontSize: 12.0,
             fontWeight: FontWeight.w700,
+            color: ColorConstants.primaryTextColor,
           ),
         ),
         SizedBox(width: 4.0.w),
         Expanded(
           flex: 7,
           child: SizedBox(
-            height: 39,
+            height: 5.0.h,
             child: Container(
-              child: DropdownButtonFormField2(
-                buttonStyleData: ButtonStyleData(
-                  decoration: BoxDecoration(
-                    color: ColorConstants.primaryFillColor
-                  ),
-                ),
-                focusNode: widget.focusNode,
-                items: widget.brtsPickupPoints
-                    .map((e) => DropdownMenuItem(
-                          value: int.parse(e.BrtsPickupPointID.toString()),
-                          child: Text(e.BrtsPickUpPointName),
-                        ))
-                    .toList(),
+              padding: EdgeInsets.symmetric(horizontal: 5.0.w),
+              decoration: BoxDecoration(
+                color: ColorConstants.primaryFillColor,
+                borderRadius: BorderRadius.circular(1.0.h),
+              ),
+              child: DropdownButtonHideUnderline(
+                child: DropdownButton(
+                  isExpanded: true,
+                  borderRadius: BorderRadius.circular(1.0.h),
 
-                value: widget.currentSelection["val"],
-                onChanged: (value) {
-                  print(value!);
-                  setState(() => widget.currentSelection["val"] = int.parse(value.toString()));
-                },
-                // value: "a",
+                  isDense: true,
+                  style: TextStyle(
+                      decoration: TextDecoration.none,
+                      fontFamily: 'Poppins',
+                      fontSize: 12.0.sp,
+                      color: Colors.black),
+                  alignment: Alignment.topCenter,
+                  focusNode: widget.focusNode,
+                  items: widget.brtsPickupPoints
+                      .map((e) => DropdownMenuItem(
+                            value: int.parse(e.BrtsPickupPointID.toString()),
+                            child: Text(e.BrtsPickUpPointName),
+                          ))
+                      .toList(),
+                  value: widget.currentSelection["val"],
+                  onChanged: (value) {
+                    print(value!);
+                    setState(() => widget.currentSelection["val"] =
+                        int.parse(value.toString()));
+                  },
+                  // value: "a",
+                ),
               ),
             ),
           ),

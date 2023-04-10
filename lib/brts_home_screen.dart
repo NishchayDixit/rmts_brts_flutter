@@ -81,7 +81,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                                   ],
                                 ),
                                 SizedBox(
-                                  height: 2.0.h,
+                                  height: 1.5.h,
                                 ),
                                 Row(
                                   mainAxisSize: MainAxisSize.max,
@@ -100,15 +100,15 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                             ),
                           ),
                           Container(
-                            margin: const EdgeInsets.only(top: 5, left: 44),
+                            margin: EdgeInsets.only(top: 0.6.h, left: 14.9.w),
                             alignment: Alignment.centerLeft,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                fixedSize: const Size(120.54, 34),
+                                fixedSize: Size(35.0.w, 4.5.h),
                                 backgroundColor: ColorConstants.primaryColor,
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(6),
+                                  borderRadius: BorderRadius.circular(0.8.h),
                                 ),
                               ),
                               onPressed: () {
@@ -222,7 +222,10 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                   GridView.builder(
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,childAspectRatio: 3/1.5,crossAxisSpacing: 1.w,mainAxisSpacing: 0.5.h),
+                        crossAxisCount: 3,
+                        childAspectRatio: 3 / 1.5,
+                        crossAxisSpacing: 1.w,
+                        mainAxisSpacing: 0.5.h),
                     itemBuilder: (context, index) {
                       return Container(
                         decoration: BoxDecoration(
@@ -305,6 +308,8 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   Future<List> getTimings(
       {required int fromID, required int toID, required int time}) async {
     _Loading = true;
+    brtsSearchResult.clear();
+    brtsSearchResultDetails.clear();
     var response =
         jsonDecode(await BaseClient().post('Brts/GetBrtsGetTimings', {
       // "id": widget.rmtsResultModel.RouteID.toString()
@@ -327,18 +332,44 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
 
   Widget getCard({fare, distance, duration}) {
     return Container(
-        decoration: BoxDecoration(
-          color: ColorConstants.primaryColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Container(
-          // color: Colors.black87,
-          padding: EdgeInsets.all(30),
-          child: Table(
-            children: [
-              TableRow(children: [
+      decoration: BoxDecoration(
+        color: ColorConstants.primaryColor,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Container(
+        // color: Colors.black87,
+        padding: const EdgeInsets.all(30),
+        child: Table(
+          children: [
+            TableRow(children: [
+              CustomText(
+                text: "Fare",
+                fontFamily: 'Poppins',
+                fontSize: 13.5.sp,
+                fontWeight: FontWeight.w300,
+                color: ColorConstants.primaryAccentTextColor,
+              ),
+              // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
+              // Text("Duration"),
+              CustomText(
+                text: ":",
+                fontFamily: 'Poppins',
+                fontSize: 13.5.sp,
+                fontWeight: FontWeight.w300,
+                color: ColorConstants.primaryAccentTextColor,
+              ),
+              CustomText(
+                text: fare,
+                fontFamily: 'Poppins',
+                fontSize: 13.5.sp,
+                fontWeight: FontWeight.w300,
+                color: ColorConstants.primaryAccentTextColor,
+              ),
+            ]),
+            TableRow(
+              children: [
                 CustomText(
-                  text: "Fare",
+                  text: "Distance",
                   fontFamily: 'Poppins',
                   fontSize: 13.5.sp,
                   fontWeight: FontWeight.w300,
@@ -354,70 +385,45 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                   color: ColorConstants.primaryAccentTextColor,
                 ),
                 CustomText(
-                  text: fare,
+                  text: distance,
                   fontFamily: 'Poppins',
                   fontSize: 13.5.sp,
                   fontWeight: FontWeight.w300,
                   color: ColorConstants.primaryAccentTextColor,
                 ),
-              ]),
-              TableRow(
-                children: [
-                  CustomText(
-                    text: "Distance",
-                    fontFamily: 'Poppins',
-                    fontSize: 13.5.sp,
-                    fontWeight: FontWeight.w300,
-                    color: ColorConstants.primaryAccentTextColor,
-                  ),
-                  // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
-                  // Text("Duration"),
-                  CustomText(
-                    text: ":",
-                    fontFamily: 'Poppins',
-                    fontSize: 13.5.sp,
-                    fontWeight: FontWeight.w300,
-                    color: ColorConstants.primaryAccentTextColor,
-                  ),
-                  CustomText(
-                    text: distance,
-                    fontFamily: 'Poppins',
-                    fontSize: 13.5.sp,
-                    fontWeight: FontWeight.w300,
-                    color: ColorConstants.primaryAccentTextColor,
-                  ),
-                ],
-              ),
-              TableRow(
-                children: [
-                  CustomText(
-                    text: "Duration",
-                    fontFamily: 'Poppins',
-                    fontSize: 13.5.sp,
-                    fontWeight: FontWeight.w300,
-                    color: ColorConstants.primaryAccentTextColor,
-                  ),
-                  // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
-                  // Text("Duration"),
-                  CustomText(
-                    text: ":",
-                    fontFamily: 'Poppins',
-                    fontSize: 13.5.sp,
-                    fontWeight: FontWeight.w300,
-                    color: ColorConstants.primaryAccentTextColor,
-                  ),
-                  CustomText(
-                    text: duration,
-                    fontFamily: 'Poppins',
-                    fontSize: 13.5.sp,
-                    fontWeight: FontWeight.w300,
-                    color: ColorConstants.primaryAccentTextColor,
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ));
+              ],
+            ),
+            TableRow(
+              children: [
+                CustomText(
+                  text: "Duration",
+                  fontFamily: 'Poppins',
+                  fontSize: 13.5.sp,
+                  fontWeight: FontWeight.w300,
+                  color: ColorConstants.primaryAccentTextColor,
+                ),
+                // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
+                // Text("Duration"),
+                CustomText(
+                  text: ":",
+                  fontFamily: 'Poppins',
+                  fontSize: 13.5.sp,
+                  fontWeight: FontWeight.w300,
+                  color: ColorConstants.primaryAccentTextColor,
+                ),
+                CustomText(
+                  text: duration,
+                  fontFamily: 'Poppins',
+                  fontSize: 13.5.sp,
+                  fontWeight: FontWeight.w300,
+                  color: ColorConstants.primaryAccentTextColor,
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   getBrtsRoute({required fromID, required toID}) async {

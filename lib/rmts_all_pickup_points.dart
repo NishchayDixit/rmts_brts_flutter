@@ -5,6 +5,7 @@ import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_pickup_points.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_pickup_point.dart';
+import 'package:sizer/sizer.dart';
 
 class RmtsAllPickupPoints extends StatefulWidget {
   const RmtsAllPickupPoints({Key? key}) : super(key: key);
@@ -40,8 +41,11 @@ class _RmtsAllPickupPointsState extends State<RmtsAllPickupPoints> {
                     scrollDirection: Axis.vertical,
                     addAutomaticKeepAlives: true,
                     itemBuilder: (context, index) {
-                      return CustomPickupPoint(
-                          rmtsPickupPoint: rmtsPickupPoints[index]);
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 2.0.w),
+                        child: CustomPickupPoint(
+                            rmtsPickupPoint: rmtsPickupPoints[index]),
+                      );
                     },
                     itemCount: rmtsPickupPoints.length,
                   );
