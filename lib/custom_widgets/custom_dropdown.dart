@@ -52,7 +52,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                 color: ColorConstants.primaryFillColor,
                 borderRadius: BorderRadius.circular(1.0.h),
               ),
-              child: DropdownButtonHideUnderline(
+              child: widget.brtsPickupPoints.isNotEmpty? DropdownButtonHideUnderline(
                 child: DropdownButton(
                   isExpanded: true,
                   borderRadius: BorderRadius.circular(1.0.h),
@@ -79,7 +79,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
                   },
                   // value: "a",
                 ),
-              ),
+              ):Container(),
             ),
           ),
         ),

@@ -31,8 +31,8 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
 
   @override
   void initState() {
-    fromID["val"] = 1;
-    toID["val"] = 1;
+    // fromID["val"] = 1;
+    // toID["val"] = 1;
     super.initState();
   }
 
@@ -106,10 +106,10 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                               Checkbox(
                                 value: _fromnow,
                                 onChanged: (value) {
-                                  setState((){
+                                  setState(() {
                                     _fromnow = value;
                                   });
-                                  },
+                                },
                                 checkColor: ColorConstants.primaryFillColor,
                               ),
                               CustomText(
@@ -497,12 +497,20 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   Future<List<BrtsPickupPoints>> getBrtsPickupPoints() async {
     _Loading = true;
     fromPickupPoints.clear();
+    toPickupPoints.clear();
+    fromPickupPoints.add(
+      const BrtsPickupPoints(BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
+    );
+    toPickupPoints.add(
+      const BrtsPickupPoints(BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
+    );
     var response =
         jsonDecode(await BaseClient().get('Brts/GetAllBrtsPickupPoints'));
     if (response['IsResult'] == 1) {
       List<dynamic> temp = List.from(response['ResultList']);
 
       for (var t in temp) {
+        toPickupPoints.add(BrtsPickupPoints.fromJSON(t));
         fromPickupPoints.add(BrtsPickupPoints.fromJSON(t));
       }
       toPickupPoints = fromPickupPoints.toList();
