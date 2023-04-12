@@ -27,6 +27,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   bool _Loading = true;
   bool _showResult = false;
   List<String> timings = [];
+  bool? _fromnow = true;
 
   @override
   void initState() {
@@ -99,37 +100,60 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                               ],
                             ),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(top: 0.6.h, left: 14.9.w),
-                            alignment: Alignment.centerLeft,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                fixedSize: Size(35.0.w, 4.5.h),
-                                backgroundColor: ColorConstants.primaryColor,
-                                elevation: 0,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(0.8.h),
+                          //Show Result Button.
+                          Row(
+                            children: [
+                              Checkbox(
+                                value: _fromnow,
+                                onChanged: (value) {
+                                  setState((){
+                                    _fromnow = value;
+                                  });
+                                  },
+                                checkColor: ColorConstants.primaryFillColor,
+                              ),
+                              CustomText(
+                                  text: "From Now",
+                                  fontFamily: "Poppins",
+                                  fontSize: 15.0,
+                                  fontWeight: FontWeight.w400),
+                              Container(
+                                margin:
+                                    EdgeInsets.only(top: 0.6.h, left: 14.9.w),
+                                alignment: Alignment.centerLeft,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    fixedSize: Size(35.0.w, 4.5.h),
+                                    backgroundColor:
+                                        ColorConstants.primaryColor,
+                                    elevation: 0,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          BorderRadius.circular(0.8.h),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    print(fromID.toString() +
+                                        "->" +
+                                        toID.toString());
+                                    // getBrtsRoute(
+                                    //     fromID: fromID["val"], toID: toID["val"]);
+                                    // getTimings(fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime());
+                                    // (){
+                                    setState(() {
+                                      _showResult = true;
+                                    });
+                                    // }();
+                                  },
+                                  child: const CustomText(
+                                    text: "Show Result",
+                                    fontFamily: 'Poppins',
+                                    fontSize: 12.0,
+                                    fontWeight: FontWeight.w700,
+                                  ),
                                 ),
                               ),
-                              onPressed: () {
-                                print(
-                                    fromID.toString() + "->" + toID.toString());
-                                // getBrtsRoute(
-                                //     fromID: fromID["val"], toID: toID["val"]);
-                                // getTimings(fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime());
-                                // (){
-                                setState(() {
-                                  _showResult = true;
-                                });
-                                // }();
-                              },
-                              child: const CustomText(
-                                text: "Show Result",
-                                fontFamily: 'Poppins',
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
+                            ],
                           ),
                         ],
                       ),
@@ -151,8 +175,10 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   Widget customTimingView() {
     timings.clear();
     return FutureBuilder(
-      future: getTimings(
-          fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime()),
+      future: _fromnow!
+          ? getTimingsFromNow(
+              fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime())
+          : getTimings(fromID: fromID["val"]!, toID: toID["val"]!),
       builder: (context, snapshot) {
         if (snapshot != null && snapshot.hasData) {
           for (var i = 0; i < snapshot.data!.length; i++) {
@@ -263,13 +289,34 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
     );
   }
 
-  Future<List> getTimings(
-      {required int fromID, required int toID, required int time}) async {
+  Future<List> getTimings({required int fromID, required int toID}) async {
     _Loading = true;
     brtsSearchResult.clear();
     brtsSearchResultDetails.clear();
     var response =
         jsonDecode(await BaseClient().post('Brts/GetBrtsGetTimings', {
+      // "id": widget.rmtsResultModel.RouteID.toString()
+      "fromID": fromID.toString(),
+      "toID": toID.toString()
+    }).catchError((err) => {print(err.toString())}));
+
+    if (response['IsResult'] == 1) {
+      List<dynamic> temp = List.from(response['ResultList']);
+
+      print(temp);
+      _Loading = false;
+      return temp;
+    }
+    print(response['Message']);
+    _Loading = false;
+    return [];
+  }
+
+  Future<List> getTimingsFromNow(
+      {required int fromID, required int toID, required int time}) async {
+    _Loading = true;
+    var response =
+        jsonDecode(await BaseClient().post('Brts/GetBrtsGetTimingsNow', {
       // "id": widget.rmtsResultModel.RouteID.toString()
       "fromID": fromID.toString(),
       "toID": toID.toString(),
