@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
 import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
-import 'package:rmts_brts/rmts_bus_details.dart';
+import 'package:rmts_brts/Screens/rmts_bus_details.dart';
 import 'package:sizer/sizer.dart';
 
 class CustomSingleBus extends StatefulWidget {

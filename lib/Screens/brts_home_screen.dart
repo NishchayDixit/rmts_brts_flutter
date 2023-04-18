@@ -27,7 +27,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   bool _Loading = true;
   bool _showResult = false;
   List<String> timings = [];
-  bool? _fromnow = true;
+  bool _fromnow = true;
 
   @override
   void initState() {
@@ -107,7 +107,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                                 value: _fromnow,
                                 onChanged: (value) {
                                   setState(() {
-                                    _fromnow = value;
+                                    _fromnow = value!;
                                   });
                                 },
                                 checkColor: ColorConstants.primaryFillColor,
@@ -175,7 +175,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   Widget customTimingView() {
     timings.clear();
     return FutureBuilder(
-      future: _fromnow!
+      future: _fromnow
           ? getTimingsFromNow(
               fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime())
           : getTimings(fromID: fromID["val"]!, toID: toID["val"]!),
@@ -499,10 +499,12 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
     fromPickupPoints.clear();
     toPickupPoints.clear();
     fromPickupPoints.add(
-      const BrtsPickupPoints(BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
+      const BrtsPickupPoints(
+          BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
     );
     toPickupPoints.add(
-      const BrtsPickupPoints(BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
+      const BrtsPickupPoints(
+          BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
     );
     var response =
         jsonDecode(await BaseClient().get('Brts/GetAllBrtsPickupPoints'));
@@ -513,7 +515,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
         toPickupPoints.add(BrtsPickupPoints.fromJSON(t));
         fromPickupPoints.add(BrtsPickupPoints.fromJSON(t));
       }
-      toPickupPoints = fromPickupPoints.toList();
+      // toPickupPoints = fromPickupPoints.toList();
       /*List<BrtsPickupPoints> fromtemp, totemp;
       fromtemp = [];
       totemp = [];

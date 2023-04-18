@@ -8,9 +8,9 @@ import 'package:rmts_brts/custom_widgets/custom_choice_chip.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:rmts_brts/custom_widgets/custom_text_field.dart';
-import 'package:rmts_brts/rmts_all_buses.dart';
-import 'package:rmts_brts/rmts_all_pickup_points.dart';
-import 'package:rmts_brts/rmts_serach_result.dart';
+import 'package:rmts_brts/Screens/rmts_all_buses.dart';
+import 'package:rmts_brts/Screens/rmts_all_pickup_points.dart';
+import 'package:rmts_brts/Screens/rmts_serach_result.dart';
 import 'package:sizer/sizer.dart';
 
 class RMTSHomeScreen extends StatefulWidget {

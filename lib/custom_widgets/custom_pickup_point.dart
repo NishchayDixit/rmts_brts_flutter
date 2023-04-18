@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/rmts_pickup_points.dart';
-import 'package:rmts_brts/rmts_buses_pickup.dart';
+import 'package:rmts_brts/Screens/rmts_buses_pickup.dart';
 import 'package:sizer/sizer.dart';
 import '../config/color_constants.dart';
 

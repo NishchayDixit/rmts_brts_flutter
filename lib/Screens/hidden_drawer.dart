@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
-import 'package:rmts_brts/about_us.dart';
+import 'package:rmts_brts/Screens/about_us.dart';
 import 'package:rmts_brts/config/color_constants.dart';
-import 'package:rmts_brts/rmts_brts_tab_screen.dart';
-import 'package:rmts_brts/rmts_live_bus.dart';
+import 'package:rmts_brts/Screens/rmts_brts_tab_screen.dart';
+import 'package:rmts_brts/Screens/rmts_live_bus.dart';
 import 'package:sizer/sizer.dart';
 
 class HiddenDrawer extends StatefulWidget {
