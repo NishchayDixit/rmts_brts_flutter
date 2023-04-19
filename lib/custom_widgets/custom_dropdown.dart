@@ -52,34 +52,35 @@ class _CustomDropDownState extends State<CustomDropDown> {
                 color: ColorConstants.primaryFillColor,
                 borderRadius: BorderRadius.circular(1.0.h),
               ),
-              child: widget.brtsPickupPoints.isNotEmpty? DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  isExpanded: true,
-                  borderRadius: BorderRadius.circular(1.0.h),
-
-                  isDense: true,
-                  style: TextStyle(
-                      decoration: TextDecoration.none,
-                      fontFamily: 'Poppins',
-                      fontSize: 12.0.sp,
-                      color: Colors.black),
-                  alignment: Alignment.topCenter,
-                  focusNode: widget.focusNode,
-                  items: widget.brtsPickupPoints
-                      .map((e) => DropdownMenuItem(
-                            value: int.parse(e.BrtsPickupPointID.toString()),
-                            child: Text(e.BrtsPickUpPointName),
-                          ))
-                      .toList(),
-                  value: widget.currentSelection["val"],
-                  onChanged: (value) {
-                    print(value!);
-                    setState(() => widget.currentSelection["val"] =
-                        int.parse(value.toString()));
-                  },
-                  // value: "a",
-                ),
-              ):Container(),
+              child: widget.brtsPickupPoints.isNotEmpty
+                  ? DropdownButtonHideUnderline(
+                      child: DropdownButton(
+                        isExpanded: true,
+                        borderRadius: BorderRadius.circular(1.0.h),
+                        isDense: true,
+                        style: TextStyle(
+                            decoration: TextDecoration.none,
+                            fontFamily: 'Poppins',
+                            fontSize: 12.0.sp,
+                            color: Colors.black),
+                        alignment: Alignment.topCenter,
+                        focusNode: widget.focusNode,
+                        items: widget.brtsPickupPoints
+                            .map((e) => DropdownMenuItem(
+                                  value:
+                                      int.parse(e.BrtsPickupPointID.toString()),
+                                  child: Text(e.BrtsPickUpPointName),
+                                ))
+                            .toList(),
+                        value: widget.currentSelection["val"],
+                        onChanged: (value) {
+                          print(value!);
+                          setState(() => widget.currentSelection["val"] =
+                              int.parse(value.toString()));
+                        },
+                      ),
+                    )
+                  : Container(),
             ),
           ),
         ),

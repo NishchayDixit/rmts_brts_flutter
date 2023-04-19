@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:rmts_brts/Model/rmts_pickup_points.dart';
 import 'package:rmts_brts/Screens/rmts_buses_pickup.dart';
 import 'package:sizer/sizer.dart';
+
 import '../config/color_constants.dart';
 
 class CustomPickupPoint extends StatefulWidget {
@@ -56,7 +57,6 @@ class _CustomPickupPointState extends State<CustomPickupPoint> {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   widget.rmtsPickupPoint.PickupPointNameEnglish.toString(),
-                  // overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: 14,
                     color: ColorConstants.seconderyTextColor,

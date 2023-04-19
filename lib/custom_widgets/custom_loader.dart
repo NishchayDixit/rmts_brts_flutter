@@ -7,37 +7,36 @@ class CustomLoader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.all(Radius.circular(8)),
-        // ),
-        alignment: Alignment.center,
-        width: 100.w,
-        height: 85.5.h,
-        color: Color.fromARGB(100, 195, 195, 195),
-        child: Container(
-            height: 90,
-            width: 300,
-            padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(Radius.circular(8)),
-            ),
-            child: Row(
-              children: [
-                Expanded(flex: 15, child: CircularProgressIndicator()),
-                Expanded(
-                  flex: 85,
-                  child: Text(
-                    "Please Wait...",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                )
-              ],
-            )));
+      alignment: Alignment.center,
+      width: 100.w,
+      height: 85.5.h,
+      color: Color.fromARGB(100, 195, 195, 195),
+      child: Container(
+        height: 90,
+        width: 300,
+        padding: EdgeInsets.fromLTRB(30, 20, 30, 20),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(8)),
+        ),
+        child: Row(
+          children: [
+            Expanded(flex: 15, child: CircularProgressIndicator()),
+            Expanded(
+              flex: 85,
+              child: Text(
+                "Please Wait...",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Poppins',
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
   }
 }

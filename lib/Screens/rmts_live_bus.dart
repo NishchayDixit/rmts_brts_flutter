@@ -36,8 +36,8 @@ class _MyHomePageState extends State<RmtsLiveBus> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SafeArea(
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          // backgroundColor: Colors.transparent,
+          resizeToAvoidBottomInset:
+              false, // backgroundColor: Colors.transparent,
           body: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
             child: Column(
@@ -175,7 +175,11 @@ class _MyHomePageState extends State<RmtsLiveBus> {
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(color: Colors.black12,blurRadius: 6,spreadRadius: 1.5,offset: Offset(1, 1)),
+          BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              spreadRadius: 1.5,
+              offset: Offset(1, 1)),
         ],
         borderRadius: BorderRadius.all(
           Radius.circular(5.0),
@@ -211,7 +215,6 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                           double.parse(b.Latitude), double.parse(b.Longitude));
                     },
                     child: Container(
-
                       margin: EdgeInsets.only(top: 15, left: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -252,7 +255,6 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                         borderRadius: BorderRadius.all(
                           Radius.circular(6.0.sp),
                         ),
-
                         color: ColorConstants.primaryColor,
                       ),
                       padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
@@ -275,7 +277,9 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                 padding: EdgeInsets.all(7.0.sp),
                 decoration: BoxDecoration(
                   color: ColorConstants.primaryColor,
-                  borderRadius: BorderRadius.all(Radius.circular(6.0.sp),),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(6.0.sp),
+                  ),
                 ),
                 margin: EdgeInsets.all(6.0.sp),
                 child: CustomText(
@@ -301,7 +305,6 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                 color: Colors.black,
               ),
             ],
-
           )
         ],
       ),

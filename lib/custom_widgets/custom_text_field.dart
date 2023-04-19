@@ -17,7 +17,7 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    textEditingController!.text="";
+    textEditingController!.text = "";
     return Row(
       children: <Widget>[
         Expanded(
