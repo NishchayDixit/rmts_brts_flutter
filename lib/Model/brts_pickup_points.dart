@@ -15,12 +15,12 @@ class BrtsPickupPoints {
   factory BrtsPickupPoints.fromJSON(Map<String, dynamic> json) {
     return BrtsPickupPoints(
       BrtsPickupPointID: int.parse(json['BrtsPickUpPointID'].toString()),
-      BrtsPickUpPointName:json['BrtsPickUpPointName'],
+      BrtsPickUpPointName: json['BrtsPickUpPointName'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'BrtsPickUpPointID':BrtsPickupPointID,
-    'BrtsPickUpPointName':BrtsPickUpPointName,
-  };
+        'BrtsPickUpPointID': BrtsPickupPointID,
+        'BrtsPickUpPointName': BrtsPickUpPointName,
+      };
 }

@@ -41,8 +41,7 @@ class _RmtsBusDetailsState extends State<RmtsBusDetails>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        // backgroundColor: Colors.transparent,
+        resizeToAvoidBottomInset: false, // backgroundColor: Colors.transparent,
         body: Column(
           children: [
             Container(
@@ -343,7 +342,8 @@ class _RmtsBusDetailsState extends State<RmtsBusDetails>
                                     borderRadius: BorderRadius.all(
                                       Radius.circular(1.0.h),
                                     ),
-                                    color: ColorConstants.primaryAccentTextColor,
+                                    color:
+                                        ColorConstants.primaryAccentTextColor,
                                   ),
                                   padding:
                                       EdgeInsets.symmetric(vertical: 1.0.h),

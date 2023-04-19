@@ -1,7 +1,5 @@
 class RmtsPickupPoints {
-  final PickupPointID,PickupPointNameEnglish,PickupPointName;
-
-
+  final PickupPointID, PickupPointNameEnglish, PickupPointName;
 
   const RmtsPickupPoints({
     required this.PickupPointID,
@@ -12,14 +10,14 @@ class RmtsPickupPoints {
   factory RmtsPickupPoints.fromJSON(Map<String, dynamic> json) {
     return RmtsPickupPoints(
       PickupPointID: json['PickupPointID'],
-      PickupPointNameEnglish:json['PickupPointNameEnglish'],
+      PickupPointNameEnglish: json['PickupPointNameEnglish'],
       PickupPointName: json['PickupPointName'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'PickupPointID':PickupPointID,
-    'PickupPointNameEnglish':PickupPointNameEnglish,
-    'PickupPointName':PickupPointName,
-  };
+        'PickupPointID': PickupPointID,
+        'PickupPointNameEnglish': PickupPointNameEnglish,
+        'PickupPointName': PickupPointName,
+      };
 }

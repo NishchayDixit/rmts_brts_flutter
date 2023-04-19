@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_osm_plugin/flutter_osm_plugin.dart';
 import 'package:http/http.dart' as http;
 import 'package:maps_launcher/maps_launcher.dart';
 import 'package:rmts_brts/Model/rmts_live_bus_model.dart';
 import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
+import 'package:rmts_brts/custom_widgets/custom_text.dart';
 import 'package:sizer/sizer.dart';
 
 class RmtsLiveBus extends StatefulWidget {
@@ -34,8 +36,8 @@ class _MyHomePageState extends State<RmtsLiveBus> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: SafeArea(
         child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          // backgroundColor: Colors.transparent,
+          resizeToAvoidBottomInset:
+              false, // backgroundColor: Colors.transparent,
           body: Padding(
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
             child: Column(
@@ -161,10 +163,24 @@ class _MyHomePageState extends State<RmtsLiveBus> {
   }
 
   Widget SingleBus(RmtsLiveBusModel b) {
+    GeoPoint currpoint = GeoPoint(
+        latitude: double.parse(b.Latitude),
+        longitude: double.parse(b.Longitude));
+    MapController bmc = MapController(
+      initMapWithUserPosition: false,
+      initPosition: currpoint,
+    );
     return Container(
       margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
       decoration: BoxDecoration(
-        color: Colors.black12,
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+              color: Colors.black12,
+              blurRadius: 6,
+              spreadRadius: 1.5,
+              offset: Offset(1, 1)),
+        ],
         borderRadius: BorderRadius.all(
           Radius.circular(5.0),
         ),
@@ -175,14 +191,21 @@ class _MyHomePageState extends State<RmtsLiveBus> {
           //Maps
           Stack(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(5.0),
-                child: Image.network(
-                    "https://maps.rmtsbus.in/?lat=" +
-                        b.Latitude +
-                        "&lon=" +
-                        b.Longitude,
-                    fit: BoxFit.fill),
+              Container(
+                width: double.infinity,
+                child: AspectRatio(
+                  aspectRatio: 5 / 2,
+                  child: OSMFlutter(
+                    controller: bmc,
+                    initZoom: 15.0,
+                    onMapIsReady: (p0) {
+                      bmc.addMarker(currpoint,
+                          markerIcon: MarkerIcon(
+                            icon: Icon(Icons.location_on_rounded, size: 80),
+                          ));
+                    },
+                  ),
+                ),
               ),
               Row(
                 children: [
@@ -192,15 +215,14 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                           double.parse(b.Latitude), double.parse(b.Longitude));
                     },
                     child: Container(
-                      width: 80,
                       margin: EdgeInsets.only(top: 15, left: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(5),
+                          Radius.circular(6.0.sp),
                         ),
                         color: Colors.white,
                       ),
-                      padding: EdgeInsets.fromLTRB(8, 10, 4, 10),
+                      padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
                       child: Row(
                         children: [
                           Image.asset(
@@ -208,9 +230,13 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                             width: 16,
                             fit: BoxFit.fitWidth,
                           ),
-                          Text('  Maps',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w500)),
+                          CustomText(
+                            text: "  Maps",
+                            fontFamily: 'Poppins',
+                            fontSize: 12.0.sp,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black,
+                          ),
                         ],
                       ),
                     ),
@@ -227,22 +253,59 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                       margin: EdgeInsets.only(top: 15, right: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(5),
+                          Radius.circular(6.0.sp),
                         ),
-                        color: Color.fromARGB(255, 210, 210, 210),
+                        color: ColorConstants.primaryColor,
                       ),
                       padding: EdgeInsets.fromLTRB(8, 10, 8, 10),
-                      child: Text('Refresh'),
+                      child: CustomText(
+                        text: "Refresh",
+                        fontFamily: 'Poppins',
+                        fontSize: 12.0.sp,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white,
+                      ),
                     ),
                   )
                 ],
               ),
             ],
           ),
-          Text(b.A_BusNo.toString()),
-          Text(
-            b.ResponseStatus.toString(),
-          ),
+          Row(
+            children: [
+              Container(
+                padding: EdgeInsets.all(7.0.sp),
+                decoration: BoxDecoration(
+                  color: ColorConstants.primaryColor,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(6.0.sp),
+                  ),
+                ),
+                margin: EdgeInsets.all(6.0.sp),
+                child: CustomText(
+                  text: b.A_BusNo.toString(),
+                  fontFamily: 'Poppins',
+                  fontSize: 12.0.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+              CustomText(
+                text: b.VehicleStatus.toString(),
+                fontFamily: 'Poppins',
+                fontSize: 12.0.sp,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+              CustomText(
+                text: b.Speed.toString(),
+                fontFamily: 'Poppins',
+                fontSize: 12.0.sp,
+                fontWeight: FontWeight.w500,
+                color: Colors.black,
+              ),
+            ],
+          )
         ],
       ),
     );

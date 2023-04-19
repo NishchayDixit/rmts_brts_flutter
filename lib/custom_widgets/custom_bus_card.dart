@@ -30,11 +30,14 @@ class CustomBusCard extends StatelessWidget {
           margin: marginRight,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(1.5.h),
-            // color: const Color.fromARGB(255, 245, 245, 245),
-            gradient: LinearGradient(begin: Alignment.centerLeft,
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
               end: Alignment.centerRight,
-              colors: [ColorConstants.primaryColor,const Color.fromARGB(
-                  255, 103, 130, 255),],),
+              colors: [
+                hexToColor('#112DA6'),
+                hexToColor('#4160E0'),
+              ],
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -60,9 +63,6 @@ class CustomBusCard extends StatelessWidget {
                   ],
                 ),
               ),
-              // SizedBox(
-              //   width: 2.2.w,
-              // ),
               Flexible(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

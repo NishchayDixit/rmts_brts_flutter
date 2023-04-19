@@ -9,18 +9,17 @@ class BrtsRouteDetails {
     required this.BrtsTravellingTime,
   });
 
-
   factory BrtsRouteDetails.fromJSON(Map<String, dynamic> json) {
     return BrtsRouteDetails(
       BrtsFare: json['BrtsFare'],
-      BrtsDistance:json['BrtsDistance'],
-      BrtsTravellingTime:json['BrtsTravellingTime'],
+      BrtsDistance: json['BrtsDistance'],
+      BrtsTravellingTime: json['BrtsTravellingTime'],
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'BrtsFare':BrtsFare,
-    'BrtsDistance':BrtsDistance,
-    'BrtsTravellingTime':BrtsTravellingTime,
-  };
+        'BrtsFare': BrtsFare,
+        'BrtsDistance': BrtsDistance,
+        'BrtsTravellingTime': BrtsTravellingTime,
+      };
 }

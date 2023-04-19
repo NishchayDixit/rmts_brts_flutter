@@ -27,12 +27,10 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   bool _Loading = true;
   bool _showResult = false;
   List<String> timings = [];
-  bool? _fromnow = true;
+  bool _fromnow = true;
 
   @override
   void initState() {
-    // fromID["val"] = 1;
-    // toID["val"] = 1;
     super.initState();
   }
 
@@ -99,15 +97,14 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                                 ),
                               ],
                             ),
-                          ),
-                          //Show Result Button.
+                          ), //Show Result Button.
                           Row(
                             children: [
                               Checkbox(
                                 value: _fromnow,
                                 onChanged: (value) {
                                   setState(() {
-                                    _fromnow = value;
+                                    _fromnow = value!;
                                   });
                                 },
                                 checkColor: ColorConstants.primaryFillColor,
@@ -136,10 +133,6 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                                     print(fromID.toString() +
                                         "->" +
                                         toID.toString());
-                                    // getBrtsRoute(
-                                    //     fromID: fromID["val"], toID: toID["val"]);
-                                    // getTimings(fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime());
-                                    // (){
                                     setState(() {
                                       _showResult = true;
                                     });
@@ -175,7 +168,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   Widget customTimingView() {
     timings.clear();
     return FutureBuilder(
-      future: _fromnow!
+      future: _fromnow
           ? getTimingsFromNow(
               fromID: fromID["val"]!, toID: toID["val"]!, time: getCurrTime())
           : getTimings(fromID: fromID["val"]!, toID: toID["val"]!),
@@ -293,9 +286,8 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
     _Loading = true;
     brtsSearchResult.clear();
     brtsSearchResultDetails.clear();
-    var response =
-        jsonDecode(await BaseClient().post('Brts/GetBrtsGetTimings', {
-      // "id": widget.rmtsResultModel.RouteID.toString()
+    var response = jsonDecode(await BaseClient().post(
+        'Brts/GetBrtsGetTimings', {
       "fromID": fromID.toString(),
       "toID": toID.toString()
     }).catchError((err) => {print(err.toString())}));
@@ -315,9 +307,8 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
   Future<List> getTimingsFromNow(
       {required int fromID, required int toID, required int time}) async {
     _Loading = true;
-    var response =
-        jsonDecode(await BaseClient().post('Brts/GetBrtsGetTimingsNow', {
-      // "id": widget.rmtsResultModel.RouteID.toString()
+    var response = jsonDecode(await BaseClient().post(
+        'Brts/GetBrtsGetTimingsNow', {
       "fromID": fromID.toString(),
       "toID": toID.toString(),
       "time": time.toString()
@@ -354,8 +345,6 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                 fontWeight: FontWeight.w300,
                 color: ColorConstants.primaryAccentTextColor,
               ),
-              // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
-              // Text("Duration"),
               CustomText(
                 text: ":",
                 fontFamily: 'Poppins',
@@ -407,8 +396,6 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
                   fontWeight: FontWeight.w300,
                   color: ColorConstants.primaryAccentTextColor,
                 ),
-                // CustomText(text: "Duration", fontFamily: "Poppins", fontSize: 20, fontWeight: FontWeight.w400),
-                // Text("Duration"),
                 CustomText(
                   text: ":",
                   fontFamily: 'Poppins',
@@ -499,38 +486,22 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
     fromPickupPoints.clear();
     toPickupPoints.clear();
     fromPickupPoints.add(
-      const BrtsPickupPoints(BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
+      const BrtsPickupPoints(
+          BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
     );
     toPickupPoints.add(
-      const BrtsPickupPoints(BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
+      const BrtsPickupPoints(
+          BrtsPickupPointID: -1, BrtsPickUpPointName: "Select Point"),
     );
     var response =
         jsonDecode(await BaseClient().get('Brts/GetAllBrtsPickupPoints'));
     if (response['IsResult'] == 1) {
       List<dynamic> temp = List.from(response['ResultList']);
-
       for (var t in temp) {
         toPickupPoints.add(BrtsPickupPoints.fromJSON(t));
         fromPickupPoints.add(BrtsPickupPoints.fromJSON(t));
       }
-      // toPickupPoints = fromPickupPoints.toList();
-      /*List<BrtsPickupPoints> fromtemp, totemp;
-      fromtemp = [];
-      totemp = [];
-      for (var e in fromPickupPoints) {
-        if (e.BrtsPickupPointID == 1 || e.BrtsPickupPointID == 18) {
-          totemp.add(e);
-          // toPickupPoints.add(e);
-          // fromPickupPoints.remove(e);
-        } else {
-          fromtemp.add(e);
-        }
-      }
-      toPickupPoints = totemp;
-      fromPickupPoints = fromtemp;*/
-      // print(response['ResultList']);
       print(fromPickupPoints.toString());
-      // print(toPickupPoints.toString());
       _Loading = false;
       return fromPickupPoints;
     }

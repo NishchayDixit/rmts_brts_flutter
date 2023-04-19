@@ -1,10 +1,10 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
-import 'package:rmts_brts/brts_home_screen.dart';
+import 'package:rmts_brts/Screens/brts_home_screen.dart';
+import 'package:rmts_brts/Screens/rmts_home_screen.dart';
 import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
-import 'package:rmts_brts/rmts_home_screen.dart';
 import 'package:sizer/sizer.dart';
 
 class RMTS_BRTSTabScreen extends StatefulWidget {
@@ -89,7 +89,6 @@ class _RMTS_BRTSTabScreenState extends State<RMTS_BRTSTabScreen>
               ),
               Expanded(
                 child: TabBarView(
-
                   controller: tabController,
                   children: const [
                     Center(child: RMTSHomeScreen()),
