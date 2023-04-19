@@ -22,7 +22,6 @@ class RMTSHomeScreen extends StatefulWidget {
 
 class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
   // final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-
   String? selectedValue = null;
   List<RmtsPickupPoints> rmtsPickupPoints = [];
   TextEditingController tecFrom=TextEditingController(),tecTo=TextEditingController();

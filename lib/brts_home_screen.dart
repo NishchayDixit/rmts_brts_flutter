@@ -513,7 +513,7 @@ class _BRTSHomeScreenState extends State<BRTSHomeScreen> {
         toPickupPoints.add(BrtsPickupPoints.fromJSON(t));
         fromPickupPoints.add(BrtsPickupPoints.fromJSON(t));
       }
-      toPickupPoints = fromPickupPoints.toList();
+      // toPickupPoints = fromPickupPoints.toList();
       /*List<BrtsPickupPoints> fromtemp, totemp;
       fromtemp = [];
       totemp = [];
