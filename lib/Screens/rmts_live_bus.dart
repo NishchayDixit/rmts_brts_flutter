@@ -43,8 +43,10 @@ class _MyHomePageState extends State<RmtsLiveBus> {
             child: Column(
               children: <Widget>[
                 Container(
+                  height: 6.5.h,
+                  margin: EdgeInsets.only(bottom: 1.5.h),
                   decoration: BoxDecoration(
-                    // shape: BoxShape.rectangle,
+                    shape: BoxShape.rectangle,
                     borderRadius: BorderRadius.circular(8.0),
                     border: Border.all(
                       style: BorderStyle.solid,
@@ -90,7 +92,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                         child: Ink(
                           color: ColorConstants.primaryColor,
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6.0.w,vertical: 2.5.h,),
+                            padding: EdgeInsets.symmetric(horizontal: 6.0.w),
                             alignment: Alignment.center,
                             decoration: const BoxDecoration(
                               borderRadius: BorderRadius.only(
@@ -102,7 +104,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                               "Search",
                               style: TextStyle(
                                 color: ColorConstants.primaryAccentTextColor,
-                                fontSize: 16.0,
+                                // fontSize: 16.0,
                               ),
                             ),
                           ),
@@ -156,18 +158,19 @@ class _MyHomePageState extends State<RmtsLiveBus> {
       initPosition: currpoint,
     );
     return Container(
-      margin: EdgeInsets.fromLTRB(5, 5, 5, 5),
+      margin: EdgeInsets.fromLTRB(1.w, 1.h, 1.w, 1.h),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-              color: Colors.black12,
-              blurRadius: 6,
-              spreadRadius: 1.5,
-              offset: Offset(1, 1)),
+            color: Colors.black12,
+            blurRadius: 1.h,
+            spreadRadius: 1.5,
+            offset: const Offset(1, 1),
+          ),
         ],
         borderRadius: BorderRadius.all(
-          Radius.circular(5.0),
+          Radius.circular(1.5.h),
         ),
       ),
       // height: 200,
@@ -176,10 +179,10 @@ class _MyHomePageState extends State<RmtsLiveBus> {
           //Maps
           Stack(
             children: [
-              SizedBox(
+              Container(
                 width: double.infinity,
                 child: AspectRatio(
-                  aspectRatio: 5 / 2,
+                  aspectRatio: 6 / 3,
                   child: OSMFlutter(
                     controller: bmc,
                     initZoom: 15.0,
@@ -200,7 +203,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                           double.parse(b.Latitude), double.parse(b.Longitude));
                     },
                     child: Container(
-                      margin: EdgeInsets.only(top: 15, left: 15),
+                      margin: EdgeInsets.only(top: 1.5.h, left: 1.5.h),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(6.0.sp),
@@ -259,7 +262,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
           Row(
             children: [
               Container(
-                padding: EdgeInsets.all(7.0.sp),
+                padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 2.h),
                 decoration: BoxDecoration(
                   color: ColorConstants.primaryColor,
                   borderRadius: BorderRadius.all(
@@ -276,14 +279,15 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                 ),
               ),
               CustomText(
-                text: b.VehicleStatus.toString(),
+                text: 'Status: ${b.VehicleStatus}',
                 fontFamily: 'Poppins',
                 fontSize: 12.0.sp,
                 fontWeight: FontWeight.w500,
                 color: Colors.black,
               ),
+              SizedBox(width: 5.w),
               CustomText(
-                text: b.Speed.toString(),
+                text: 'Speed: ${b.Speed}',
                 fontFamily: 'Poppins',
                 fontSize: 12.0.sp,
                 fontWeight: FontWeight.w500,
