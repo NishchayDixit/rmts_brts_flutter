@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
-import 'package:rmts_brts/config/color_constants.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_single_bus.dart';
 import 'package:rmts_brts/custom_widgets/custom_text.dart';
@@ -33,13 +32,12 @@ class _RmtsSearchResultState extends State<RmtsSearchResult> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Container(
-        decoration: BoxDecoration(
-          color: ColorConstants.primaryBackGround,
-        ),
-        child: SafeArea(
-          child: Scaffold(
-            body: FutureBuilder(
+      child: SafeArea(
+        child: Scaffold(
+          body: Container(
+            color: Colors.white,
+            width: double.infinity,
+            child: FutureBuilder(
               future: getSearchResult(formID: widget.fromID, toID: widget.toID),
               builder: (context, snapshot) {
                 if (snapshot != null && snapshot.hasData) {

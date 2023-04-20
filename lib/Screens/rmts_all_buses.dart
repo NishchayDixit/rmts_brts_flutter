@@ -5,6 +5,9 @@ import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_result_model.dart';
 import 'package:rmts_brts/custom_widgets/custom_loader.dart';
 import 'package:rmts_brts/custom_widgets/custom_single_bus.dart';
+import 'package:sizer/sizer.dart';
+
+import '../custom_widgets/custom_text.dart';
 
 class RmtsAllBuses extends StatefulWidget {
   const RmtsAllBuses({Key? key}) : super(key: key);
@@ -26,33 +29,34 @@ class _RmtsAllBusesState extends State<RmtsAllBuses> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 207, 207, 207),
-        ),
-        child: SafeArea(
-          child: Scaffold(
-            body: Container(
-              width: double.infinity,
-              child: FutureBuilder(
-                future: getAllBuses(),
-                builder: (context, snapshot) {
-                  if (snapshot != null && snapshot.hasData) {
-                    return ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      addAutomaticKeepAlives: true,
-                      itemBuilder: (context, index) {
-                        return CustomSingleBus(
-                            rmtsResultModel: rmtsResultModel[index]);
-                      },
-                      itemCount: rmtsResultModel.length,
-                    );
-                  } else if (_loading) {
-                    return CustomLoader();
-                  }
-                  return Text("no result found");
-                },
-              ),
+      child: SafeArea(
+        child: Scaffold(
+          body: Container(
+            color: Colors.white,
+            width: double.infinity,
+            child: FutureBuilder(
+              future: getAllBuses(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    scrollDirection: Axis.vertical,
+                    addAutomaticKeepAlives: true,
+                    itemBuilder: (context, index) {
+                      return CustomSingleBus(
+                          rmtsResultModel: rmtsResultModel[index]);
+                    },
+                    itemCount: rmtsResultModel.length,
+                  );
+                } else if (_loading) {
+                  return const CustomLoader();
+                }
+                return CustomText(
+                  text: "no result found",
+                  fontFamily: 'Poppins',
+                  fontSize: 16.0.sp,
+                  fontWeight: FontWeight.w500,
+                );
+              },
             ),
           ),
         ),

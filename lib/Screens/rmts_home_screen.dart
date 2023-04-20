@@ -39,7 +39,6 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
     "Bedi"
   ];
 
-
   @override
   void initState() {
     super.initState();
@@ -80,7 +79,7 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
           alignment: Alignment.topCenter,
           margin: EdgeInsets.only(top: 1.0.h, left: 3.5.w, right: 3.5.w),
           child: SingleChildScrollView(
-            physics: ClampingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
             scrollDirection: Axis.vertical,
             child: Column(
               children: [
@@ -481,7 +480,12 @@ class _RMTSHomeScreenState extends State<RMTSHomeScreen> {
                     } else if (_Loading) {
                       return const CustomLoader();
                     }
-                    return CustomText(text: "Cannot connect to server",fontFamily: 'Poppins',fontSize: 16.0.sp,fontWeight: FontWeight.w500,);
+                    return CustomText(
+                      text: "Cannot connect to server",
+                      fontFamily: 'Poppins',
+                      fontSize: 16.0.sp,
+                      fontWeight: FontWeight.w500,
+                    );
                   },
                 ),
               ],

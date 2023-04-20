@@ -42,103 +42,88 @@ class _MyHomePageState extends State<RmtsLiveBus> {
             padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 0.0),
             child: Column(
               children: <Widget>[
-                Expanded(
-                  flex: 6,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      borderRadius: BorderRadius.circular(8.0),
-                      border: Border.all(
-                          style: BorderStyle.solid,
+                Container(
+                  decoration: BoxDecoration(
+                    // shape: BoxShape.rectangle,
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(
+                      style: BorderStyle.solid,
+                      color: ColorConstants.primaryColor,
+                      width: 2.0,
+                    ),
+                  ),
+                  child: Row(
+                    children: <Widget>[
+                      Expanded(
+                        child: TextField(
+                          textAlign: TextAlign.start,
+                          controller: textEditingController,
+                          textAlignVertical: TextAlignVertical.bottom,
+                          cursorColor: ColorConstants.primaryColor,
+                          decoration: InputDecoration(
+                            // filled: true,
+                            // fillColor: ColorConstants.primaryFillColor,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.circular(1.0.h),
+                            ),
+                            hintText: "Enter Bus no.",
+                            hintStyle: TextStyle(
+                                fontSize: 15.5,
+                                color: ColorConstants.seconderyColor),
+                          ),
+                          keyboardType: TextInputType.number,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          // if(!isLoading){
+                          setState(() {
+                            bus_no = int.parse(
+                                textEditingController.text.toString());
+                            buses;
+                            // fetchBus();
+                          });
+                          // }
+                        },
+                        enableFeedback: true,
+                        child: Ink(
                           color: ColorConstants.primaryColor,
-                          width: 2.0),
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Expanded(
-                          flex: 65,
-                          child: TextField(
-                            textAlign: TextAlign.start,
-                            controller: textEditingController,
-                            textAlignVertical: TextAlignVertical.bottom,
-                            cursorColor: ColorConstants.primaryColor,
-                            decoration: InputDecoration(
-                              filled: true,
-                              fillColor: ColorConstants.primaryFillColor,
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                borderRadius: BorderRadius.circular(1.0.h),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 6.0.w,vertical: 2.5.h,),
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(4.0),
+                                topRight: Radius.circular(4.0),
                               ),
-                              hintText: "Enter Bus no.",
-                              hintStyle: TextStyle(
-                                  fontSize: 15.5,
-                                  color: ColorConstants.seconderyColor),
                             ),
-                            keyboardType: TextInputType.number,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 35,
-                          child: InkWell(
-                            onTap: () {
-                              // if(!isLoading){
-                              setState(() {
-                                bus_no = int.parse(
-                                    textEditingController.text.toString());
-                                buses;
-                                // fetchBus();
-                              });
-                              // }
-                            },
-                            enableFeedback: true,
-                            child: Ink(
-                              color: ColorConstants.primaryColor,
-                              child: Container(
-                                alignment: Alignment.center,
-                                height: double.maxFinite,
-                                width: double.maxFinite,
-                                decoration: const BoxDecoration(
-                                  borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(4.0),
-                                    topRight: Radius.circular(4.0),
-                                  ),
-                                ),
-                                child: Text(
-                                  "Search",
-                                  style: TextStyle(
-                                    color:
-                                        ColorConstants.primaryAccentTextColor,
-                                    fontSize: 16.0,
-                                  ),
-                                ),
+                            child: Text(
+                              "Search",
+                              style: TextStyle(
+                                color: ColorConstants.primaryAccentTextColor,
+                                fontSize: 16.0,
                               ),
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 Expanded(
-                  flex: 94,
                   child: (bus_no != -1)
                       ? FutureBuilder<List<RmtsLiveBusModel>>(
                           future: fetchBus(),
                           builder: (context, snapshot) {
-                            if (snapshot.hasData &&
-                                snapshot.data?.length != 0) {
-                              return Column(
-                                children: [
-                                  // Text(buses.length.toString()),
-                                  ListView.builder(
-                                    itemBuilder: (context, index) {
-                                      return SingleBus(buses[index]);
-                                    },
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount: snapshot.data?.length,
-                                  ),
-                                ],
+                            if (snapshot.hasData && snapshot.data!.isNotEmpty) {
+                              return ListView.builder(
+                                itemBuilder: (context, index) {
+                                  return SingleBus(buses[index]);
+                                },
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemCount: snapshot.data?.length,
                               );
                             } else if (snapshot.hasError) {
                               return Text('${snapshot.error}');
@@ -191,7 +176,7 @@ class _MyHomePageState extends State<RmtsLiveBus> {
           //Maps
           Stack(
             children: [
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child: AspectRatio(
                   aspectRatio: 5 / 2,

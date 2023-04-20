@@ -19,15 +19,15 @@ class _CustomSingleBusState extends State<CustomSingleBus> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 9.h,
+      height: 11.h,
       width: double.infinity,
-      padding: EdgeInsets.fromLTRB(3.w, .5.h, 3.w, .5.h),
+      padding: EdgeInsets.fromLTRB(4.w, .7.h, 4.w, .7.h),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: ColorConstants.primaryAccentTextColor,
-          elevation: .25.h,
+          backgroundColor: ColorConstants.primaryFillColor,
+          elevation: .05.h,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(1.h),
+            borderRadius: BorderRadius.circular(2.h),
           ),
         ),
         onPressed: () {
@@ -42,7 +42,7 @@ class _CustomSingleBusState extends State<CustomSingleBus> {
         child: Row(
           children: [
             Expanded(
-              flex: 15,
+              flex: 25,
               child: Container(
                 alignment: Alignment.center,
                 child: CustomText(
@@ -50,39 +50,24 @@ class _CustomSingleBusState extends State<CustomSingleBus> {
                       ? ""
                       : widget.rmtsResultModel.BusNo.toString(),
                   fontFamily: 'Poppins',
-                  fontSize: 20.0.sp,
-                  fontWeight: FontWeight.w500,
-                  color: ColorConstants.primaryColor,
+                  fontSize: 24.5.sp,
+                  fontWeight: FontWeight.w600,
+                  color: ColorConstants.primaryTextColor,
                 ),
               ),
             ),
             Expanded(
-              flex: 73,
+              flex: 75,
               child: Container(
                 margin: EdgeInsets.only(left: 1.5.w),
                 alignment: Alignment.centerLeft,
-                // child: Text(
-                //   widget.rmtsResultModel.RouteNameEnglish.toString(),
-                //   // overflow: TextOverflow.ellipsis,
-                //   style: TextStyle(
-                //     fontSize: 14,
-                //   ),
-                // ),
                 child: CustomText(
                   text: widget.rmtsResultModel.RouteNameEnglish.toString(),
                   fontFamily: 'Poppins-Regular',
-                  fontSize: 12.0.sp,
-                  fontWeight: FontWeight.w500,
-                  color: ColorConstants.seconderyTextColor,
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.w700,
+                  color: ColorConstants.primaryTextColor,
                 ),
-              ),
-            ),
-            Expanded(
-              flex: 12,
-              child: Container(
-                alignment: Alignment.centerRight,
-                child: Icon(Icons.navigate_next_rounded,
-                    color: ColorConstants.seconderyTextColor),
               ),
             ),
           ],
