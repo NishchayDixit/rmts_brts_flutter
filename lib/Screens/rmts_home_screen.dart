@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:rmts_brts/Api/base_client.dart';
 import 'package:rmts_brts/Model/rmts_pickup_points.dart';

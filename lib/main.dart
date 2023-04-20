@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'RMTS BRTS',
+          title: 'RMTS-BRTS',
           theme: ThemeData(
             primarySwatch: Colors.indigo,
           ),

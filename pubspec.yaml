@@ -44,6 +44,7 @@ dependencies:
   dropdown_button2: ^2.0.0
   latlong: ^0.6.1
   flutter_osm_plugin: ^0.53.4
+  url_launcher: ^6.1.10
 
 
 dev_dependencies:
@@ -66,6 +67,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/
+    - assets/logos/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

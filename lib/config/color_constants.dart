@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 Color hexToColor(String hex) {
@@ -12,12 +11,15 @@ Color hexToColor(String hex) {
 }
 
 class ColorConstants {
-  static Color primaryColor = hexToColor('#405FDF');
-  static Color seconderyColor = hexToColor('#7F97FF');
-  static Color primaryTextColor = hexToColor('#2B45B3');
-  static Color seconderyTextColor = hexToColor('#000000');
-  static Color primaryAccentTextColor = hexToColor('#ffffff');
-  static Color primaryFillColor = hexToColor('#EFF2FE');
-  static Color primaryBackGround = hexToColor('#CFCFCF');
-  static Color shadowColor = hexToColor('#BEBEBE');
+  static Color primaryColor = const Color.fromARGB(255, 64, 95, 223);
+  static Color seconderyColor = const Color.fromARGB(255, 127, 151, 255);
+  static Color primaryTextColor = const Color.fromARGB(255, 43, 69, 179);
+  static Color seconderyTextColor = const Color.fromARGB(255, 0, 0, 0);
+  static Color primaryAccentTextColor = const Color.fromARGB(255, 255, 255, 255);
+  static Color primaryFillColor = const Color.fromARGB(255, 239, 242, 254);
+  static Color primaryBackGround = const Color.fromARGB(255, 207, 207, 207);
+  static Color shadowColor = const Color.fromARGB(255, 190, 190, 190);
+  static Color buttonColor = const Color.fromRGBO(240, 51, 74, 1);
+  static Color kSecondaryBackgroundColor = const Color.fromRGBO(107, 82, 200, 0.1);
+  static Color kPrimaryBackgroundColor = Colors.deepOrange;
 }
