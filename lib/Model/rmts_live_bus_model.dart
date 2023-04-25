@@ -1,4 +1,4 @@
-class Bus {
+class RmtsLiveBusModel {
   final BoxId,
       VehName,
       DriverName,
@@ -17,7 +17,7 @@ class Bus {
       ResponseStatus,
       A_BusNo;
 
-  const Bus({
+  const RmtsLiveBusModel({
     required this.BoxId,
     required this.VehName,
     required this.DriverName,
@@ -37,8 +37,8 @@ class Bus {
     required this.A_BusNo,
   });
 
-  factory Bus.fromJSON(Map<String, dynamic> json) {
-    return Bus(
+  factory RmtsLiveBusModel.fromJSON(Map<String, dynamic> json) {
+    return RmtsLiveBusModel(
       BoxId: json['BoxId'],
       VehName: json['VehName'],
       DriverName: json['DriverName'],
