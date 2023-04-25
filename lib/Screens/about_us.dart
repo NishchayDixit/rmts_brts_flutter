@@ -165,7 +165,7 @@ class AboutUs extends StatelessWidget {
                             Expanded(
                               flex: 5,
                               child: Text(
-                                "Prof. Mehul Bhundiya, Computer Engineering Department",
+                                "Prof. Rajkumar Gondaliya, Computer Engineering Department",
                                 style: TextStyle(
                                     fontSize: 12,
                                     color: Colors.blueGrey,

@@ -278,20 +278,31 @@ class _MyHomePageState extends State<RmtsLiveBus> {
                   color: Colors.white,
                 ),
               ),
-              CustomText(
-                text: 'Status: ${b.VehicleStatus}',
-                fontFamily: 'Poppins',
-                fontSize: 12.0.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    text: 'Status: ${b.VehicleStatus}',
+                    fontFamily: 'Poppins',
+                    fontSize: 12.0.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
               ),
-              SizedBox(width: 5.w),
-              CustomText(
-                text: 'Speed: ${b.Speed}',
-                fontFamily: 'Poppins',
-                fontSize: 12.0.sp,
-                fontWeight: FontWeight.w500,
-                color: Colors.black,
+              // SizedBox(width: 4.w),
+              Expanded(
+                child: Container(
+                  alignment: Alignment.centerLeft,
+                  child: CustomText(
+                    text: 'Speed: ${b.Speed}',
+                    fontFamily: 'Poppins',
+                    fontSize: 12.0.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.black,
+                  ),
+                ),
               ),
             ],
           )
